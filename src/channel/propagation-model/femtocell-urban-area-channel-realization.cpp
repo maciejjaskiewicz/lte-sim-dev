@@ -31,6 +31,7 @@
 #include "../../core/eventScheduler/simulator.h"
 #include "../../load-parameters.h"
 
+#include <cmath>
 
 FemtoCellUrbanAreaChannelRealization::FemtoCellUrbanAreaChannelRealization (NetworkNode* src, NetworkNode* dst)
 {
@@ -130,11 +131,7 @@ FemtoCellUrbanAreaChannelRealization::GetPathLoss (void)
 	  distance =  ue->GetMobilityModel ()->GetAbsolutePosition ()->GetDistance (enb->GetMobilityModel ()->GetAbsolutePosition ());
   }
 
-
-
-
-  m_pathLoss = max( minimumCouplingLoss, 127 + ( 30 * log10 (distance * 0.001) ) + floorPenetration);
-
+  m_pathLoss = std::fmax( minimumCouplingLoss, 127 + ( 30 * log10 (distance * 0.001) ) + floorPenetration);
 
   return m_pathLoss;
 }

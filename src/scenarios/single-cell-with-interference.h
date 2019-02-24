@@ -204,18 +204,16 @@ static void SingleCellWithInterference (int nbCells, double radius,
 
   //Define Application Container
   int nbCell=1;
-  VoIP VoIPApplication[nbVoIP*nbCell*nbUE];
-  TraceBased VideoApplication[nbVideo*nbCell*nbUE];
-  InfiniteBuffer BEApplication[nbBE*nbCell*nbUE];
-  CBR CBRApplication[nbCBR*nbCell*nbUE];
+  std::vector<VoIP> VoIPApplication(nbVoIP*nbCell*nbUE);
+  std::vector<TraceBased> VideoApplication(nbVideo*nbCell*nbUE);
+  std::vector<InfiniteBuffer> BEApplication(nbBE*nbCell*nbUE);
+  std::vector<CBR> CBRApplication(nbCBR*nbCell*nbUE);
   int voipApplication = 0;
   int videoApplication = 0;
   int cbrApplication = 0;
   int beApplication = 0;
   int destinationPort = 101;
   int applicationID = 0;
-
-
 
   //Create GW
   Gateway *gw = new Gateway ();

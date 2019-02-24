@@ -26,6 +26,7 @@
 #include <iostream>
 #include <string>
 
+#define _USE_MATH_DEFINES
 
 /* path */
 static std::string path ("/Users/giuseppepiro/Desktop/lte-sim/");

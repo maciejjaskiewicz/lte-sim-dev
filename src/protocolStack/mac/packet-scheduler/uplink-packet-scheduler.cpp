@@ -147,14 +147,14 @@ UplinkPacketScheduler::RBsAllocation ()
 	int nbOfRBs = GetMacEntity ()->GetDevice ()->GetPhy ()->GetBandwidthManager ()->GetUlSubChannels ().size ();
 
 	  //create a matrix of flow metrics
-	  double metrics[nbOfRBs][users->size ()];
-	  for (int i = 0; i < nbOfRBs; i++)
-	    {
-		  for (int j = 0; j < users->size (); j++)
-		    {
-			  metrics[i][j] = ComputeSchedulingMetric (users->at (j), i);
-		    }
-	    }
+	std::vector<std::vector<double>> metrics(nbOfRBs, std::vector<double>(users->size()));
+	for (int i = 0; i < nbOfRBs; i++)
+	{
+		for (int j = 0; j < users->size (); j++)
+		{
+			metrics[i][j] = ComputeSchedulingMetric (users->at (j), i);
+		}
+	}
 
 #ifdef SCHEDULER_DEBUG
   std::cout << ", available RBs " << nbOfRBs << ", users " << users->size () << std::endl;

@@ -50,8 +50,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include <cstring>
-#include <math.h>
-
+#include <cmath>
 
 static void TestThroughputMacroWithFemto (double radius,
 								          int nbBuildings,

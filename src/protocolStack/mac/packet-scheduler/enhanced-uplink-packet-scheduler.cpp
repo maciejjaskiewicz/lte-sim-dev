@@ -91,10 +91,10 @@ EnhancedUplinkPacketScheduler::RBsAllocation ()
 	int selectedPRB;      // PRB to be selected for allocation
 	double bestMetric;    // best metric to identify user/RB combination
 	int left, right;      // index of left and left PRB's to check
-	bool Allocated[nbOfRBs];
+	std::vector<bool> Allocated(nbOfRBs);
 	bool allocationMade;
-	double metrics[nbOfRBs][users->size ()];
-	int requiredPRBs[users->size ()];
+	std::vector<std::vector<double>> metrics(nbOfRBs, std::vector<double>(users->size()));
+	std::vector<int> requiredPRBs(users->size());
 
 
 	//Some initialization

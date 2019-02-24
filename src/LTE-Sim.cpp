@@ -50,13 +50,9 @@
 #include "TEST/test-throughput-building.h"
 #include "TEST/test-uplink-fme.h"
 #include "TEST/test-uplink-channel-quality.h"
-
-
 #include "utility/help.h"
-#include <iostream>
-#include <queue>
-#include <fstream>
-#include <stdlib.h>
+
+#include <cstdlib>
 #include <cstring>
 
 int
@@ -86,14 +82,6 @@ main (int argc, char *argv[])
 	    {
 		  Simple ();
 	    }
-
-
-
-
-
-
-
-
 
       /* Run more complex scenarios */
 	  if (strcmp(argv[1], "SingleCell")==0)

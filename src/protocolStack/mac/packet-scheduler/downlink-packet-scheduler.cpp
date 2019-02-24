@@ -323,7 +323,7 @@ DownlinkPacketScheduler::RBsAllocation ()
   int nbOfRBs = GetMacEntity ()->GetDevice ()->GetPhy ()->GetBandwidthManager ()->GetDlSubChannels ().size ();
 
   //create a matrix of flow metrics
-  double metrics[nbOfRBs][flows->size ()];
+  std::vector<std::vector<double>> metrics(nbOfRBs, std::vector<double>(flows->size()));
   for (int i = 0; i < nbOfRBs; i++)
     {
 	  for (int j = 0; j < flows->size (); j++)

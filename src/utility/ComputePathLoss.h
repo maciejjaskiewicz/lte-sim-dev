@@ -118,7 +118,7 @@ ComputePathLossForInterference (NetworkNode* src, NetworkNode* dst)
 
 
 
-	  return max(minimumCouplingLoss, pathLoss);
+	  return std::fmax(minimumCouplingLoss, pathLoss);
 
     }
 

@@ -25,6 +25,7 @@
 #include "../radio-bearer.h"
 #include <math.h>
 
+#include <ctime>
 
 int arrival;
 Random Ran;

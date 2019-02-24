@@ -264,10 +264,11 @@ static void SingleCellWithStreets ( double radius, int nbStreets,
   int totalNbCell = nbCell + nbFemtoCells;
 
   //Define Application Container
-  VoIP VoIPApplication[ nbVoIP*totalNbUE ];
-  TraceBased VideoApplication[ nbVideo*totalNbUE ];
-  InfiniteBuffer BEApplication[ nbBE*totalNbUE ];
-  CBR CBRApplication[ nbCBR*totalNbUE ];
+  std::vector<VoIP> VoIPApplication(nbVoIP*totalNbUE);
+  std::vector<TraceBased> VideoApplication(nbVideo*totalNbUE);
+  std::vector<InfiniteBuffer> BEApplication(nbBE*totalNbUE);
+  std::vector<CBR> CBRApplication(nbCBR*totalNbUE);
+
   int voipApplication = 0;
   int videoApplication = 0;
   int cbrApplication = 0;
