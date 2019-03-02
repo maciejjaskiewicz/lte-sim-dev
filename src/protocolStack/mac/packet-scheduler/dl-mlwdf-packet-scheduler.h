@@ -24,7 +24,7 @@
 
 #include "downlink-packet-scheduler.h"
 
-class DL_MLWDF_PacketScheduler : public DownlinkPacketScheduler {
+class LTE_SIM_API DL_MLWDF_PacketScheduler : public DownlinkPacketScheduler {
 public:
 	DL_MLWDF_PacketScheduler();
 	virtual ~DL_MLWDF_PacketScheduler();

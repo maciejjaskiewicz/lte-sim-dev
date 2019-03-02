@@ -29,7 +29,7 @@
  */
 class UserEquipment;
 
-class HenbMacEntity : public EnbMacEntity
+class LTE_SIM_API HenbMacEntity : public EnbMacEntity
 {
 public:
 	HenbMacEntity (void);

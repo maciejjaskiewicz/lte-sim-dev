@@ -26,7 +26,7 @@
 
 #include "Application.h"
 
-class CBR : public Application {
+class LTE_SIM_API CBR : public Application {
 public:
 	CBR();
 	virtual ~CBR();

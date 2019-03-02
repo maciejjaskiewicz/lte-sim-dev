@@ -26,7 +26,7 @@
 
 #include "Mobility.h"
 
-class Manhattan :public Mobility {
+class LTE_SIM_API Manhattan :public Mobility {
 public:
 	Manhattan();
 	virtual ~Manhattan();

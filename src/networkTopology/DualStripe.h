@@ -25,7 +25,7 @@
 #include "Building.h"
 
 
-class DualStripe : public Building {
+class LTE_SIM_API DualStripe : public Building {
 public:
 	DualStripe ();
 	DualStripe (int idBuilding,

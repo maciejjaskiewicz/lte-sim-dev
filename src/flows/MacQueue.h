@@ -23,6 +23,7 @@
 #ifndef MACQUEUE_H_
 #define MACQUEUE_H_
 
+#include "core/Core.h"
 #include "../protocolStack/packet/Packet.h"
 
 #include <deque>
@@ -30,7 +31,7 @@
 
 using namespace std;
 
-class MacQueue {
+class LTE_SIM_API MacQueue {
 private:
 	struct QueueElement
 	 {

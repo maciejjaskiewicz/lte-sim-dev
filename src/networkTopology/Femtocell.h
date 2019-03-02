@@ -24,7 +24,7 @@
 
 #include "Cell.h"
 
-class Femtocell : public Cell {
+class LTE_SIM_API Femtocell : public Cell {
 public:
 
 	Femtocell(int idCell,

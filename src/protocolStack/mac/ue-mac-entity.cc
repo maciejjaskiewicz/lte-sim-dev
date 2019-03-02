@@ -34,6 +34,7 @@
 #include "../../flows/MacQueue.h"
 #include "../../flows/QoS/QoSParameters.h"
 #include "../rlc/am-rlc-entity.h"
+#include "core/eventScheduler/simulator.h"
 
 
 UeMacEntity::UeMacEntity ()

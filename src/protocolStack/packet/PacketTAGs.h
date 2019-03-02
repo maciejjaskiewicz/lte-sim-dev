@@ -23,9 +23,9 @@
 #ifndef PACKETTAGS_H_
 #define PACKETTAGS_H_
 
-#include <vector>
+#include "core/Core.h"
 
-class PacketTAGs {
+class LTE_SIM_API PacketTAGs {
 public:
 	enum ApplicationType
 	  {

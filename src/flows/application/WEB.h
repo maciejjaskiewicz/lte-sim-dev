@@ -25,7 +25,7 @@
 
 #include "Application.h"
 
-class WEB : public Application {
+class LTE_SIM_API WEB : public Application {
 public:
 	WEB();
 	virtual ~WEB();

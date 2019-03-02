@@ -23,6 +23,8 @@
 #ifndef LTE_PHY_H_
 #define LTE_PHY_H_
 
+#include "core/Core.h"
+
 class NetworkNode;
 class LteChannel;
 class BandwidthManager;
@@ -32,7 +34,7 @@ class IdealControlMessage;
 class Interference;
 class ErrorModel;
 
-class LtePhy {
+class LTE_SIM_API LtePhy {
 public:
 	LtePhy();
 	virtual ~LtePhy();

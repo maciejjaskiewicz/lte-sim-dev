@@ -22,10 +22,10 @@
 #ifndef APARTMENTGRID_H_
 #define APARTMENTGRID_H_
 
+#include "core/Core.h"
 #include "Building.h"
 
-
-class ApartmentGrid : public Building {
+class LTE_SIM_API ApartmentGrid : public Building {
 public:
 	ApartmentGrid ();
 	ApartmentGrid (int idBuilding,

@@ -24,7 +24,7 @@
 
 #include "Mobility.h"
 
-class RandomDirection :public Mobility {
+class LTE_SIM_API RandomDirection :public Mobility {
 public:
 	RandomDirection();
 	virtual ~RandomDirection();

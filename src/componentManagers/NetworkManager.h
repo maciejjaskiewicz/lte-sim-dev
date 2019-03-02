@@ -23,9 +23,11 @@
 #ifndef NetworkManager_H_
 #define NetworkManager_H_
 
+#include "core/Core.h"
+#include "../networkTopology/Cell.h"
+
 #include <stdint.h>
 #include <vector>
-#include "../networkTopology/Cell.h"
 
 class NetworkNode;
 class Cell;
@@ -41,7 +43,7 @@ class LteChannel;
 class Building;
 class Street;
 
-class NetworkManager {
+class LTE_SIM_API NetworkManager {
 private:
 	std::vector<Cell*> *m_cellContainer;
 	std::vector<Femtocell*> *m_femtoCellContainer;

@@ -55,7 +55,9 @@
  *  See clause 4.7.4 for further details on GBR and MBR
  */
 
-class QoSParameters {
+#include "core/Core.h"
+
+class LTE_SIM_API QoSParameters {
 public:
 	QoSParameters();
 	QoSParameters (int qci,

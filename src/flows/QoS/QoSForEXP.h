@@ -22,9 +22,10 @@
 #ifndef QOSFOREXP_H_
 #define QOSFOREXP_H_
 
+#include "core/Core.h"
 #include "QoSParameters.h"
 
-class QoSForEXP :public QoSParameters {
+class LTE_SIM_API QoSForEXP :public QoSParameters {
 
 public:
 	QoSForEXP ();

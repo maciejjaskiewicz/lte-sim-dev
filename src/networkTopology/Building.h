@@ -22,13 +22,15 @@
 #ifndef BUILDING_H_
 #define BUILDING_H_
 
+#include "core/Core.h"
+
 #include <vector>
 
 class CartesianCoordinates;
 class Femtocell;
 class UserEquipment;
 
-class Building {
+class LTE_SIM_API Building {
 public:
 
 	enum BuildingType

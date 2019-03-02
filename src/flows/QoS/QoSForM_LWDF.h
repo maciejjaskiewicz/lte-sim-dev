@@ -23,9 +23,10 @@
 #ifndef QOSFORM_LWDF_H_
 #define QOSFORM_LWDF_H_
 
+#include "core/Core.h"
 #include "QoSParameters.h"
 
-class QoSForM_LWDF :public QoSParameters {
+class LTE_SIM_API QoSForM_LWDF :public QoSParameters {
 
 public:
 	QoSForM_LWDF ();

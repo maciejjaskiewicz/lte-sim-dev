@@ -25,7 +25,7 @@
 
 #include "downlink-packet-scheduler.h"
 
-class LogRuleDownlinkPacketScheduler : public DownlinkPacketScheduler {
+class LTE_SIM_API LogRuleDownlinkPacketScheduler : public DownlinkPacketScheduler {
 public:
 	LogRuleDownlinkPacketScheduler();
 	virtual ~LogRuleDownlinkPacketScheduler();

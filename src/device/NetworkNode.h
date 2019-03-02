@@ -41,7 +41,7 @@
 class PacketBurst;
 class LtePhy;
 
-class NetworkNode {
+class LTE_SIM_API NetworkNode {
 public:
 	enum NodeState
 	  {

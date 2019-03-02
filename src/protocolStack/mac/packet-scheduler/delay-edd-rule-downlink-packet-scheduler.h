@@ -32,7 +32,7 @@
  * i(t) ∈ arg min 1 ≤ i ≤ N (di − wi (t)),
  */
 
-class DelayEddRuleDownlinkPacketScheduler : public DownlinkPacketScheduler {
+class LTE_SIM_API DelayEddRuleDownlinkPacketScheduler : public DownlinkPacketScheduler {
 public:
 	DelayEddRuleDownlinkPacketScheduler();
 	virtual ~DelayEddRuleDownlinkPacketScheduler();

@@ -23,9 +23,10 @@
 #ifndef QOSFORFLS_H_
 #define QOSFORFLS_H_
 
+#include "core/Core.h"
 #include "QoSParameters.h"
 
-class QoSForFLS :public QoSParameters {
+class LTE_SIM_API QoSForFLS :public QoSParameters {
 public:
 	QoSForFLS();
 	virtual ~QoSForFLS();

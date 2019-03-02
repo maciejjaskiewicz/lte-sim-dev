@@ -25,6 +25,7 @@
 #include <cstdlib>
 #include "../../componentManagers/NetworkManager.h"
 #include "../radio-bearer.h"
+#include "core/eventScheduler/simulator.h"
 
 CBR::CBR()
 {

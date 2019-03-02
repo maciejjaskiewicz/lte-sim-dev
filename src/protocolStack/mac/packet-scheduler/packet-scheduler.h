@@ -31,7 +31,7 @@ class PacketBurst;
 class Packet;
 class RadioBearer;
 
-class PacketScheduler {
+class LTE_SIM_API PacketScheduler {
 public:
 	PacketScheduler();
 	virtual ~PacketScheduler();

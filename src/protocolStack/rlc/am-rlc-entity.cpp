@@ -31,6 +31,7 @@
 #include "amd-record.h"
 #include "../../core/idealMessages/ideal-control-messages.h"
 #include "../../load-parameters.h"
+#include "core/eventScheduler/simulator.h"
 
 #define MAX_AMD_RETX 5
 

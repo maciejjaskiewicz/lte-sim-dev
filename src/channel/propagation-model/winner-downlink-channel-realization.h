@@ -28,7 +28,7 @@
 
 class NetworkNode;
 
-class WinnerDownlinkChannelRealization: public ChannelRealization {
+class LTE_SIM_API WinnerDownlinkChannelRealization: public ChannelRealization {
 public:
 	WinnerDownlinkChannelRealization (NetworkNode* src, NetworkNode* dst);
 	virtual ~WinnerDownlinkChannelRealization ();

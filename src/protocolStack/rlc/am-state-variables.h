@@ -22,12 +22,13 @@
 #ifndef AMSTATEVARIABLES_H_
 #define AMSTATEVARIABLES_H_
 
+#include "core/Core.h"
 
 /*
  * This class implements all variables, constants and timers for the AM RLC
  * see 3GPP TS 36.322 V9.3.0 (2010-09)
  */
-class AmStateVariables {
+class LTE_SIM_API AmStateVariables {
 public:
 	AmStateVariables();
 	virtual ~AmStateVariables();

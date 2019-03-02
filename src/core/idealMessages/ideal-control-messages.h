@@ -23,17 +23,18 @@
 #ifndef IDEAL_CONTROL_MESSAGES_H
 #define IDEAL_CONTROL_MESSAGES_H
 
+#include "core/Core.h"
+
 #include <list>
 
 class NetworkNode;
-
 
 /*
  * The IdealControlMessage provides a basic implementations for
  * control messages (such as PDCCH allocation map, CQI feedbacks)
  * that are exchanged among eNodeB and UEs.
  */
-class IdealControlMessage
+class LTE_SIM_API IdealControlMessage
 {
 public:
   enum MessageType

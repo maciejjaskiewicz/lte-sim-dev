@@ -24,12 +24,13 @@
 #ifndef CLASSIFIER_H_
 #define CLASSIFIER_H_
 
+#include "core/Core.h"
 #include "../../protocolStack/packet/Packet.h"
 
 class ClassifierParameters;
 class NetworkNode;
 
-class Classifier {
+class LTE_SIM_API Classifier {
 private:
 
 public:

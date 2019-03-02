@@ -23,10 +23,12 @@
 #ifndef HOMANAGER_H_
 #define HOMANAGER_H_
 
+#include "core/Core.h"
+
 class UserEquipment;
 class NetworkNode;
 
-class HoManager {
+class LTE_SIM_API HoManager {
 public:
 	HoManager();
 	virtual ~HoManager();

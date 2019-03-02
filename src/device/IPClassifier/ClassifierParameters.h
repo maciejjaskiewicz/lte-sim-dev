@@ -20,14 +20,13 @@
  */
 
 
-
 #ifndef CLASSIFIERPARAMETERS_H_
 #define CLASSIFIERPARAMETERS_H_
 
-#include "../../protocolStack/protocols/TransportProtocol.h"
+#include "core/Core.h"
+#include "protocolStack/protocols/TransportProtocol.h"
 
-
-class ClassifierParameters {
+class LTE_SIM_API ClassifierParameters {
 public:
 	ClassifierParameters();
 	ClassifierParameters(int sourceID,

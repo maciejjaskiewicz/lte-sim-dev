@@ -25,7 +25,7 @@
 #include <vector>
 #include "error-model.h"
 
-class WidebandCqiEesmErrorModel : public ErrorModel {
+class LTE_SIM_API WidebandCqiEesmErrorModel : public ErrorModel {
 public:
 	WidebandCqiEesmErrorModel();
 	virtual ~WidebandCqiEesmErrorModel();

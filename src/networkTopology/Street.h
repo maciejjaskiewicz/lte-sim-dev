@@ -22,14 +22,15 @@
 #ifndef STREET_H_
 #define STREET_H_
 
-#include <vector>
+#include "core/Core.h"
 
+#include <vector>
 
 class Building;
 class CartesianCoordinates;
 
 
-class Street {
+class LTE_SIM_API Street {
 public:
 
 	Street ( int streetID,

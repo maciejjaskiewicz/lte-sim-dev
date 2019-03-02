@@ -28,7 +28,7 @@
 #include "Packet.h"
 
 
-class PacketBurst
+class LTE_SIM_API PacketBurst
 {
   /*
    * This class implement a burst as a list of packets

@@ -30,7 +30,7 @@ class Gateway;
 
 class PacketScheduler;
 
-class ENodeB : public NetworkNode {
+class LTE_SIM_API ENodeB : public NetworkNode {
 public:
 	struct UserEquipmentRecord
 	  {

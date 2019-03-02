@@ -23,13 +23,12 @@
 #ifndef UE_MAC_ENTITY_H
 #define UE_MAC_ENTITY_H
 
-#include <list>
 #include "mac-entity.h"
 
 /*
  * This class implements the MAC layer of the UE device
  */
-class UeMacEntity : public MacEntity
+class LTE_SIM_API UeMacEntity : public MacEntity
 {
 public:
 

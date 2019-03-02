@@ -25,7 +25,7 @@
 
 #include "ho-manager.h"
 
-class PowerBasedHoManager: public HoManager {
+class LTE_SIM_API PowerBasedHoManager: public HoManager {
 public:
 	PowerBasedHoManager();
 	virtual ~PowerBasedHoManager();

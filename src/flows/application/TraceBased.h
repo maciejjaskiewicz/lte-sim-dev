@@ -26,8 +26,7 @@
 #include "Application.h"
 
 #include <cstdio>
-#include <iostream>
-#include <fstream>
+#include <vector>
 
 /*
  * This application sends udp packets based on a trace file could be downloaded form :
@@ -41,7 +40,7 @@
  * default-trace.h will be loaded.
  */
 
-class TraceBased : public Application {
+class LTE_SIM_API TraceBased : public Application {
 public:
 	TraceBased();
 	TraceBased(NetworkNode *source,

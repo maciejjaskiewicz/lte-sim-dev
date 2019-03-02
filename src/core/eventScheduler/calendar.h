@@ -24,11 +24,12 @@
 #ifndef CALENDAR_H_
 #define CALENDAR_H_
 
+#include "core/Core.h"
 #include "event.h"
 #include <list>
 
 
-class Calendar {
+class LTE_SIM_API Calendar {
 public:
 	Calendar();
 	virtual ~Calendar();

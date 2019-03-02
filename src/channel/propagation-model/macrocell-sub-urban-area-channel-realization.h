@@ -23,12 +23,14 @@
 #ifndef MacroCellSubUrbanAreaChannelRealization_H_
 #define MacroCellSubUrbanAreaChannelRealization_H_
 
+#include "core/Core.h"
 #include "channel-realization.h"
+
 #include "vector"
 
 class NetworkNode;
 
-class MacroCellSubUrbanAreaChannelRealization: public ChannelRealization {
+class LTE_SIM_API MacroCellSubUrbanAreaChannelRealization: public ChannelRealization {
 public:
 	MacroCellSubUrbanAreaChannelRealization (NetworkNode* src, NetworkNode* dst);
 	virtual ~MacroCellSubUrbanAreaChannelRealization ();

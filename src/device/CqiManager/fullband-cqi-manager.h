@@ -24,7 +24,7 @@
 
 #include "cqi-manager.h"
 
-class FullbandCqiManager: public CqiManager {
+class LTE_SIM_API FullbandCqiManager: public CqiManager {
 public:
 	FullbandCqiManager();
 	virtual ~FullbandCqiManager();

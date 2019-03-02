@@ -23,8 +23,7 @@
 #ifndef RLC_ENTITY_H
 #define RLC_ENTITY_H
 
-#include <list>
-#include "../../load-parameters.h"
+#include "core/Core.h"
 
 class NetworkNode;
 class RadioBearerInstance;
@@ -38,7 +37,7 @@ class Packet;
  * For a RLC entity configured at the eNB, there is a peer RLC entity
  * configured at the UE and vice versa.
  */
-class RlcEntity
+class LTE_SIM_API RlcEntity
 {
 public:
 

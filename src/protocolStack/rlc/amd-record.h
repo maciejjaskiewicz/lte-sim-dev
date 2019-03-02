@@ -22,9 +22,11 @@
 #ifndef AMDRECORD_H_
 #define AMDRECORD_H_
 
+#include "core/Core.h"
+
 class Packet;
 
-class AmdRecord {
+class LTE_SIM_API AmdRecord {
 public:
 	AmdRecord (Packet* p, int sn);
 	virtual ~AmdRecord();

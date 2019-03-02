@@ -28,7 +28,7 @@
 
 class PacketBurst;
 
-class UmRlcEntity: public RlcEntity {
+class LTE_SIM_API UmRlcEntity: public RlcEntity {
 public:
 	UmRlcEntity();
 	virtual ~UmRlcEntity();

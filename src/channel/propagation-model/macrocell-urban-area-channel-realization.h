@@ -28,7 +28,7 @@
 
 class NetworkNode;
 
-class MacroCellUrbanAreaChannelRealization: public ChannelRealization {
+class LTE_SIM_API MacroCellUrbanAreaChannelRealization: public ChannelRealization {
 public:
 	MacroCellUrbanAreaChannelRealization (NetworkNode* src, NetworkNode* dst);
 	virtual ~MacroCellUrbanAreaChannelRealization ();

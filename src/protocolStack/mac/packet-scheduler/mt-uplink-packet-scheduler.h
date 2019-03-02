@@ -25,7 +25,7 @@
 
 #include "uplink-packet-scheduler.h"
 
-class MaximumThroughputUplinkPacketScheduler : public UplinkPacketScheduler {
+class LTE_SIM_API MaximumThroughputUplinkPacketScheduler : public UplinkPacketScheduler {
 public:
 	MaximumThroughputUplinkPacketScheduler ();
 	virtual ~MaximumThroughputUplinkPacketScheduler();

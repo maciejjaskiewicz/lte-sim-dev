@@ -23,9 +23,8 @@
 #ifndef ENB_MAC_ENTITY_H
 #define ENB_MAC_ENTITY_H
 
-#include <list>
+#include "core/Core.h"
 #include "mac-entity.h"
-
 
 /*
  * This class implements the MAC layer of the eNodeB device
@@ -36,7 +35,7 @@ class CqiIdealControlMessage;
 class PdcchMapIdealControlMessage;
 class SchedulingRequestIdealControlMessage;
 
-class EnbMacEntity : public MacEntity
+class LTE_SIM_API EnbMacEntity : public MacEntity
 {
 public:
 

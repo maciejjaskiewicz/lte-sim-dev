@@ -20,11 +20,10 @@
  */
 
 
-
-
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
+#include "core/Core.h"
 #include "event.h"
 #include "calendar.h"
 #include "make-event.h"
@@ -39,7 +38,7 @@
  * Control the scheduling of simulation events.
  */
 
-class Simulator 
+class LTE_SIM_API Simulator
 {
 private:
 	Simulator ();

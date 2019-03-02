@@ -37,6 +37,7 @@
 #include "../protocolStack/rlc/am-rlc-entity.h"
 #include "../protocolStack/rlc/amd-record.h"
 #include "../load-parameters.h"
+#include "core/eventScheduler/simulator.h"
 
 RadioBearer::RadioBearer()
 {

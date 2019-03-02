@@ -22,13 +22,14 @@
 #ifndef FEMTOCELLURBANAREACHANNELREALIZATION_H_
 #define FEMTOCELLURBANAREACHANNELREALIZATION_H_
 
-
+#include "core/Core.h"
 #include "channel-realization.h"
+
 #include "vector"
 
 class NetworkNode;
 
-class FemtoCellUrbanAreaChannelRealization: public ChannelRealization {
+class LTE_SIM_API FemtoCellUrbanAreaChannelRealization: public ChannelRealization {
 public:
 	FemtoCellUrbanAreaChannelRealization (NetworkNode* src, NetworkNode* dst);
 	virtual ~FemtoCellUrbanAreaChannelRealization ();

@@ -31,7 +31,7 @@ class Gateway;
 class CqiManager;
 
 
-class UserEquipment : public NetworkNode {
+class LTE_SIM_API UserEquipment : public NetworkNode {
 public:
 	UserEquipment ();
 	UserEquipment (int idElement,

@@ -2,7 +2,7 @@ project(LTE-Sim)
 
 SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/load-parameters.h
-    ${PROJECT_SOURCE_DIR}/LTE-Sim.cpp
+    ${PROJECT_SOURCE_DIR}/LTE-Sim.h
     ${PROJECT_SOURCE_DIR}/channel/LteChannel.cpp
     ${PROJECT_SOURCE_DIR}/channel/LteChannel.h
     ${PROJECT_SOURCE_DIR}/channel/propagation-model/3gpp-downlin-channel-realization.cpp
@@ -97,9 +97,13 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/core/idealMessages/ideal-control-messages.cc
     ${PROJECT_SOURCE_DIR}/core/idealMessages/ideal-control-messages.h
     ${PROJECT_SOURCE_DIR}/core/spectrum/bandwidth-manager.cpp
+    ${PROJECT_SOURCE_DIR}/core/simulation/Simulation.h
+    ${PROJECT_SOURCE_DIR}/core/simulation/Simulation.cpp
     ${PROJECT_SOURCE_DIR}/core/spectrum/bandwidth-manager.h
     ${PROJECT_SOURCE_DIR}/core/spectrum/transmitted-signal.cpp
     ${PROJECT_SOURCE_DIR}/core/spectrum/transmitted-signal.h
+    ${PROJECT_SOURCE_DIR}/core/Core.h
+    ${PROJECT_SOURCE_DIR}/core/main.h
     ${PROJECT_SOURCE_DIR}/device/CqiManager/cqi-manager.cpp
     ${PROJECT_SOURCE_DIR}/device/CqiManager/cqi-manager.h
     ${PROJECT_SOURCE_DIR}/device/CqiManager/fullband-cqi-manager.cpp
@@ -273,35 +277,6 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/protocolStack/rrc/ho/power-based-ho-manager.h
     ${PROJECT_SOURCE_DIR}/protocolStack/rrc/rrc-entity.cc
     ${PROJECT_SOURCE_DIR}/protocolStack/rrc/rrc-entity.h
-    ${PROJECT_SOURCE_DIR}/scenarios/multi-cell-sinrplot.h
-    ${PROJECT_SOURCE_DIR}/scenarios/multi-cell.h
-    ${PROJECT_SOURCE_DIR}/scenarios/simple.h
-    ${PROJECT_SOURCE_DIR}/scenarios/single-cell-with-femto.h
-    ${PROJECT_SOURCE_DIR}/scenarios/single-cell-with-interference.h
-    ${PROJECT_SOURCE_DIR}/scenarios/single-cell-with-streets.h
-    ${PROJECT_SOURCE_DIR}/scenarios/single-cell-without-interference.h
-    ${PROJECT_SOURCE_DIR}/TEST/scalability-test-macro-with-femto.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-amc-mapping.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-attach-to-the-channel.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-cqi-feedbacks.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-dl-transmission.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-downlink-proportiona-fair.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-enqueue-packet.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-frequency-reuse.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-mobility-models.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-multi-cell.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-propagation-loss-model.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-sinr-femto.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-sinr-macro-with-femto.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-sinr-urban.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-start-application.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-throughput-building.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-throughput-macro-with-femto.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-throughput-urban.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-uplink-channel-quality.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-uplink-fme.h
-    ${PROJECT_SOURCE_DIR}/TEST/test-uplink-maximumthroughput.h
-    ${PROJECT_SOURCE_DIR}/TEST/test.h
     ${PROJECT_SOURCE_DIR}/utility/CellPosition.h
     ${PROJECT_SOURCE_DIR}/utility/ComputePathLoss.h
     ${PROJECT_SOURCE_DIR}/utility/eesm-effective-sinr.h
@@ -315,6 +290,13 @@ SET(LTE_SIM_SRC
 )
 source_group(TREE ${PROJECT_SOURCE_DIR} FILES ${LTE_SIM_SRC})
 
-add_executable(${PROJECT_NAME} ${LTE_SIM_SRC})
+# add_executable(${PROJECT_NAME} ${LTE_SIM_SRC})
+add_library(${PROJECT_NAME} SHARED ${LTE_SIM_SRC})
+add_library(LTE-Sim::LTE-Sim ALIAS ${PROJECT_NAME})
+
+if (WIN32)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC LTE_SIM_PLATFORM_WINDOWS=1)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE LTE_SIM_BUILD_DLL=1)
+endif()
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})

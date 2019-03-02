@@ -25,7 +25,7 @@
 
 #include "ho-manager.h"
 
-class PositionBasedHoManager: public HoManager {
+class LTE_SIM_API PositionBasedHoManager: public HoManager {
 public:
 	PositionBasedHoManager();
 	virtual ~PositionBasedHoManager();

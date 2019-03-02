@@ -28,7 +28,7 @@
 
 class NetworkNode;
 
-class MicroCellAreaChannelRealization: public ChannelRealization {
+class LTE_SIM_API MicroCellAreaChannelRealization: public ChannelRealization {
 public:
 	MicroCellAreaChannelRealization (NetworkNode* src, NetworkNode* dst);
 	virtual ~MicroCellAreaChannelRealization ();

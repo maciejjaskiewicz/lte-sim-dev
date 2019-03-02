@@ -24,16 +24,9 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-#include "../../core/eventScheduler/simulator.h"
 #include "../../protocolStack/packet/Packet.h"
 #include "../../protocolStack/protocols/TransportProtocol.h"
-#include "../../load-parameters.h"
 #include "../../device/IPClassifier/ClassifierParameters.h"
-#include "../../protocolStack/packet/PacketTAGs.h"
-
-
-#include <iostream>
-#include <stdint.h>
 
 class NetworkNode;
 class ClassifierParameters;
@@ -42,7 +35,7 @@ class QoSParameters;
 class ApplicationSink;
 class RadioBearerSink;
 
-class Application {
+class LTE_SIM_API Application {
 public:
 	enum ApplicationType
 	  {

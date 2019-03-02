@@ -23,12 +23,14 @@
 #ifndef three_gpp_DOWNLINCHANNELREALIZATION_H_
 #define three_gpp_DOWNLINCHANNELREALIZATION_H_
 
+#include "core/Core.h"
 #include "channel-realization.h"
+
 #include "vector"
 
 class NetworkNode;
 
-class ThreeGppDownlinChannelRealization: public ChannelRealization {
+class LTE_SIM_API ThreeGppDownlinChannelRealization: public ChannelRealization {
 public:
 	ThreeGppDownlinChannelRealization (NetworkNode* src, NetworkNode* dst);
 	virtual ~ThreeGppDownlinChannelRealization ();

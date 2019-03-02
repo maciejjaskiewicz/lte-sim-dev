@@ -25,7 +25,7 @@
 
 #include "uplink-packet-scheduler.h"
 
-class EnhancedUplinkPacketScheduler : public UplinkPacketScheduler {
+class LTE_SIM_API EnhancedUplinkPacketScheduler : public UplinkPacketScheduler {
 public:
 	EnhancedUplinkPacketScheduler ();
 	virtual ~EnhancedUplinkPacketScheduler();

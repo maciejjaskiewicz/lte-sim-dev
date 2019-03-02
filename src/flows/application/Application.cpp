@@ -33,6 +33,7 @@
 #include "../../device/UserEquipment.h"
 #include "../../device/ENodeB.h"
 #include "../../load-parameters.h"
+#include "core/eventScheduler/simulator.h"
 
 Application::Application()
 {

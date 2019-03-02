@@ -22,7 +22,9 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
-class Event {
+#include "core/Core.h"
+
+class LTE_SIM_API Event {
 public:
 	Event();
 	virtual ~Event();

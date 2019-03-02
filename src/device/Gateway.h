@@ -24,7 +24,7 @@
 
 #include "NetworkNode.h"
 
-class Gateway : public NetworkNode {
+class LTE_SIM_API Gateway : public NetworkNode {
 public:
 	Gateway();
 	virtual ~Gateway();

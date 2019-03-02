@@ -38,7 +38,7 @@
 #include "pdcp/pdcp-entity.h"
 
 
-class ProtocolStack {
+class LTE_SIM_API ProtocolStack {
 public:
 	ProtocolStack();
 	ProtocolStack(NetworkNode* device);

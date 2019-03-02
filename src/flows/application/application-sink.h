@@ -33,7 +33,7 @@ class RadioBearerSink;
 class Packet;
 
 
-class ApplicationSink {
+class LTE_SIM_API ApplicationSink {
 public:
 	ApplicationSink();
 	virtual ~ApplicationSink();

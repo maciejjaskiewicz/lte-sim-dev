@@ -24,8 +24,9 @@
 #ifndef MAKE_EVENT_H
 #define MAKE_EVENT_H
 
+#include "core/Core.h"
 
-class Event;
+class LTE_SIM_API Event;
 
 template <typename MEM, typename OBJ>
 Event*

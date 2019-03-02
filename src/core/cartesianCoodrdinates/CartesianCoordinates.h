@@ -24,10 +24,11 @@
 #ifndef CARTESIANCOORDINATES_H_
 #define CARTESIANCOORDINATES_H_
 
+#include "core/Core.h"
 #include <math.h>
 
 
-class CartesianCoordinates
+class LTE_SIM_API CartesianCoordinates
 {
 private:
 	double m_posX;

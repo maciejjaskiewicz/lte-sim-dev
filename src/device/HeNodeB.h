@@ -25,7 +25,7 @@
 #include "ENodeB.h"
 
 
-class HeNodeB : public ENodeB {
+class LTE_SIM_API HeNodeB : public ENodeB {
 public:
 
 	HeNodeB (int idElement,

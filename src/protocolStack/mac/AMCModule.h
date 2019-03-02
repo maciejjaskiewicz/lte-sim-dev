@@ -24,12 +24,14 @@
 #ifndef AMCModule_H_
 #define AMCModule_H_
 
+#include "core/Core.h"
+
 #include <vector>
 /*
  *  Adaptive Modulation And Coding Scheme
  */
 
-class AMCModule {
+class LTE_SIM_API AMCModule {
 public:
 	AMCModule();
 	virtual ~AMCModule();

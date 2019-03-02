@@ -23,11 +23,12 @@
 #ifndef ENB_LTE_PHY_H_
 #define ENB_LTE_PHY_H_
 
+#include "core/Core.h"
 #include "lte-phy.h"
 
 class IdealControlMessage;
 
-class EnbLtePhy :public LtePhy {
+class LTE_SIM_API EnbLtePhy :public LtePhy {
 public:
 	EnbLtePhy();
 	virtual ~EnbLtePhy();

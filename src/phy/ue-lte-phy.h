@@ -28,7 +28,7 @@
 
 class IdealControlMessage;
 
-class UeLtePhy :public LtePhy {
+class LTE_SIM_API UeLtePhy :public LtePhy {
 public:
 	UeLtePhy();
 	virtual ~UeLtePhy();

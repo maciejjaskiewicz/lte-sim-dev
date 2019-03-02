@@ -25,7 +25,7 @@
 
 #include "Mobility.h"
 
-class ConstantPosition: public Mobility {
+class LTE_SIM_API ConstantPosition: public Mobility {
 public:
 	ConstantPosition();
 	virtual ~ConstantPosition();

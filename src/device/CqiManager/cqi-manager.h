@@ -22,11 +22,13 @@
 #ifndef CQIMANAGER_H_
 #define CQIMANAGER_H_
 
+#include "core/Core.h"
+
 #include <vector>
 
 class NetworkNode;
 
-class CqiManager {
+class LTE_SIM_API CqiManager {
 public:
 
     enum CQIReportingMode

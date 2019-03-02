@@ -24,7 +24,7 @@
 
 #include "enb-lte-phy.h"
 
-class HenbLtePhy :public EnbLtePhy {
+class LTE_SIM_API HenbLtePhy :public EnbLtePhy {
 
 public:
 	HenbLtePhy();

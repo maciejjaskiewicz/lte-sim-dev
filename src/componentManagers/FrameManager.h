@@ -24,11 +24,12 @@
 #ifndef FRAMEMANAGER_H_
 #define FRAMEMANAGER_H_
 
-#include <iostream>
+#include "core/Core.h"
 #include "NetworkManager.h"
 #include "../core/eventScheduler/simulator.h"
 #include "TDDConfiguration.h"
 
+#include <iostream>
 
  /*
    * LTE Frame Structure:
@@ -40,7 +41,7 @@
    */
 
 
-class FrameManager {
+class LTE_SIM_API FrameManager {
 public:
 	enum FrameStructure
 	  {

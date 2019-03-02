@@ -22,7 +22,9 @@
 #ifndef HARQMANAGER_H_
 #define HARQMANAGER_H_
 
-class HarqManager {
+#include "core/Core.h"
+
+class LTE_SIM_API HarqManager {
 public:
 	HarqManager();
 	virtual ~HarqManager();

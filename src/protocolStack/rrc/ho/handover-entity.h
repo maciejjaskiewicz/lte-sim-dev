@@ -23,11 +23,13 @@
 #ifndef HANDOVERENTITY_H_
 #define HANDOVERENTITY_H_
 
+#include "core/Core.h"
+
 class NetworkNode;
 class UserEquipment;
 class HoManager;
 
-class HandoverEntity {
+class LTE_SIM_API HandoverEntity {
 public:
 	HandoverEntity();
 	virtual ~HandoverEntity();

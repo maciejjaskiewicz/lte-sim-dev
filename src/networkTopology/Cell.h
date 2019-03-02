@@ -28,7 +28,7 @@
 
 using namespace std;
 
-class Cell {
+class LTE_SIM_API Cell {
 private:
 	int m_idCell;
 	double m_radius;			// Km

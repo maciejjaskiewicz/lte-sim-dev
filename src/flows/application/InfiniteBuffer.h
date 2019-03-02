@@ -26,7 +26,7 @@
 
 #include "Application.h"
 
-class InfiniteBuffer : public Application {
+class LTE_SIM_API InfiniteBuffer : public Application {
 public:
 	InfiniteBuffer();
 	virtual ~InfiniteBuffer();

@@ -23,6 +23,8 @@
 #ifndef BandwidthManager_H_
 #define BandwidthManager_H_
 
+#include "core/Core.h"
+
 #include <vector>
 
 /*
@@ -30,7 +32,7 @@
  * in a particular cell.
  * See information on TR 36.101 - Table 5.5-1
  */
-class BandwidthManager {
+class LTE_SIM_API BandwidthManager {
 public:
 	BandwidthManager();
 	BandwidthManager(double ulBw, double dlBw, int ulOffset, int dlOffset);

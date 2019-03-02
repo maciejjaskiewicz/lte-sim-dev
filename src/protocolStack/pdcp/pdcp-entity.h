@@ -22,7 +22,9 @@
 #ifndef PDCPNTITY_H_
 #define PDCPNTITY_H_
 
-class PdcpEntity {
+#include "core/Core.h"
+
+class LTE_SIM_API PdcpEntity {
 public:
 	PdcpEntity();
 	virtual ~PdcpEntity();

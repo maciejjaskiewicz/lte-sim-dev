@@ -23,9 +23,11 @@
 #ifndef NASENTITY_H_
 #define NASENTITY_H_
 
+#include "core/Core.h"
+
 class NetworkNode;
 
-class NasEntity {
+class LTE_SIM_API NasEntity {
 public:
 	NasEntity();
 	virtual ~NasEntity();

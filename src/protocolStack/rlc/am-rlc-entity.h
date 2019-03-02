@@ -23,6 +23,7 @@
 #ifndef AMRLCENTITY_H_
 #define AMRLCENTITY_H_
 
+#include "core/Core.h"
 #include "rlc-entity.h"
 #include "am-state-variables.h"
 #include <vector>
@@ -32,7 +33,7 @@ class Packet;
 class AmdRecord;
 class ArqRlcIdealControlMessage;
 
-class AmRlcEntity: public RlcEntity {
+class LTE_SIM_API AmRlcEntity: public RlcEntity {
 public:
 	AmRlcEntity();
 	virtual ~AmRlcEntity();

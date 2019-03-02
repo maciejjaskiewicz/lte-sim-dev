@@ -30,7 +30,7 @@
 
 #include "cqi-manager.h"
 
-class WidebandCqiManager: public CqiManager {
+class LTE_SIM_API WidebandCqiManager: public CqiManager {
 public:
 	WidebandCqiManager();
 	virtual ~WidebandCqiManager();

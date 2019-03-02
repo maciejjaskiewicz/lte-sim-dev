@@ -23,9 +23,11 @@
 #ifndef INTERFERENCE_H_
 #define INTERFERENCE_H_
 
+#include "core/Core.h"
+
 class UserEquipment;
 
-class Interference {
+class LTE_SIM_API Interference {
 public:
 	Interference();
 	virtual ~Interference();

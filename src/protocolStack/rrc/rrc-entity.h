@@ -23,7 +23,8 @@
 #ifndef RRC_ENTITY_H
 #define RRC_ENTITY_H
 
-#include <list>
+#include "core/Core.h"
+
 #include <vector>
 
 class ClassifierParameters;
@@ -36,7 +37,7 @@ class HandoverEntity;
 /*
  * This class implements the RRC entity
  */
-class RrcEntity
+class LTE_SIM_API RrcEntity
 {
 public:
 

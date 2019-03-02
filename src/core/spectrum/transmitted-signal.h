@@ -23,10 +23,13 @@
 #ifndef TRANSMITTEDSIGNAL_H_
 #define TRANSMITTEDSIGNAL_H_
 
+#include "core/Core.h"
+
 #include <vector>
+
 class BandwidthManager;
 
-class TransmittedSignal {
+class LTE_SIM_API TransmittedSignal {
 public:
 	TransmittedSignal();
 	virtual ~TransmittedSignal();

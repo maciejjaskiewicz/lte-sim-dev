@@ -22,9 +22,10 @@
 #ifndef HEADER_H_
 #define HEADER_H_
 
+#include "core/Core.h"
 #include "../protocols/TransportProtocol.h"
 
-class Header {
+class LTE_SIM_API Header {
 public:
 	enum ProtocolHeader
 	  {

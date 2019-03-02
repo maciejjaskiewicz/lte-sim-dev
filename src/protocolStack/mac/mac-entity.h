@@ -23,7 +23,7 @@
 #ifndef MAC_ENTITY_H
 #define MAC_ENTITY_H
 
-#include <list>
+#include "core/Core.h"
 
 class Packet;
 class NetworkNode;
@@ -34,7 +34,7 @@ class HarqManager;
  * This class provides a basic implementation of the MAC
  * layer
  */
-class MacEntity
+class LTE_SIM_API MacEntity
 {
 public:
 

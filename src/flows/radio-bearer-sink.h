@@ -31,7 +31,7 @@ class ApplicationSink;
 class Packet;
 class RlcEntity;
 
-class RadioBearerSink : public RadioBearerInstance {
+class LTE_SIM_API RadioBearerSink : public RadioBearerInstance {
 public:
 	RadioBearerSink();
 	virtual ~RadioBearerSink();

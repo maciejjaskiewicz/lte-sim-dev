@@ -23,7 +23,9 @@
 #ifndef TRANSPORTPROTOCOL_H_
 #define TRANSPORTPROTOCOL_H_
 
-class TransportProtocol {
+#include "core/Core.h"
+
+class LTE_SIM_API TransportProtocol {
 public:
 	enum TransportProtocolType
 	  {

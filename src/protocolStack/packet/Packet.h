@@ -26,7 +26,7 @@
 #include "Header.h"
 #include "PacketTAGs.h"
 
-class Packet {
+class LTE_SIM_API Packet {
 public:
 	Packet();
 	virtual ~Packet();

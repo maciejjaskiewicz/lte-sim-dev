@@ -22,9 +22,11 @@
 
 #include "TraceBased.h"
 #include "Trace/default-trace.h"
-#include <cstring>
 #include "../../componentManagers/NetworkManager.h"
 #include "../radio-bearer.h"
+#include "core/eventScheduler/simulator.h"
+
+#include <fstream>
 
 #define MAXMTUSIZE 1490
 

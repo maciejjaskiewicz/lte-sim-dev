@@ -23,8 +23,9 @@
 #include <cstdlib>
 //#include "../../componentManagers/NetworkManager.h"
 #include "../radio-bearer.h"
-#include <math.h>
+#include "core/eventScheduler/simulator.h"
 
+#include <cmath>
 #include <ctime>
 
 int arrival;

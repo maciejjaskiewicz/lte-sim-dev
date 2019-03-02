@@ -23,11 +23,13 @@
 #ifndef CHANNELREALIZATION_H_
 #define CHANNELREALIZATION_H_
 
+#include "core/Core.h"
+
 #include <vector>
 
 class NetworkNode;
 
-class ChannelRealization {
+class LTE_SIM_API ChannelRealization {
 public:
 	ChannelRealization();
 	virtual ~ChannelRealization();

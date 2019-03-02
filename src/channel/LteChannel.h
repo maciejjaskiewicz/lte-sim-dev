@@ -23,6 +23,8 @@
 #ifndef LTECHANNEL_H_
 #define LTECHANNEL_H_
 
+#include "core/Core.h"
+
 #include <vector>
 
 class NetworkNode;
@@ -30,7 +32,7 @@ class PacketBurst;
 class TransmittedSignal;
 class PropagationLossModel;
 
-class LteChannel {
+class LTE_SIM_API LteChannel {
 public:
 	LteChannel();
 	virtual ~LteChannel();

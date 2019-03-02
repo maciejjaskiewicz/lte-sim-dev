@@ -26,7 +26,7 @@
 
 #include "Mobility.h"
 
-class RandomWaypoint :public Mobility{
+class LTE_SIM_API RandomWaypoint :public Mobility{
 public:
 	RandomWaypoint();
 	virtual ~RandomWaypoint();

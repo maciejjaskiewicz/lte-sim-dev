@@ -18,22 +18,24 @@
  *
  * Author: Giuseppe Piro <g.piro@poliba.it>
  */
-
+ //TODO: Remove
 
 #ifndef FLOWSMANAGER_H_
 #define FLOWSMANAGER_H_
 
-#include <iostream>
-#include <queue>
+#include "core/Core.h"
 #include "../protocolStack/protocols/TransportProtocol.h"
 #include "../flows/application/Application.h"
+
+#include <iostream>
+#include <queue>
 
 class ClassifierParameters;
 class QoSParameters;
 class NetworkNode;
 
 
-class FlowsManager {
+class LTE_SIM_API FlowsManager {
 public:
 
 private:

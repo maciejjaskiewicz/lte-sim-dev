@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-class Mobility {
+class LTE_SIM_API Mobility {
 public:
 	Mobility();
 	virtual ~Mobility();

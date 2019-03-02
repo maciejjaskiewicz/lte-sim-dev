@@ -25,7 +25,7 @@
 
 #include "uplink-packet-scheduler.h"
 
-class RoundRobinUplinkPacketScheduler : public UplinkPacketScheduler {
+class LTE_SIM_API RoundRobinUplinkPacketScheduler : public UplinkPacketScheduler {
 public:
 	RoundRobinUplinkPacketScheduler ();
 	virtual ~RoundRobinUplinkPacketScheduler();

@@ -25,7 +25,7 @@
 
 #include "downlink-packet-scheduler.h"
 
-class MwRulePacketScheduler : public DownlinkPacketScheduler {
+class LTE_SIM_API MwRulePacketScheduler : public DownlinkPacketScheduler {
 public:
 	MwRulePacketScheduler();
 	virtual ~MwRulePacketScheduler();

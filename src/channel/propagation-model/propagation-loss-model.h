@@ -23,13 +23,14 @@
 #ifndef PROPAGATIONLOSSMODEL_H_
 #define PROPAGATIONLOSSMODEL_H_
 
+#include "core/Core.h"
 #include <map>
 
 class TransmittedSignal;
 class ChannelRealization;
 class NetworkNode;
 
-class PropagationLossModel {
+class LTE_SIM_API PropagationLossModel {
 public:
 	PropagationLossModel();
 	virtual ~PropagationLossModel();

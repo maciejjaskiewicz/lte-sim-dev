@@ -26,7 +26,7 @@
 
 #include "Mobility.h"
 
-class RandomWalk :public Mobility {
+class LTE_SIM_API RandomWalk :public Mobility {
 public:
 	RandomWalk();
 	virtual ~RandomWalk();

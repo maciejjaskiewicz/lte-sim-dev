@@ -23,6 +23,7 @@
 #ifndef RADIOBEARER_H_
 #define RADIOBEARER_H_
 
+#include "core/Core.h"
 #include "radio-bearer-instance.h"
 
 class NetworkNode;
@@ -33,7 +34,7 @@ class QoSParameters;
 class Packet;
 class RlcEntity;
 
-class RadioBearer : public RadioBearerInstance {
+class LTE_SIM_API RadioBearer : public RadioBearerInstance {
 public:
 	RadioBearer();
 	virtual ~RadioBearer();

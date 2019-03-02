@@ -25,7 +25,7 @@
 
 #include "Application.h"
 
-class VoIP : public Application {
+class LTE_SIM_API VoIP : public Application {
 public:
 	VoIP();
 	virtual ~VoIP();

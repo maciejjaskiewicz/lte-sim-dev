@@ -22,10 +22,12 @@
 #ifndef SIMPLE_ERRORMODEL_H_
 #define SIMPLE_ERRORMODEL_H_
 
+#include "core/Core.h"
 #include "error-model.h"
+
 #include <vector>
 
-class SimpleErrorModel : public ErrorModel {
+class LTE_SIM_API SimpleErrorModel : public ErrorModel {
 public:
 	SimpleErrorModel();
 	virtual ~SimpleErrorModel();
