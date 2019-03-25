@@ -1,13 +1,10 @@
 #include <LTE-Sim.h>
 
-#include <iostream>
-
 class Simple : public Simulation
 {
 public:
 	Simple()
 	{
-		Simulator *simulator = Simulator::Init();
 		FrameManager *frameManager = FrameManager::Init();
 		NetworkManager* networkManager = NetworkManager::Init();
 		FlowsManager* flowsManager = FlowsManager::Init();
@@ -50,13 +47,12 @@ public:
 			qos,
 			startTime, stopTime);
 
-		simulator->SetStop(0.13);
-		simulator->Run();
+		ScheduleStop(0.13);
+		Run(std::unique_ptr<Application>(be));
 	}
 
 	void OnPacket(Packet& packet) override
 	{
-		std::cout << "Packet" << std::endl;
 	}
 };
 

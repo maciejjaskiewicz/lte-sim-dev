@@ -20,8 +20,8 @@
  */
 
 #include "cqi-manager.h"
-#include "../../core/eventScheduler/simulator.h"
 #include "../NetworkNode.h"
+#include "core/simulation/Simulation.h"
 
 CqiManager::CqiManager()
 {
@@ -93,7 +93,7 @@ CqiManager::GetReportingInterval (void)
 void
 CqiManager::SetLastSent ()
 {
-  m_lastSent = Simulator::Init ()->Now () * 1000; //TTI
+  m_lastSent = Simulation::Get().Now () * 1000; //TTI
 }
 
 long int
@@ -112,7 +112,7 @@ CqiManager::NeedToSendFeedbacks (void)
 	  return true;
     }
 
-  else if (GetSendCqi () && ((int)(Simulator::Init ()->Now ()*1000) - GetLastSent ()) >= GetReportingInterval ())
+  else if (GetSendCqi () && ((int)(Simulation::Get().Now ()*1000) - GetLastSent ()) >= GetReportingInterval ())
     {
       return true;
     }

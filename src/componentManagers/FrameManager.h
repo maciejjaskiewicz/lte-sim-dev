@@ -26,8 +26,6 @@
 
 #include "core/Core.h"
 #include "NetworkManager.h"
-#include "../core/eventScheduler/simulator.h"
-#include "TDDConfiguration.h"
 
 #include <iostream>
 

@@ -25,9 +25,9 @@
 #include "../protocolStack/packet/packet-burst.h"
 #include "../device/NetworkNode.h"
 #include "../phy/lte-phy.h"
-#include "../core/eventScheduler/simulator.h"
 #include "../load-parameters.h"
 #include "propagation-model/propagation-loss-model.h"
+#include "core/simulation/Simulation.h"
 
 LteChannel::LteChannel()
 {
@@ -50,7 +50,7 @@ LteChannel::StartTx (PacketBurst* p, TransmittedSignal* txSignal, NetworkNode* s
   std::cout << "LteChannel::StartTx ch " << GetChannelId () << std::endl;
 #endif
 
-  Simulator::Init()->Schedule(0.001,
+  Simulation::Get().GetCalendar().Schedule(0.001,
 	 						  &LteChannel::StartRx,
 	  						  this,
 	 						  p,

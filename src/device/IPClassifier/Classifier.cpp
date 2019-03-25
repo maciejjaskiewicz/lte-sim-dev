@@ -22,7 +22,6 @@
 
 
 #include "Classifier.h"
-#include "../../core/eventScheduler/simulator.h"
 #include "ClassifierParameters.h"
 #include "../NetworkNode.h"
 #include "../../protocolStack/rrc/rrc-entity.h"

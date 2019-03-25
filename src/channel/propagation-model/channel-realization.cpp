@@ -23,14 +23,12 @@
 #include "channel-realization.h"
 #include "../../device/UserEquipment.h"
 #include "../../device/ENodeB.h"
-#include "../../device/HeNodeB.h"
 #include "../../utility/RandomVariable.h"
-#include "shadowing-trace.h"
 #include "../../core/spectrum/bandwidth-manager.h"
 #include "../../phy/lte-phy.h"
-#include "../../core/eventScheduler/simulator.h"
 #include "../../load-parameters.h"
 #include "fast-fading-trace.h"
+#include "core/simulation/Simulation.h"
 
 ChannelRealization::ChannelRealization()
 {
@@ -90,7 +88,7 @@ ChannelRealization::GetDestinationNode (void)
 void
 ChannelRealization::SetLastUpdate (void)
 {
-  m_lastUpdate = Simulator::Init()->Now ();
+  m_lastUpdate = Simulation::Get().Now ();
 }
 
 
@@ -124,7 +122,7 @@ ChannelRealization::NeedForUpdate (void)
 		  << " GetSamplingPeriod () " << GetSamplingPeriod () << std::endl;
 #endif
 
-  if (Simulator::Init()->Now () >= (GetLastUpdate () + GetSamplingPeriod ()) - 0.001)
+  if (Simulation::Get().Now () >= (GetLastUpdate () + GetSamplingPeriod ()) - 0.001)
     {
       return true;
     }

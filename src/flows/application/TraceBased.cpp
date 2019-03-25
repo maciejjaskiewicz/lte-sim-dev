@@ -24,7 +24,7 @@
 #include "Trace/default-trace.h"
 #include "../../componentManagers/NetworkManager.h"
 #include "../radio-bearer.h"
-#include "core/eventScheduler/simulator.h"
+#include "core/simulation/Simulation.h"
 
 #include <fstream>
 
@@ -49,7 +49,7 @@ TraceBased::~TraceBased()
 void
 TraceBased::DoStart (void)
 {
-  Simulator::Init()->Schedule(0.0, &TraceBased::Send, this);
+	Simulation::Get().GetCalendar().Schedule(0.0, &TraceBased::Send, this);
 }
 
 void
@@ -144,9 +144,9 @@ TraceBased::LoadDefaultTrace (void)
 void
 TraceBased::ScheduleTransmit (double time)
 {
-  if ( (Simulator::Init()->Now () + time) < GetStopTime () )
+  if ((Simulation::Get().Now () + time) < GetStopTime () )
     {
-      Simulator::Init()->Schedule(time, &TraceBased::Send, this);
+	  Simulation::Get().GetCalendar().Schedule(time, &TraceBased::Send, this);
     }
 }
 
@@ -162,10 +162,10 @@ TraceBased::Send (void)
 		{
     	  //CREATE A NEW PACKET (ADDING UDP, IP and PDCP HEADERS)
     	  Packet *packet = new Packet ();
-    	  int uid = Simulator::Init()->GetUID ();
+    	  int uid = Simulation::Get().GenerateNewUID();
 
     	  packet->SetID(uid);
-    	  packet->SetTimeStamp (Simulator::Init()->Now ());
+    	  packet->SetTimeStamp (Simulation::Get().Now());
     	  packet->SetSize (MAXMTUSIZE);
 
       	  Trace (packet);
@@ -200,10 +200,10 @@ TraceBased::Send (void)
         {
     	  //CREATE A NEW PACKET (ADDING UDP, IP and PDCP HEADERS)
 	      Packet *packet = new Packet ();
-	      int uid = Simulator::Init()->GetUID ();
+	      int uid = Simulation::Get().GenerateNewUID();
 
    	      packet->SetID(uid);
-	      packet->SetTimeStamp (Simulator::Init()->Now ());
+	      packet->SetTimeStamp (Simulation::Get().Now());
 	      packet->SetSize (sizetosend);
 
 	      Trace (packet);

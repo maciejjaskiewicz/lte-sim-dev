@@ -31,9 +31,8 @@
 #include "../../phy/lte-phy.h"
 #include "../../channel/LteChannel.h"
 #include "../../device/UserEquipment.h"
-#include "../../device/ENodeB.h"
 #include "../../load-parameters.h"
-#include "core/eventScheduler/simulator.h"
+#include "core/simulation/Simulation.h"
 
 Application::Application()
 {
@@ -321,9 +320,7 @@ void
 Application::SetStartTime (double time)
 {
   m_startTime = time;
-  Simulator::Init()->Schedule(time,
-							  &Application::Start,
-							  this);
+  Simulation::Get().GetCalendar().Schedule(time, &Application::Start, this);
 }
 
 double
@@ -336,9 +333,7 @@ void
 Application::SetStopTime (double time)
 {
   m_stopTime = time;
-  Simulator::Init()->Schedule(time + 0.1,
-							  &Application::Stop,
-							  this);
+  Simulation::Get().GetCalendar().Schedule(time + 0.1, &Application::Stop, this);
 }
 
 double
@@ -396,7 +391,7 @@ Application::Trace (Packet* p)
 			<< " SIZE " << p->GetSize ()
 			<< " SRC " << GetSource ()->GetIDNetworkNode ()
 			<< " DST " << GetDestination ()->GetIDNetworkNode ()
-			<< " T " << Simulator::Init()->Now()
+			<< " T " << Simulation::Get().Now()
 	        << " " << ue->IsIndoor () << std::endl;
     }
   else
@@ -406,7 +401,7 @@ Application::Trace (Packet* p)
 		<< " SIZE " << p->GetSize ()
 		<< " SRC " << GetSource ()->GetIDNetworkNode ()
 		<< " DST " << GetDestination ()->GetIDNetworkNode ()
-		<< " T " << Simulator::Init()->Now() << std::endl;
+		<< " T " << Simulation::Get().Now() << std::endl;
     }
 }
 

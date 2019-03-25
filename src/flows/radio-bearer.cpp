@@ -28,16 +28,12 @@
 #include "../protocolStack/packet/Packet.h"
 #include "../flows/MacQueue.h"
 #include "../flows/QoS/QoSParameters.h"
-#include "../flows/QoS/QoSForEXP.h"
-#include "../flows/QoS/QoSForFLS.h"
-#include "../flows/QoS/QoSForM_LWDF.h"
 #include "../protocolStack/rlc/rlc-entity.h"
-#include "../protocolStack/rlc/tm-rlc-entity.h"
 #include "../protocolStack/rlc/um-rlc-entity.h"
 #include "../protocolStack/rlc/am-rlc-entity.h"
 #include "../protocolStack/rlc/amd-record.h"
 #include "../load-parameters.h"
-#include "core/eventScheduler/simulator.h"
+#include "core/simulation/Simulation.h"
 
 RadioBearer::RadioBearer()
 {
@@ -108,7 +104,7 @@ RadioBearer::UpdateAverageTransmissionRate ()
    * R'(t+1) = (0.8 * R'(t)) + (0.2 * r(t))
    */
 
-  double rate = (GetTransmittedBytes () * 8)/(Simulator::Init()->Now() - GetLastUpdate());
+  double rate = (GetTransmittedBytes () * 8)/(Simulation::Get().Now() - GetLastUpdate());
 
   double beta = 0.2;
 
@@ -143,7 +139,7 @@ RadioBearer::GetAverageTransmissionRate (void) const
 void
 RadioBearer::SetLastUpdate (void)
 {
-  m_lastUpdate = Simulator::Init()->Now();
+  m_lastUpdate = Simulation::Get().Now();
 }
 
 double
@@ -157,8 +153,8 @@ RadioBearer::CreatePacket (int bytes)
 {
   Packet *p = new Packet ();
 
-  p->SetID(Simulator::Init()->GetUID ());
-  p->SetTimeStamp(Simulator::Init()->Now ());
+  p->SetID(Simulation::Get().GenerateNewUID());
+  p->SetTimeStamp(Simulation::Get().Now ());
 
   UDPHeader *udp = new UDPHeader (GetClassifierParameters ()->GetSourcePort(),
 		                          GetClassifierParameters ()->GetDestinationPort ());
@@ -224,7 +220,7 @@ RadioBearer::CreatePacket (int bytes)
 	 			<< " SIZE " << bytes
 	 			<< " SRC " << GetSource ()->GetIDNetworkNode ()
 	 			<< " DST " << GetDestination ()->GetIDNetworkNode ()
-	 			<< " T " << Simulator::Init()->Now()
+	 			<< " T " << Simulation::Get().Now()
 	 			<< " " << ue->IsIndoor () << std::endl;
     }
 
@@ -250,7 +246,7 @@ double
 RadioBearer::GetHeadOfLinePacketDelay (void)
 {
   double HOL = 0.;
-  double now = Simulator::Init()->Now();
+  double now = Simulation::Get().Now();
   if (GetRlcEntity ()->GetRlcModel () == RlcEntity::AM_RLC_MODE)
     {
 	  AmRlcEntity* amRlc = (AmRlcEntity*) GetRlcEntity ();

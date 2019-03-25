@@ -19,15 +19,13 @@
  * Author: Giuseppe Piro <g.piro@poliba.it>
  */
 
-
-
 #ifndef CALENDAR_H_
 #define CALENDAR_H_
 
 #include "core/Core.h"
+#include "make-event.h"
 #include "event.h"
 #include <list>
-
 
 class LTE_SIM_API Calendar {
 public:
@@ -36,21 +34,61 @@ public:
 
     typedef std::list<Event*> Events;
 
-    Events*
-    GetEvents (void);
+	bool IsEmpty() const;
+	Event* GetEvent() const;
+	void RemoveEvent() const;
 
-	void
-	InsertEvent (Event *newEvent);
-	bool
-	IsEmpty (void);
-	Event*
-	GetEvent (void);
-	void
-	RemoveEvent (void);
+	void Schedule(double time, Event *event) const;
 
+	template <typename MEM, typename OBJ>
+	void Schedule(double time, MEM mem_ptr, OBJ obj);
+
+	template <typename MEM, typename OBJ, typename T1>
+	void Schedule(double time, MEM mem_ptr, OBJ obj, T1 a1);
+
+	template <typename MEM, typename OBJ, typename T1, typename T2>
+	void Schedule(double time, MEM mem_ptr, OBJ obj, T1 a1, T2 a2);
+
+	template <typename MEM, typename OBJ, typename T1, typename T2, typename T3>
+	void Schedule(double time, MEM mem_ptr, OBJ obj, T1 a1, T2 a2, T3 a3);
+
+	template <typename U1, typename T1>
+	void Schedule(double time, void(*f) (U1), T1 a1);
 
 private:
-    Events *m_events;
+    Events *m_Events;
+
+	void InsertEvent(Event *newEvent) const;
 };
+
+template <typename MEM, typename OBJ>
+void Calendar::Schedule(double time, MEM mem_ptr, OBJ obj)
+{
+	Schedule(time, MakeEvent(mem_ptr, obj));
+}
+
+template <typename MEM, typename OBJ, typename T1>
+void Calendar::Schedule(double time, MEM mem_ptr, OBJ obj, T1 a1)
+{
+	Schedule(time, MakeEvent(mem_ptr, obj, a1));
+}
+
+template <typename MEM, typename OBJ, typename T1, typename T2>
+void Calendar::Schedule(double time, MEM mem_ptr, OBJ obj, T1 a1, T2 a2)
+{
+	Schedule(time, MakeEvent(mem_ptr, obj, a1, a2));
+}
+
+template <typename MEM, typename OBJ, typename T1, typename T2, typename T3>
+void Calendar::Schedule(double time, MEM mem_ptr, OBJ obj, T1 a1, T2 a2, T3 a3)
+{
+	Schedule(time, MakeEvent(mem_ptr, obj, a1, a2, a3));
+}
+
+template <typename U1, typename T1>
+void Calendar::Schedule(double time, void(*f) (U1), T1 a1)
+{
+	DoSchedule(time, MakeEvent(f, a1));
+}
 
 #endif /* CALENDAR_H_ */

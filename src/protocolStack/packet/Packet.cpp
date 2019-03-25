@@ -20,7 +20,6 @@
  */
 
 #include "Packet.h"
-#include "../../core/eventScheduler/simulator.h"
 #include <iostream>
 
 Packet::Packet()

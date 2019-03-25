@@ -22,7 +22,6 @@
 
 
 #include "NetworkManager.h"
-#include "../core/eventScheduler/simulator.h"
 #include "../device/Gateway.h"
 #include "../device/ENodeB.h"
 #include "../device/HeNodeB.h"
@@ -41,11 +40,10 @@
 #include "../utility/frequency-reuse-helper.h"
 #include "../device/CqiManager/cqi-manager.h"
 #include "../device/CqiManager/fullband-cqi-manager.h"
-#include "../device/CqiManager/wideband-cqi-manager.h"
 #include "../load-parameters.h"
-#include "../flows/application/Application.h"
 #include "../utility/IndoorScenarios.h"
 #include "../networkTopology/Street.h"
+#include "core/simulation/Simulation.h"
 
 NetworkManager* NetworkManager::ptr=NULL;
 
@@ -778,7 +776,7 @@ NetworkManager::HandoverProcedure(double time, UserEquipment* ue, NetworkNode* o
     //XXX Admission Control is not implemented
 	double detachTime = 0.030;
     ue->SetNodeState (UserEquipment::STATE_DETACHED);
-    Simulator::Init()->Schedule(detachTime, &NetworkNode::MakeActive, ue);
+	Simulation::Get().GetCalendar().Schedule(detachTime, &NetworkNode::MakeActive, ue);
     }
 
 #ifdef MOBILITY_DEBUG
@@ -788,7 +786,7 @@ NetworkManager::HandoverProcedure(double time, UserEquipment* ue, NetworkNode* o
 #endif
 
   // 2 - transfer all active radio bearer
-  Simulator::Init()->Schedule(0.001,
+  Simulation::Get().GetCalendar().Schedule(0.001,
                               &NetworkManager::TransferBearerInfo,
                               this,
                               ue,
@@ -1111,14 +1109,14 @@ NetworkManager::PrintUserPosition (void)
   std::vector<UserEquipment*>::iterator iter;
   UserEquipment *user;
 
-  std::cout << " UserPosition X [at " << Simulator::Init()->Now() << "] ";
+  std::cout << " UserPosition X [at " << Simulation::Get().Now() << "] ";
   for (iter = users->begin(); iter != users->end(); iter++)
     {
     user = *iter;
     std::cout << user->GetMobilityModel ()->GetAbsolutePosition()->GetCoordinateX() << " ";
     }
 
-  std::cout << "\n UserPosition Y [at " << Simulator::Init()->Now() << "] ";
+  std::cout << "\n UserPosition Y [at " << Simulation::Get().Now() << "] ";
   for (iter = users->begin(); iter != users->end(); iter++)
     {
     user = *iter;

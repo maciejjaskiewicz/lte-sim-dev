@@ -23,7 +23,7 @@
 #include <cstdlib>
 //#include "../../componentManagers/NetworkManager.h"
 #include "../radio-bearer.h"
-#include "core/eventScheduler/simulator.h"
+#include "core/simulation/Simulation.h"
 
 #include <cmath>
 #include <ctime>
@@ -203,7 +203,7 @@ WEB::~WEB()
 void
 WEB::DoStart (void)
 {
-  Simulator::Init()->Schedule(0.0, &WEB::Send, this);
+	Simulation::Get().GetCalendar().Schedule(0.0, &WEB::Send, this);
 }
 
 void
@@ -213,9 +213,9 @@ WEB::DoStop (void)
 void
 WEB::ScheduleTransmit (double time)
 {
-  if ( (Simulator::Init()->Now () + time) < GetStopTime () )
+  if ((Simulation::Get().Now () + time) < GetStopTime () )
     {
-      Simulator::Init()->Schedule(time, &WEB::Send, this);
+	  Simulation::Get().GetCalendar().Schedule(time, &WEB::Send, this);
     }
 }
 
@@ -231,7 +231,7 @@ WEB::Send (void)
           arrival = Ran.Geometric(0.4);
 	 // double random = rand() %10000;
 	  m_stateDuration = n_packet * arrival;
-	  m_endState = Simulator::Init()->Now () + m_stateDuration;
+	  m_endState = Simulation::Get().Now () + m_stateDuration;
 #ifdef APPLICATION_DEBUG
 	  std::cout << " WEB_DEBUG - Start ON Period, "
 	      "\n\t Time = " << Simulator::Init()->Now ()
@@ -242,10 +242,10 @@ WEB::Send (void)
 
   //CREATE A NEW PACKET (ADDING UDP, IP and PDCP HEADERS)
   Packet *packet = new Packet ();
-  int uid = Simulator::Init()->GetUID ();
+  int uid = Simulation::Get().GenerateNewUID();
 
   packet->SetID(uid);
-  packet->SetTimeStamp (Simulator::Init()->Now ());
+  packet->SetTimeStamp (Simulation::Get().Now ());
   packet->SetSize (GetSize ());
 
   Trace (packet);
@@ -270,7 +270,7 @@ WEB::Send (void)
   GetRadioBearer()->Enqueue (packet);
 
 
-  if (Simulator::Init()->Now () <= m_endState)
+  if (Simulation::Get().Now () <= m_endState)
     {
 	  ScheduleTransmit (arrival);
     }

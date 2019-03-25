@@ -92,8 +92,6 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/core/eventScheduler/event.cpp
     ${PROJECT_SOURCE_DIR}/core/eventScheduler/event.h
     ${PROJECT_SOURCE_DIR}/core/eventScheduler/make-event.h
-    ${PROJECT_SOURCE_DIR}/core/eventScheduler/simulator.cc
-    ${PROJECT_SOURCE_DIR}/core/eventScheduler/simulator.h
     ${PROJECT_SOURCE_DIR}/core/idealMessages/ideal-control-messages.cc
     ${PROJECT_SOURCE_DIR}/core/idealMessages/ideal-control-messages.h
     ${PROJECT_SOURCE_DIR}/core/spectrum/bandwidth-manager.cpp
@@ -156,7 +154,6 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer.cpp
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer.h
     ${PROJECT_SOURCE_DIR}/load-parameters.h
-    ${PROJECT_SOURCE_DIR}/LTE-Sim.cpp
     ${PROJECT_SOURCE_DIR}/mobility/ConstantPosition.cpp
     ${PROJECT_SOURCE_DIR}/mobility/ConstantPosition.h
     ${PROJECT_SOURCE_DIR}/mobility/Manhattan.cpp
@@ -290,7 +287,6 @@ SET(LTE_SIM_SRC
 )
 source_group(TREE ${PROJECT_SOURCE_DIR} FILES ${LTE_SIM_SRC})
 
-# add_executable(${PROJECT_NAME} ${LTE_SIM_SRC})
 add_library(${PROJECT_NAME} SHARED ${LTE_SIM_SRC})
 add_library(LTE-Sim::LTE-Sim ALIAS ${PROJECT_NAME})
 

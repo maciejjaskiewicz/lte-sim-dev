@@ -22,7 +22,6 @@
 
 
 #include "InfiniteBuffer.h"
-#include "../../componentManagers/NetworkManager.h"
 
 InfiniteBuffer::InfiniteBuffer()
 {
@@ -34,11 +33,9 @@ InfiniteBuffer::~InfiniteBuffer()
   Destroy ();
 }
 
-void
-InfiniteBuffer::DoStart (void)
+void InfiniteBuffer::DoStart (void)
 {}
 
-void
-InfiniteBuffer::DoStop (void)
+void InfiniteBuffer::DoStop (void)
 {}
 

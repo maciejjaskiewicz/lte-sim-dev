@@ -23,14 +23,12 @@
 #include "microcell-area-channel-realization.h"
 #include "../../device/UserEquipment.h"
 #include "../../device/ENodeB.h"
-#include "../../device/HeNodeB.h"
 #include "../../utility/RandomVariable.h"
 #include "shadowing-trace.h"
 #include "../../core/spectrum/bandwidth-manager.h"
 #include "../../phy/lte-phy.h"
-#include "../../core/eventScheduler/simulator.h"
 #include "../../load-parameters.h"
-
+#include "core/simulation/Simulation.h"
 
 MicroCellAreaChannelRealization::MicroCellAreaChannelRealization(NetworkNode* src, NetworkNode* dst)
 {
@@ -173,7 +171,7 @@ MicroCellAreaChannelRealization::GetLoss ()
   std::vector<double> loss;
 
 
-  int now_ms = Simulator::Init()->Now () * 1000;
+  int now_ms = Simulation::Get().Now() * 1000;
   int lastUpdate_ms = GetLastUpdate () * 1000;
   int index = now_ms - lastUpdate_ms;
 

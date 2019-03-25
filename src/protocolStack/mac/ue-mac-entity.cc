@@ -34,8 +34,7 @@
 #include "../../flows/MacQueue.h"
 #include "../../flows/QoS/QoSParameters.h"
 #include "../rlc/am-rlc-entity.h"
-#include "core/eventScheduler/simulator.h"
-
+#include "core/simulation/Simulation.h"
 
 UeMacEntity::UeMacEntity ()
 {
@@ -45,7 +44,7 @@ UeMacEntity::UeMacEntity ()
 
   if (UPLINK)
     {
-      Simulator::Init()->Schedule(GetSchedulingRequestInterval (),
+	  Simulation::Get().GetCalendar().Schedule(GetSchedulingRequestInterval (),
   		                      &UeMacEntity::SendSchedulingRequest,
   		                      this);
     }
@@ -114,7 +113,7 @@ UeMacEntity::SendSchedulingRequest ()
 
 
   //schedule the next event
-  Simulator::Init()->Schedule(GetSchedulingRequestInterval (),
+  Simulation::Get().GetCalendar().Schedule(GetSchedulingRequestInterval (),
 		                      &UeMacEntity::SendSchedulingRequest,
 		                      this);
 

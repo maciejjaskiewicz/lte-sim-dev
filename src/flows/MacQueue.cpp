@@ -23,10 +23,10 @@
 #include "MacQueue.h"
 #include "../device/NetworkNode.h"
 #include "../componentManagers/NetworkManager.h"
-#include "../core/eventScheduler/simulator.h"
 #include "../load-parameters.h"
-#include <iostream>
+#include "core/simulation/Simulation.h"
 
+#include <iostream>
 
 MacQueue::MacQueue()
 {
@@ -339,7 +339,7 @@ void
 MacQueue::CheckForDropPackets (double maxDelay,
 							   int bearerID)
 {
-  double now = Simulator::Init()->Now();
+  double now = Simulation::Get().Now();
 
   while (true && GetPacketQueue()->size() > 0)
     {

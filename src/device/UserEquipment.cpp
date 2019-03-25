@@ -22,16 +22,12 @@
 
 #include "UserEquipment.h"
 #include "NetworkNode.h"
-#include "ENodeB.h"
-#include "HeNodeB.h"
-#include "Gateway.h"
 #include "../phy/ue-lte-phy.h"
 #include "CqiManager/cqi-manager.h"
-#include "../core/eventScheduler/simulator.h"
 #include "../componentManagers/NetworkManager.h"
 #include "../protocolStack/rrc/ho/handover-entity.h"
 #include "../protocolStack/rrc/ho/ho-manager.h"
-
+#include "core/simulation/Simulation.h"
 
 UserEquipment::UserEquipment ()
 {}
@@ -92,10 +88,10 @@ UserEquipment::UserEquipment (int idElement,
   SetMobilityModel (m);
 
   m_timePositionUpdate = 0.001;
-  Simulator::Init()->Schedule(m_timePositionUpdate,
+  Simulation::Get().GetCalendar().Schedule(m_timePositionUpdate,
 		  &UserEquipment::UpdateUserPosition,
 		  this,
-		  Simulator::Init ()->Now());
+		  Simulation::Get().Now());
 
   delete position;
 
@@ -167,10 +163,10 @@ UserEquipment::UserEquipment (int idElement,
   SetMobilityModel (m);
 
   m_timePositionUpdate = 0.001;
-  Simulator::Init()->Schedule(m_timePositionUpdate,
+  Simulation::Get().GetCalendar().Schedule(m_timePositionUpdate,
 		  &UserEquipment::UpdateUserPosition,
 		  this,
-		  Simulator::Init ()->Now());
+		  Simulation::Get().Now());
 
   delete position;
 
@@ -229,10 +225,10 @@ UserEquipment::UpdateUserPosition (double time)
 
 
     //schedule the new update after m_timePositionUpdate
-    Simulator::Init()->Schedule(m_timePositionUpdate,
-                                                           &UserEquipment::UpdateUserPosition,
-                                                           this,
-                                                           Simulator::Init ()->Now());
+	Simulation::Get().GetCalendar().Schedule(m_timePositionUpdate,
+		&UserEquipment::UpdateUserPosition, 
+		this, 
+		Simulation::Get().Now());
 }
 
 

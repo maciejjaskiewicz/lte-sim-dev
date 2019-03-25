@@ -22,9 +22,10 @@
 
 
 #include "FrameManager.h"
-#include "../load-parameters.h"
 #include "../device/ENodeB.h"
 #include "../device/HeNodeB.h"
+#include "componentManagers/TDDConfiguration.h"
+#include "core/simulation/Simulation.h"
 
 FrameManager* FrameManager::ptr=NULL;
 
@@ -34,7 +35,7 @@ FrameManager::FrameManager() {
   m_TTICounter = 0;
   m_frameStructure = FrameManager::FRAME_STRUCTURE_FDD; //Default Value
   m_TDDFrameConfiguration = 1; //Default Value
-  Simulator::Init()->Schedule(0.0, &FrameManager::Start, this);
+  Simulation::Get().GetCalendar().Schedule(0.0, &FrameManager::Start, this);
 }
 
 FrameManager::~FrameManager()
@@ -128,7 +129,7 @@ FrameManager::Start (void)
   std::cout << " LTE Simulation starts now! "<< std::endl;
 #endif
 
-  Simulator::Init()->Schedule(0.0, &FrameManager::StartFrame, this);
+  Simulation::Get().GetCalendar().Schedule(0.0, &FrameManager::StartFrame, this);
 }
 
 void
@@ -141,7 +142,7 @@ FrameManager::StartFrame (void)
       << Simulator::Init()->Now() << " +++++++++" << std::endl;
 #endif
 
-  Simulator::Init()->Schedule(0.0,
+  Simulation::Get().GetCalendar().Schedule(0.0,
 							  &FrameManager::StartSubframe,
 							  this);
 }
@@ -149,7 +150,7 @@ FrameManager::StartFrame (void)
 void
 FrameManager::StopFrame (void)
 {
-  Simulator::Init()->Schedule(0.0,
+	Simulation::Get().GetCalendar().Schedule(0.0,
 							  &FrameManager::StartFrame,
 							  this);
 }
@@ -183,7 +184,7 @@ FrameManager::StartSubframe (void)
    * (RBs allocation)
    */
   ResourceAllocation();
-  Simulator::Init()->Schedule(0.001,
+  Simulation::Get().GetCalendar().Schedule(0.001,
 							  &FrameManager::StopSubframe,
 							  this);
 }
@@ -194,13 +195,13 @@ FrameManager::StopSubframe (void)
   if (GetNbSubframes () == 10)
     {
 	  ResetNbSubframes ();
-	  Simulator::Init()->Schedule(0.0,
+	  Simulation::Get().GetCalendar().Schedule(0.0,
 								  &FrameManager::StopFrame,
 								  this);
     }
   else
     {
-	  Simulator::Init()->Schedule(0.0,
+	  Simulation::Get().GetCalendar().Schedule(0.0,
 								  &FrameManager::StartSubframe,
 								  this);
     }
@@ -239,7 +240,7 @@ FrameManager::ResourceAllocation(void)
 	  if (GetFrameStructure () == FrameManager::FRAME_STRUCTURE_FDD)
 		{
 		  //record->ResourceBlocksAllocation ();
-		  Simulator::Init()->Schedule(0.0, &ENodeB::ResourceBlocksAllocation,record);
+		  Simulation::Get().GetCalendar().Schedule(0.0, &ENodeB::ResourceBlocksAllocation,record);
 		}
 	  else
 		{
@@ -251,7 +252,7 @@ FrameManager::ResourceAllocation(void)
 				  "	SUBFRAME_FOR_DOWNLINK " << std::endl;
 #endif
 			  //record->DownlinkResourceBlokAllocation();
-			  Simulator::Init()->Schedule(0.0, &ENodeB::DownlinkResourceBlokAllocation,record);
+			  Simulation::Get().GetCalendar().Schedule(0.0, &ENodeB::DownlinkResourceBlokAllocation,record);
 			}
 		  else if(GetSubFrameType (GetNbSubframes ()) == 1)
 			{
@@ -260,7 +261,7 @@ FrameManager::ResourceAllocation(void)
 				  "	SUBFRAME_FOR_UPLINK " << std::endl;
 #endif
 			  //record->UplinkResourceBlockAllocation();
-			  Simulator::Init()->Schedule(0.0, &ENodeB::UplinkResourceBlockAllocation,record);
+			  Simulation::Get().GetCalendar().Schedule(0.0, &ENodeB::UplinkResourceBlockAllocation,record);
 			}
 		  else
 			{
@@ -288,7 +289,7 @@ FrameManager::ResourceAllocation(void)
   	  if (GetFrameStructure () == FrameManager::FRAME_STRUCTURE_FDD)
   		{
   		  //record_2->ResourceBlocksAllocation ();
-  		  Simulator::Init()->Schedule(0.0, &ENodeB::ResourceBlocksAllocation,record_2);
+		  Simulation::Get().GetCalendar().Schedule(0.0, &ENodeB::ResourceBlocksAllocation,record_2);
   		}
   	  else
   		{
@@ -300,7 +301,7 @@ FrameManager::ResourceAllocation(void)
   				  "	SUBFRAME_FOR_DOWNLINK " << std::endl;
   #endif
   			  //record_2->DownlinkResourceBlokAllocation();
-  			  Simulator::Init()->Schedule(0.0, &ENodeB::DownlinkResourceBlokAllocation,record_2);
+			  Simulation::Get().GetCalendar().Schedule(0.0, &ENodeB::DownlinkResourceBlokAllocation,record_2);
   			}
   		  else if(GetSubFrameType (GetNbSubframes ()) == 1)
   			{
@@ -309,7 +310,7 @@ FrameManager::ResourceAllocation(void)
   				  "	SUBFRAME_FOR_UPLINK " << std::endl;
   #endif
   			  //record_2->UplinkResourceBlockAllocation();
-  			  Simulator::Init()->Schedule(0.0, &ENodeB::UplinkResourceBlockAllocation,record_2);
+			  Simulation::Get().GetCalendar().Schedule(0.0, &ENodeB::UplinkResourceBlockAllocation,record_2);
   			}
   		  else
   			{

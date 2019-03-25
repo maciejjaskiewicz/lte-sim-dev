@@ -25,7 +25,7 @@
 #include <cstdlib>
 #include "../../componentManagers/NetworkManager.h"
 #include "../radio-bearer.h"
-#include "core/eventScheduler/simulator.h"
+#include "core/simulation/Simulation.h"
 
 CBR::CBR()
 {
@@ -40,7 +40,7 @@ CBR::~CBR()
 void
 CBR::DoStart (void)
 {
-  Simulator::Init()->Schedule(0.0, &CBR::Send, this);
+  Simulation::Get().GetCalendar().Schedule(0.0, &CBR::Send, this);
 }
 
 void
@@ -51,9 +51,9 @@ CBR::DoStop (void)
 void
 CBR::ScheduleTransmit (double time)
 {
-  if ( (Simulator::Init()->Now () + time) < GetStopTime () )
+  if ((Simulation::Get().Now() + time) < GetStopTime () )
     {
-      Simulator::Init()->Schedule(time, &CBR::Send, this);
+	  Simulation::Get().GetCalendar().Schedule(time, &CBR::Send, this);
     }
 }
 
@@ -62,10 +62,10 @@ CBR::Send (void)
 {
   //CREATE A NEW PACKET (ADDING UDP, IP and PDCP HEADERS)
   Packet *packet = new Packet ();
-  int uid = Simulator::Init()->GetUID ();
+  int uid = Simulation::Get().GenerateNewUID();
 
   packet->SetID(uid);
-  packet->SetTimeStamp (Simulator::Init()->Now ());
+  packet->SetTimeStamp (Simulation::Get().Now());
   packet->SetSize (GetSize ());
 
   PacketTAGs *tags = new PacketTAGs ();

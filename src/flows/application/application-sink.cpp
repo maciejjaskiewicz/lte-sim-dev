@@ -22,10 +22,9 @@
 
 #include "application-sink.h"
 #include "../../device/IPClassifier/ClassifierParameters.h"
-#include "../../componentManagers/NetworkManager.h"
-#include "../../core/eventScheduler/simulator.h"
 #include "../../load-parameters.h"
 #include "../../device/UserEquipment.h"
+#include "core/simulation/Simulation.h"
 
 ApplicationSink::ApplicationSink()
 {
@@ -120,7 +119,7 @@ ApplicationSink::Receive (Packet* p)
 		}
 	}
 
-  double delay = ((Simulator::Init()->Now() *10000) - (p->GetTimeStamp () *10000)) /10000;
+  double delay = ((Simulation::Get().Now() *10000) - (p->GetTimeStamp () *10000)) /10000;
   if (delay < 0.000001) delay = 0.000001;
 
   UserEquipment* ue = (UserEquipment*) GetSourceApplication ()->GetDestination ();

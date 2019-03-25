@@ -22,15 +22,10 @@
 
 
 #include "NetworkNode.h"
-#include "../core/eventScheduler/simulator.h"
 #include "../componentManagers/NetworkManager.h"
-#include "../load-parameters.h"
 #include "../protocolStack/packet/Packet.h"
 #include "../protocolStack/packet/packet-burst.h"
-#include "stdlib.h"
 #include "../phy/lte-phy.h"
-#include "../phy/enb-lte-phy.h"
-#include "../phy/ue-lte-phy.h"
 #include "../flows/radio-bearer-instance.h"
 
 

@@ -24,7 +24,7 @@
 #include <cstdlib>
 #include "../../componentManagers/NetworkManager.h"
 #include "../radio-bearer.h"
-#include "core/eventScheduler/simulator.h"
+#include "core/simulation/Simulation.h"
 
 #include <cmath>
 
@@ -47,7 +47,7 @@ VoIP::~VoIP()
 void
 VoIP::DoStart (void)
 {
-  Simulator::Init()->Schedule(0.0, &VoIP::Send, this);
+	Simulation::Get().GetCalendar().Schedule(0.0, &VoIP::Send, this);
 }
 
 void
@@ -57,9 +57,9 @@ VoIP::DoStop (void)
 void
 VoIP::ScheduleTransmit (double time)
 {
-  if ( (Simulator::Init()->Now () + time) < GetStopTime () )
+  if ((Simulation::Get().Now () + time) < GetStopTime () )
     {
-      Simulator::Init()->Schedule(time, &VoIP::Send, this);
+	  Simulation::Get().GetCalendar().Schedule(time, &VoIP::Send, this);
     }
 }
 
@@ -72,7 +72,7 @@ VoIP::Send (void)
 	  //start state ON
 	  double random = rand() %10000;
 	  m_stateDuration = -3*log(1-((double)random/10000));
-	  m_endState = Simulator::Init()->Now () + m_stateDuration;
+	  m_endState = Simulation::Get().Now () + m_stateDuration;
 #ifdef APPLICATION_DEBUG
 	  std::cout << " VoIP_DEBUG - Start ON Period, "
 	      "\n\t Time = " << Simulator::Init()->Now ()
@@ -83,10 +83,10 @@ VoIP::Send (void)
 
   //CREATE A NEW PACKET (ADDING UDP, IP and PDCP HEADERS)
   Packet *packet = new Packet ();
-  int uid = Simulator::Init()->GetUID ();
+  int uid = Simulation::Get().GenerateNewUID();
 
   packet->SetID(uid);
-  packet->SetTimeStamp (Simulator::Init()->Now ());
+  packet->SetTimeStamp (Simulation::Get().Now());
   packet->SetSize (GetSize ());
 
   Trace (packet);
@@ -111,7 +111,7 @@ VoIP::Send (void)
   GetRadioBearer()->Enqueue (packet);
 
 
-  if (Simulator::Init()->Now () <= m_endState)
+  if (Simulation::Get().Now() <= m_endState)
     {
 	  ScheduleTransmit (0.02);
     }

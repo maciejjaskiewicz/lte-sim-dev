@@ -30,16 +30,15 @@
 #include "../protocolStack/mac/AMCModule.h"
 #include "../device/UserEquipment.h"
 #include "../device/ENodeB.h"
-#include "../device/HeNodeB.h"
 #include "interference.h"
 #include "error-model.h"
 #include "../device/CqiManager/cqi-manager.h"
 #include "../load-parameters.h"
-#include "../core/eventScheduler/simulator.h"
 #include "../protocolStack/mac/ue-mac-entity.h"
 #include "../utility/eesm-effective-sinr.h"
 #include "enb-lte-phy.h"
 #include "../utility/ComputePathLoss.h"
+#include "core/simulation/Simulation.h"
 
 /*
  * Noise is computed as follows:
@@ -67,7 +66,7 @@ UeLtePhy::UeLtePhy()
   SetInterference (interference);
   SetTxPower (23); //dBm
 
-  Simulator::Init()->Schedule(0.001, &UeLtePhy::SetTxSignalForReferenceSymbols, this);
+  Simulation::Get().GetCalendar().Schedule(0.001, &UeLtePhy::SetTxSignalForReferenceSymbols, this);
 }
 
 UeLtePhy::~UeLtePhy()
@@ -327,7 +326,7 @@ UeLtePhy::SendReferenceSymbols (void)
   ENodeB* target = (ENodeB*) ue->GetTargetNode ();
   EnbLtePhy* enbPhy = (EnbLtePhy*) target->GetPhy ();
   enbPhy->ReceiveReferenceSymbols (ue, GetTxSignalForReferenceSymbols ());
-  Simulator::Init()->Schedule(0.001, &UeLtePhy::SendReferenceSymbols, this);
+  Simulation::Get().GetCalendar().Schedule(0.001, &UeLtePhy::SendReferenceSymbols, this);
 }
 
 

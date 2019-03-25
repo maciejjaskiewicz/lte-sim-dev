@@ -23,16 +23,15 @@
 #include "winner-downlink-channel-realization.h"
 #include "../../device/UserEquipment.h"
 #include "../../device/ENodeB.h"
-#include "../../device/HeNodeB.h"
 #include "../../utility/RandomVariable.h"
 #include "../../utility/IndoorScenarios.h"
 #include "shadowing-trace.h"
 #include "../../core/spectrum/bandwidth-manager.h"
 #include "../../phy/lte-phy.h"
-#include "../../core/eventScheduler/simulator.h"
 #include "../../load-parameters.h"
-#include <assert.h>
+#include "core/simulation/Simulation.h"
 
+#include <assert.h>
 
 WinnerDownlinkChannelRealization::WinnerDownlinkChannelRealization (NetworkNode* src, NetworkNode* dst)
 {
@@ -203,8 +202,7 @@ WinnerDownlinkChannelRealization::GetLoss ()
 
   std::vector<double> loss;
 
-
-  int now_ms = Simulator::Init()->Now () * 1000;
+  int now_ms = Simulation::Get().Now () * 1000;
   int lastUpdate_ms = GetLastUpdate () * 1000;
   int index = now_ms - lastUpdate_ms;
 

@@ -19,80 +19,66 @@
  * Author: Giuseppe Piro <g.piro@poliba.it>
  */
 
-
-
-
 #include "calendar.h"
-
-#include <iostream>
+#include "core/simulation/Simulation.h"
 
 Calendar::Calendar()
 {
-  m_events = new Events;
+	m_Events = new Events;
 }
 
 Calendar::~Calendar()
 {
-  delete m_events;
+	delete m_Events;
 }
 
-Calendar::Events*
-Calendar::GetEvents (void)
+void Calendar::InsertEvent (Event *newEvent) const
 {
-  return m_events;
-}
-
-void
-Calendar::InsertEvent (Event *newEvent)
-{
-  Events *events = GetEvents ();
-  Event *event;
-  Events::iterator iter;
-
-  if (IsEmpty ())
+	if (IsEmpty ())
     {
-	  events->push_front(newEvent);
-	  return;
+		m_Events->push_front(newEvent);
+		return;
     }
 
-  for (iter = events->begin(); iter != events->end(); iter++)
+	for (auto iter = m_Events->begin(); iter != m_Events->end(); ++iter)
 	{
-	  event = *iter;
-	  if(newEvent->GetTimeStamp() < event->GetTimeStamp())
-	    {
-		  m_events->insert(iter, newEvent);
-		  return;
-	    }
+		Event* event = *iter;
+		if(newEvent->GetTimeStamp() < event->GetTimeStamp())
+		{
+			m_Events->insert(iter, newEvent);
+			return;
+		}
 	}
 
-  m_events->push_back(newEvent);;
+	m_Events->push_back(newEvent);;
 }
 
-bool
-Calendar::IsEmpty (void)
+bool Calendar::IsEmpty() const
 {
-  return GetEvents ()->empty();
+	return m_Events->empty();
 }
 
-Event*
-Calendar::GetEvent (void)
+Event* Calendar::GetEvent() const
 {
-  if (IsEmpty ())
-	return NULL;
+	if (IsEmpty ())
+		return nullptr;
 
-  Event *event = GetEvents ()->front ();
-  return event;
+	Event *event = m_Events->front();
+	return event;
 }
 
-void
-Calendar::RemoveEvent (void)
+void Calendar::RemoveEvent() const
 {
-  if (!IsEmpty ())
-    {
-	  Event *event = GetEvents ()->front();
-	  GetEvents ()->pop_front ();
-	  delete event;
-    }
+	if (!IsEmpty ())
+	{
+		Event *event = m_Events->front();
+		m_Events->pop_front();
+		delete event;
+	}
 }
 
-
+void Calendar::Schedule(double time, Event* event) const
+{
+	event->SetTimeStamp(time + Simulation::Get().Now());
+	InsertEvent(event);
+}

@@ -31,7 +31,7 @@
 #include "amd-record.h"
 #include "../../core/idealMessages/ideal-control-messages.h"
 #include "../../load-parameters.h"
-#include "core/eventScheduler/simulator.h"
+#include "core/simulation/Simulation.h"
 
 #define MAX_AMD_RETX 5
 
@@ -600,7 +600,7 @@ AmRlcEntity::ReceptionProcedureEnd ()
 	{
 	  AmdRecord *amdRecord = (*itt);
 	  double delay = amdRecord->m_packet->GetTimeStamp () + GetRadioBearerInstance ()->GetQoSParameters ()->GetMaxDelay ();
-	  if ((delay + 0.01) < Simulator::Init()->Now())
+	  if ((delay + 0.01) < Simulation::Get().Now())
 		{
 		  //trace for statistical purposes
 		  Packet *pp = amdRecord->m_packet;
@@ -711,7 +711,7 @@ AmRlcEntity::CheckForDropPackets (double maxDelay, int bearerID)
 #endif
 
   int currentpacket = -1;
-  double now = Simulator::Init()->Now();
+  double now = Simulation::Get().Now();
   std::vector <AmdRecord*> *newAmdlist = new std::vector <AmdRecord*> ();
 
   for (std::vector <AmdRecord*>::iterator  it = m_sentAMDs->begin (); it != m_sentAMDs->end (); it++)
