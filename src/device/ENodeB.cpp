@@ -37,6 +37,7 @@
 #include "../phy/enb-lte-phy.h"
 #include "../core/spectrum/bandwidth-manager.h"
 #include "../protocolStack/packet/packet-burst.h"
+#include "mobility/ConstantPosition.h"
 
 ENodeB::ENodeB ()
 {}

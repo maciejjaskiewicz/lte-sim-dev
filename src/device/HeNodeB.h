@@ -23,7 +23,7 @@
 #define HENODEB_H_
 
 #include "ENodeB.h"
-
+#include "networkTopology/Femtocell.h"
 
 class LTE_SIM_API HeNodeB : public ENodeB {
 public:

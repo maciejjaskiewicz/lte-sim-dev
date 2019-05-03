@@ -23,15 +23,9 @@
 #ifndef APPLICATIONSINK_H_
 #define APPLICATIONSINK_H_
 
-#include <iostream>
-#include <stdint.h>
-#include "Application.h"
-
-class ClassifierParameters;
-class RadioBearer;
-class RadioBearerSink;
-class Packet;
-
+#include "device/IPClassifier/ClassifierParameters.h"
+#include "flows/radio-bearer-sink.h"
+#include "flows/application/Application.h"
 
 class LTE_SIM_API ApplicationSink {
 public:

@@ -78,8 +78,6 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/channel/propagation-model/shadowing-trace.h
     ${PROJECT_SOURCE_DIR}/channel/propagation-model/winner-downlink-channel-realization.cpp
     ${PROJECT_SOURCE_DIR}/channel/propagation-model/winner-downlink-channel-realization.h
-    ${PROJECT_SOURCE_DIR}/componentManagers/FlowsManager.cpp
-    ${PROJECT_SOURCE_DIR}/componentManagers/FlowsManager.h
     ${PROJECT_SOURCE_DIR}/componentManagers/FrameManager.cpp
     ${PROJECT_SOURCE_DIR}/componentManagers/FrameManager.h
     ${PROJECT_SOURCE_DIR}/componentManagers/NetworkManager.cpp
@@ -153,6 +151,8 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer-sink.h
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer.cpp
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer.h
+    ${PROJECT_SOURCE_DIR}/flows/ApplicationFactory.cpp
+    ${PROJECT_SOURCE_DIR}/flows/ApplicationFactory.h
     ${PROJECT_SOURCE_DIR}/load-parameters.h
     ${PROJECT_SOURCE_DIR}/mobility/ConstantPosition.cpp
     ${PROJECT_SOURCE_DIR}/mobility/ConstantPosition.h
@@ -294,5 +294,7 @@ if (WIN32)
     target_compile_definitions(${PROJECT_NAME} PUBLIC LTE_SIM_PLATFORM_WINDOWS=1)
     target_compile_definitions(${PROJECT_NAME} PRIVATE LTE_SIM_BUILD_DLL=1)
 endif()
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE LTE_SIM_ENABLE_ASSERTS=1)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})

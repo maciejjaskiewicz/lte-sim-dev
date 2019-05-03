@@ -13,4 +13,10 @@
 	#error Unsupported platform!
 #endif
 
+#ifdef LTE_SIM_ENABLE_ASSERTS
+	#define LTE_SIM_ASSERT(x, ...) { if(!(x)) { __debugbreak(); } }
+#else
+	#define LTE_SIM_ASSERT(x, ...)
+#endif
+
 #endif /* CORE_H */

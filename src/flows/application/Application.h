@@ -27,13 +27,9 @@
 #include "../../protocolStack/packet/Packet.h"
 #include "../../protocolStack/protocols/TransportProtocol.h"
 #include "../../device/IPClassifier/ClassifierParameters.h"
-
-class NetworkNode;
-class ClassifierParameters;
-class RadioBearer;
-class QoSParameters;
-class ApplicationSink;
-class RadioBearerSink;
+#include "flows/QoS/QoSParameters.h"
+#include "device/NetworkNode.h"
+#include "application-sink.h"
 
 class LTE_SIM_API Application {
 public:

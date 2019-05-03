@@ -3,8 +3,6 @@
 
 #include "componentManagers/FrameManager.h"
 #include "componentManagers/NetworkManager.h"
-//TODO: Remove
-#include "componentManagers/FlowsManager.h"
 
 #include "channel/LteChannel.h"
 
@@ -16,6 +14,7 @@
 #include "device/NetworkNode.h"
 #include "device/UserEquipment.h"
 
+#include "flows/ApplicationFactory.h"
 #include "flows/application/InfiniteBuffer.h"
 #include "flows/application/CBR.h"
 #include "flows/application/VoIP.h"

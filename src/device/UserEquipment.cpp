@@ -28,6 +28,11 @@
 #include "../protocolStack/rrc/ho/handover-entity.h"
 #include "../protocolStack/rrc/ho/ho-manager.h"
 #include "core/simulation/Simulation.h"
+#include "mobility/RandomDirection.h"
+#include "mobility/RandomWalk.h"
+#include "mobility/RandomWaypoint.h"
+#include "mobility/ConstantPosition.h"
+#include "mobility/Manhattan.h"
 
 UserEquipment::UserEquipment ()
 {}

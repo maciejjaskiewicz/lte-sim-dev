@@ -1,13 +1,14 @@
+#include <iostream>
 #include <LTE-Sim.h>
+#include "flows/ApplicationFactory.h"
 
 class Simple : public Simulation
 {
 public:
 	Simple()
 	{
-		FrameManager *frameManager = FrameManager::Init();
 		NetworkManager* networkManager = NetworkManager::Init();
-		FlowsManager* flowsManager = FlowsManager::Init();
+		FrameManager *frameManager = FrameManager::Init();
 
 		LteChannel *dlCh = new LteChannel();
 		LteChannel *ulCh = new LteChannel();
@@ -40,19 +41,66 @@ public:
 		int dstPort = 100;
 		double startTime = 0.1; //s
 		double stopTime = 0.12;  //s
-		Application* be = flowsManager->CreateApplication(applicationID,
-			gw, ue,
-			srcPort, dstPort, TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP,
+
+		auto application = ApplicationFactory::CreateApplication(
 			Application::APPLICATION_TYPE_INFINITE_BUFFER,
+			applicationID,
+			gw, ue,
+			srcPort, dstPort,
+			TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP,
 			qos,
 			startTime, stopTime);
 
+		AddApplication(std::move(application));
+
 		ScheduleStop(0.13);
-		Run(std::unique_ptr<Application>(be));
+		Run();
 	}
 
-	void OnPacket(Packet& packet) override
+	void OnTransmit(Packet& packet, int applicationId) override
 	{
+		std::cout << "OnTransmit" << endl;
+	}
+
+	void OnReceive(Packet& packet, int applicationId) override
+	{
+		std::cout << "OnReceive: ";
+		std::cout << "RX";
+
+		auto app = GetApplication(applicationId);
+
+		ApplicationTypeToString(app->GetApplicationType());
+		auto delay = CalculateDelay(packet);
+		auto ue = dynamic_cast<UserEquipment*>(app->GetDestination());
+
+		std::cout << " ID " << packet.GetID()
+			<< " B " << app->GetApplicationID()
+			<< " SIZE " << packet.GetPacketTags()->GetApplicationSize()
+			<< " SRC " << packet.GetSourceID()
+			<< " DST " << packet.GetDestinationID()
+			<< " D " << delay
+			<< " " << ue->IsIndoor() << std::endl;
+		
+	}
+private:
+	static std::string ApplicationTypeToString(Application::ApplicationType applicationType)
+	{
+		switch (applicationType)
+		{
+			case Application::APPLICATION_TYPE_VOIP: return "VOIP";
+			case Application::APPLICATION_TYPE_TRACE_BASED: return "VIDEO";
+			case Application::APPLICATION_TYPE_CBR: return "CBR";
+			case Application::APPLICATION_TYPE_INFINITE_BUFFER: return "INF_BUF";
+			default: return "UNDEFINED";
+		}
+	}
+
+	double CalculateDelay(Packet& packet) const
+	{
+		double delay = (Now() * 10000 - packet.GetTimeStamp() * 10000) / 10000;
+		if (delay < 0.000001) delay = 0.000001;
+
+		return delay;
 	}
 };
 

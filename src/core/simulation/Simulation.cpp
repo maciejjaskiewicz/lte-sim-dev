@@ -4,8 +4,7 @@
 
 Simulation* Simulation::s_Instance = nullptr;
 
-Simulation::Simulation() : m_Application(nullptr), 
-	m_CurrentTimeStamp(0), m_LastUID(-1)
+Simulation::Simulation() : m_CurrentTimeStamp(0), m_LastUID(-1)
 {
 	s_Instance = this;
 	m_Calendar = std::make_unique<Calendar>();
@@ -13,9 +12,8 @@ Simulation::Simulation() : m_Application(nullptr),
 
 Simulation::~Simulation() = default;
 
-void Simulation::Run(std::unique_ptr<Application> application)
+void Simulation::Run()
 {
-	m_Application = std::move(application);
 	m_Running = true;
 
 	while(m_Running && !m_Calendar->IsEmpty())
@@ -58,9 +56,34 @@ int Simulation::GenerateNewUID()
 	return m_LastUID;
 }
 
-Application& Simulation::GetApplication() const
+void Simulation::AddApplication(std::unique_ptr<Application> application)
 {
-	return *m_Application;
+	m_Applications.push_back(std::move(application));
+	auto& app = m_Applications.back();
+
+	// TODO:
+	/*GetCalendar().Schedule(
+		app->GetStartTime(),
+		&Application::Start, 
+		application.get()
+	);
+
+	GetCalendar().Schedule(
+		app->GetStopTime() + 0.1,
+		&Application::Stop, 
+		application.get()
+	);*/
+}
+
+Application* Simulation::GetApplication(const int applicationId) const
+{
+	for(auto& app : m_Applications)
+	{
+		if (app->GetApplicationID() == applicationId)
+			return app.get();
+	}
+
+	return nullptr;
 }
 
 Calendar& Simulation::GetCalendar() const

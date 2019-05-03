@@ -6,27 +6,31 @@
 #include "flows/application/Application.h"
 #include "protocolStack/packet/Packet.h"
 
+#include "vector"
+
 class LTE_SIM_API Simulation
 {
 public:
 	Simulation();
 	virtual ~Simulation();
 
-	void Run(std::unique_ptr<Application> application);
+	void Run();
 	void Stop();
 	void ScheduleStop(double time);
-	void virtual OnPacket(Packet& packet) {}
+	void virtual OnTransmit(Packet& packet, int applicationId) = 0;
+	void virtual OnReceive(Packet& packet, int applicationId) = 0;
 
 	double Now() const;
 	int GenerateNewUID();
 
-	Application& GetApplication() const;
+	void AddApplication(std::unique_ptr<Application> application);
+	Application* GetApplication(int applicationId) const;
 	Calendar& GetCalendar() const;
 	static Simulation& Get();
 
 private:
 	static Simulation* s_Instance;
-	std::unique_ptr<Application> m_Application;
+	std::vector<std::unique_ptr<Application>> m_Applications;
 	std::unique_ptr<Calendar> m_Calendar;
 	double m_CurrentTimeStamp;
 	int m_LastUID;

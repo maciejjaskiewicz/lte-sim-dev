@@ -21,6 +21,7 @@
 
 #include "HeNodeB.h"
 #include "../phy/henb-lte-phy.h"
+#include "mobility/ConstantPosition.h"
 
 
 HeNodeB::HeNodeB ( int idElement,

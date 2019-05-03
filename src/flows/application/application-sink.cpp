@@ -85,6 +85,7 @@ ApplicationSink::Receive (Packet* p)
    *
    * TX   APPLICATION_TYPE   BEARER_ID  SIZE   SRC_ID   DST_ID   TIME
    */
+  Simulation::Get().OnReceive(*p, m_sourceApplication->GetApplicationID());
 
   if (!_APP_TRACING_) return;
 

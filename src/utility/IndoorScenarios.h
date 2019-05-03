@@ -28,8 +28,9 @@
 
 #include <vector>
 #include <iostream>
-#include "../networkTopology/Building.h"
-#include "../componentManagers/NetworkManager.h"
+#include "networkTopology/Building.h"
+#include "networkTopology/Femtocell.h"
+#include "componentManagers/NetworkManager.h"
 
 static vector<CartesianCoordinates*>*
 GetUniformBuildingDistribution (int idCell, int nbBuilding)

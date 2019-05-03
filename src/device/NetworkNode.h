@@ -25,17 +25,9 @@
 #define NETWORKNODE_H_
 
 #include <vector>
-#include <cmath>
 #include "../networkTopology/Cell.h"
-#include "../networkTopology/Femtocell.h"
 #include "IPClassifier/Classifier.h"
-#include "../protocolStack/protocols/TransportProtocol.h"
 #include "../mobility/Mobility.h"
-#include "../mobility/RandomDirection.h"
-#include "../mobility/RandomWalk.h"
-#include "../mobility/RandomWaypoint.h"
-#include "../mobility/ConstantPosition.h"
-#include "../mobility/Manhattan.h"
 #include "../protocolStack/protocol-stack.h"
 
 class PacketBurst;

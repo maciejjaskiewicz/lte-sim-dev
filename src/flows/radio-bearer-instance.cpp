@@ -22,19 +22,8 @@
 #include "radio-bearer-instance.h"
 #include "../device/NetworkNode.h"
 #include "../device/IPClassifier/ClassifierParameters.h"
-#include "application/Application.h"
-#include "../protocolStack/packet/Packet.h"
-#include "../load-parameters.h"
-#include "../flows/MacQueue.h"
 #include "../flows/QoS/QoSParameters.h"
-#include "../flows/QoS/QoSForEXP.h"
-#include "../flows/QoS/QoSForFLS.h"
-#include "../flows/QoS/QoSForM_LWDF.h"
 #include "../protocolStack/rlc/rlc-entity.h"
-#include "../protocolStack/rlc/tm-rlc-entity.h"
-#include "../protocolStack/rlc/um-rlc-entity.h"
-#include "../protocolStack/rlc/am-rlc-entity.h"
-
 
 RadioBearerInstance::RadioBearerInstance()
 {

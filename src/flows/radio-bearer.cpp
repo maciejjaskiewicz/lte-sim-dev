@@ -174,6 +174,8 @@ RadioBearer::CreatePacket (int bytes)
   tags->SetApplicationType(PacketTAGs::APPLICATION_TYPE_INFINITE_BUFFER);
   p->SetPacketTags(tags);
 
+  Simulation::Get().OnTransmit(*p, m_application->GetApplicationID());
+
   if (_APP_TRACING_)
     {
 	  /*

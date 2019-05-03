@@ -22,7 +22,7 @@
 
 
 #include "Application.h"
-#include "../radio-bearer.h"
+#include "flows/radio-bearer.h"
 #include "../../device/NetworkNode.h"
 #include "../QoS/QoSParameters.h"
 #include "../../componentManagers/NetworkManager.h"
@@ -76,7 +76,7 @@ Application::Start ()
 #endif
 
   // 1 - create radio bearer
-  m_radioBearer = new RadioBearer ();
+  m_radioBearer = new RadioBearer();
   m_radioBearer->GetRlcEntity ()->SetRlcEntityIndex (GetApplicationID ());
 
 
@@ -320,7 +320,13 @@ void
 Application::SetStartTime (double time)
 {
   m_startTime = time;
-  Simulation::Get().GetCalendar().Schedule(time, &Application::Start, this);
+
+	//TODO: Remove
+  Simulation::Get().GetCalendar().Schedule(
+	  time,
+	  &Application::Start,
+	  this
+  );
 }
 
 double
@@ -333,7 +339,13 @@ void
 Application::SetStopTime (double time)
 {
   m_stopTime = time;
-  Simulation::Get().GetCalendar().Schedule(time + 0.1, &Application::Stop, this);
+
+  //TODO: Remove
+  Simulation::Get().GetCalendar().Schedule(
+	  time,
+	  &Application::Start,
+	  this
+  );
 }
 
 double
@@ -345,6 +357,7 @@ Application::GetStopTime (void) const
 void
 Application::Trace (Packet* p)
 {
+ Simulation::Get().OnTransmit(*p, GetApplicationID());
 
  if (!_APP_TRACING_) return;
 
