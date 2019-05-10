@@ -246,6 +246,8 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/protocolStack/packet/Packet.h
     ${PROJECT_SOURCE_DIR}/protocolStack/packet/PacketTAGs.cpp
     ${PROJECT_SOURCE_DIR}/protocolStack/packet/PacketTAGs.h
+    ${PROJECT_SOURCE_DIR}/protocolStack/packet/PacketAttributes.cpp
+    ${PROJECT_SOURCE_DIR}/protocolStack/packet/PacketAttributes.h
     ${PROJECT_SOURCE_DIR}/protocolStack/pdcp/pdcp-entity.cpp
     ${PROJECT_SOURCE_DIR}/protocolStack/pdcp/pdcp-entity.h
     ${PROJECT_SOURCE_DIR}/protocolStack/protocol-stack.cpp

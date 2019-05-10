@@ -85,54 +85,64 @@ ApplicationSink::Receive (Packet* p)
    *
    * TX   APPLICATION_TYPE   BEARER_ID  SIZE   SRC_ID   DST_ID   TIME
    */
-  Simulation::Get().OnReceive(*p, m_sourceApplication->GetApplicationID());
 
-  if (!_APP_TRACING_) return;
+	auto packetAttr = new PacketAttributes(
+		m_sourceApplication->GetApplicationID(),
+		m_sourceApplication->GetApplicationID(),
+		p->GetPacketTags()->GetApplicationSize(),
+		p->GetSourceID(),
+		p->GetDestinationID(),
+		Simulation::Get().Now()
+	);
+	  Simulation::Get().OnReceive(*p, *packetAttr);
 
-  std::cout << "RX";
+	//TODO: Remove
+	  if (!_APP_TRACING_) return;
 
-  switch (m_sourceApplication->GetApplicationType ())
-	{
-	  case Application::APPLICATION_TYPE_VOIP:
+	  std::cout << "RX";
+
+	  switch (m_sourceApplication->GetApplicationType ())
 		{
-		  std::cout << " VOIP";
-		  break;
+		  case Application::APPLICATION_TYPE_VOIP:
+			{
+			  std::cout << " VOIP";
+			  break;
+			}
+		  case Application::APPLICATION_TYPE_TRACE_BASED:
+			{
+			  std::cout << " VIDEO";
+			  break;
+			}
+		  case Application::APPLICATION_TYPE_CBR:
+			{
+			  std::cout << " CBR";
+			  break;
+			}
+		  case Application::APPLICATION_TYPE_INFINITE_BUFFER:
+			{
+			  std::cout << " INF_BUF";
+			  break;
+			}
+		  default:
+			{
+			  std::cout << " UNDEFINED";
+			  break;
+			}
 		}
-	  case Application::APPLICATION_TYPE_TRACE_BASED:
-		{
-		  std::cout << " VIDEO";
-		  break;
-		}
-	  case Application::APPLICATION_TYPE_CBR:
-		{
-		  std::cout << " CBR";
-		  break;
-		}
-	  case Application::APPLICATION_TYPE_INFINITE_BUFFER:
-		{
-		  std::cout << " INF_BUF";
-		  break;
-		}
-	  default:
-		{
-		  std::cout << " UNDEFINED";
-		  break;
-		}
-	}
 
-  double delay = ((Simulation::Get().Now() *10000) - (p->GetTimeStamp () *10000)) /10000;
-  if (delay < 0.000001) delay = 0.000001;
+	  double delay = ((Simulation::Get().Now() *10000) - (p->GetTimeStamp () *10000)) /10000;
+	  if (delay < 0.000001) delay = 0.000001;
 
-  UserEquipment* ue = (UserEquipment*) GetSourceApplication ()->GetDestination ();
+	  UserEquipment* ue = (UserEquipment*) GetSourceApplication ()->GetDestination ();
 
-  std::cout << " ID " << p->GetID ()
-                        << " B " << m_sourceApplication->GetApplicationID ()
-                        << " SIZE " << p->GetPacketTags ()->GetApplicationSize ()
-                        << " SRC " << p->GetSourceID ()
-                        << " DST " << p->GetDestinationID ()
-                        << " D " << delay
-                        << " " << ue->IsIndoor () << std::endl;
+	  std::cout << " ID " << p->GetID ()
+	                        << " B " << m_sourceApplication->GetApplicationID ()
+	                        << " SIZE " << p->GetPacketTags ()->GetApplicationSize ()
+	                        << " SRC " << p->GetSourceID ()
+	                        << " DST " << p->GetDestinationID ()
+	                        << " D " << delay
+	                        << " " << ue->IsIndoor () << std::endl;
 
 
-  delete p;
+	  delete p;
 }

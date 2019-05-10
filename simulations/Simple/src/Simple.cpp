@@ -57,23 +57,41 @@ public:
 		Run();
 	}
 
-	void OnTransmit(Packet& packet, int applicationId) override
+	void OnTransmit(Packet& packet, PacketAttributes& packetAttr) override
 	{
-		std::cout << "OnTransmit" << endl;
+		std::cout << "OnTransmit:";
+		std::cout << "TX ";
+
+		auto app = GetApplication(packetAttr.GetApplicationId());
+		auto appType = ApplicationTypeToString(app->GetApplicationType());
+		auto destination = app->GetDestination();
+
+		std::cout << appType << " ID " << packet.GetID()
+			<< " B " << packetAttr.GetBearerId()
+			<< " SIZE " << packetAttr.GetSize()
+			<< " SRC " << packetAttr.GetSourceId()
+			<< " DST " << packetAttr.GetDestinationId()
+			<< " T " << packetAttr.GetCreatedTime();
+
+		if(destination->GetNodeType() == NetworkNode::TYPE_UE)
+		{
+			auto ue = dynamic_cast<UserEquipment*>(destination);
+			std::cout << " " << ue->IsIndoor() << std::endl;
+		}
 	}
 
-	void OnReceive(Packet& packet, int applicationId) override
+	void OnReceive(Packet& packet, PacketAttributes& packetAttr) override
 	{
 		std::cout << "OnReceive: ";
-		std::cout << "RX";
+		std::cout << "RX ";
 
-		auto app = GetApplication(applicationId);
+		auto app = GetApplication(packetAttr.GetApplicationId());
 
-		ApplicationTypeToString(app->GetApplicationType());
+		auto appType = ApplicationTypeToString(app->GetApplicationType());
 		auto delay = CalculateDelay(packet);
 		auto ue = dynamic_cast<UserEquipment*>(app->GetDestination());
 
-		std::cout << " ID " << packet.GetID()
+		std::cout << appType << " ID " << packet.GetID()
 			<< " B " << app->GetApplicationID()
 			<< " SIZE " << packet.GetPacketTags()->GetApplicationSize()
 			<< " SRC " << packet.GetSourceID()

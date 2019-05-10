@@ -5,6 +5,7 @@
 #include "core/eventScheduler/calendar.h"
 #include "flows/application/Application.h"
 #include "protocolStack/packet/Packet.h"
+#include "protocolStack/packet/PacketAttributes.h"
 
 #include "vector"
 
@@ -17,8 +18,8 @@ public:
 	void Run();
 	void Stop();
 	void ScheduleStop(double time);
-	void virtual OnTransmit(Packet& packet, int applicationId) = 0;
-	void virtual OnReceive(Packet& packet, int applicationId) = 0;
+	void virtual OnTransmit(Packet& packet, PacketAttributes& packetAttr) = 0;
+	void virtual OnReceive(Packet& packet, PacketAttributes& packetAttr) = 0;
 
 	double Now() const;
 	int GenerateNewUID();

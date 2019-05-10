@@ -34,6 +34,7 @@
 #include "../protocolStack/rlc/amd-record.h"
 #include "../load-parameters.h"
 #include "core/simulation/Simulation.h"
+#include "protocolStack/packet/PacketAttributes.h"
 
 RadioBearer::RadioBearer()
 {
@@ -174,8 +175,21 @@ RadioBearer::CreatePacket (int bytes)
   tags->SetApplicationType(PacketTAGs::APPLICATION_TYPE_INFINITE_BUFFER);
   p->SetPacketTags(tags);
 
-  Simulation::Get().OnTransmit(*p, m_application->GetApplicationID());
+  if (bytes > 1490) bytes = 1490;
+  else bytes = bytes - 13;
 
+  auto packetAttr = new PacketAttributes(
+	  m_application->GetApplicationID(),
+	  GetRlcEntity()->GetRlcEntityIndex(),
+	  bytes,
+	  GetSource()->GetIDNetworkNode(),
+	  GetDestination()->GetIDNetworkNode(),
+	  Simulation::Get().Now()
+  );
+
+  Simulation::Get().OnTransmit(*p, *packetAttr);
+
+  //TODO: Remove
   if (_APP_TRACING_)
     {
 	  /*
@@ -213,9 +227,6 @@ RadioBearer::CreatePacket (int bytes)
 	     	  break;
 	         }
 	     }
-
-	   if (bytes > 1490) bytes = 1490;
-	   else bytes = bytes - 13;
 
        std::cout << " ID " << p->GetID ()
 	 		    << " B " << GetRlcEntity ()->GetRlcEntityIndex ()

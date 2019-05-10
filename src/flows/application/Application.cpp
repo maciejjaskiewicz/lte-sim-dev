@@ -357,65 +357,75 @@ Application::GetStopTime (void) const
 void
 Application::Trace (Packet* p)
 {
- Simulation::Get().OnTransmit(*p, GetApplicationID());
+	auto packetAttr = new PacketAttributes(
+		GetApplicationID(),
+		GetApplicationID(),
+		p->GetSize(),
+		GetSource()->GetIDNetworkNode(),
+		GetDestination()->GetIDNetworkNode(),
+		Simulation::Get().Now()
+	);
 
- if (!_APP_TRACING_) return;
+	 Simulation::Get().OnTransmit(*p, *packetAttr);
 
- /*
-  * Trace format:
-  *
-  * TX   APPLICATION_TYPE   BEARER_ID  SIZE   SRC_ID   DST_ID   TIME
-  */
-  std::cout << "TX";
-  switch (m_applicationType)
-    {
-      case Application::APPLICATION_TYPE_VOIP:
-        {
-    	  std::cout << " VOIP";
-    	  break;
-        }
-      case Application::APPLICATION_TYPE_TRACE_BASED:
-        {
-          std::cout << " VIDEO";
-    	  break;
-        }
-      case Application::APPLICATION_TYPE_CBR:
-        {
-    	  std::cout << " CBR";
-    	  break;
-        }
-      case Application::APPLICATION_TYPE_INFINITE_BUFFER:
-        {
-    	  std::cout << " INF_BUF";
-    	  break;
-        }
-      default:
-        {
-    	  std::cout << " UNDEFINED";
-    	  break;
-        }
-    }
+	 //TODO: Remove
+	 if (!_APP_TRACING_) return;
 
-  if (GetDestination ()->GetNodeType() == NetworkNode::TYPE_UE)
-    {
-      UserEquipment* ue = (UserEquipment*) GetDestination ();
-      std::cout << " ID " << p->GetID ()
-		    << " B " << GetApplicationID ()
+	 /*
+	  * Trace format:
+	  *
+	  * TX   APPLICATION_TYPE   BEARER_ID  SIZE   SRC_ID   DST_ID   TIME
+	  */
+	  std::cout << "TX";
+	  switch (m_applicationType)
+	    {
+	      case Application::APPLICATION_TYPE_VOIP:
+	        {
+    		  std::cout << " VOIP";
+    		  break;
+	        }
+	      case Application::APPLICATION_TYPE_TRACE_BASED:
+	        {
+	          std::cout << " VIDEO";
+    		  break;
+	        }
+	      case Application::APPLICATION_TYPE_CBR:
+	        {
+    		  std::cout << " CBR";
+    		  break;
+	        }
+	      case Application::APPLICATION_TYPE_INFINITE_BUFFER:
+	        {
+    		  std::cout << " INF_BUF";
+    		  break;
+	        }
+	      default:
+	        {
+    		  std::cout << " UNDEFINED";
+    		  break;
+	        }
+	    }
+
+	  if (GetDestination ()->GetNodeType() == NetworkNode::TYPE_UE)
+	    {
+	      UserEquipment* ue = (UserEquipment*) GetDestination ();
+	      std::cout << " ID " << p->GetID ()
+			    << " B " << GetApplicationID ()
+				<< " SIZE " << p->GetSize ()
+				<< " SRC " << GetSource ()->GetIDNetworkNode ()
+				<< " DST " << GetDestination ()->GetIDNetworkNode ()
+				<< " T " << Simulation::Get().Now()
+		        << " " << ue->IsIndoor () << std::endl;
+	    }
+	  else
+	    {
+		  std::cout << " ID " << p->GetID ()
+			<< " B " << GetApplicationID ()
 			<< " SIZE " << p->GetSize ()
 			<< " SRC " << GetSource ()->GetIDNetworkNode ()
 			<< " DST " << GetDestination ()->GetIDNetworkNode ()
-			<< " T " << Simulation::Get().Now()
-	        << " " << ue->IsIndoor () << std::endl;
-    }
-  else
-    {
-	  std::cout << " ID " << p->GetID ()
-		<< " B " << GetApplicationID ()
-		<< " SIZE " << p->GetSize ()
-		<< " SRC " << GetSource ()->GetIDNetworkNode ()
-		<< " DST " << GetDestination ()->GetIDNetworkNode ()
-		<< " T " << Simulation::Get().Now() << std::endl;
-    }
+			<< " T " << Simulation::Get().Now() << std::endl;
+	    }
 }
 
 void
