@@ -4,7 +4,8 @@
 #include "utility/CellPosition.h"
 #include "utility/frequency-reuse-helper.h"
 #include "utility/RandomVariable.h"
-#include "phy/wideband-cqi-eesm-error-model.h"
+#include "output/OutputFactory.h"
+#include "utility/PacketHelper.h"
 
 class MySchFair : public Simulation
 {
@@ -326,66 +327,48 @@ public:
 
 	void OnTransmit(Packet& packet, PacketAttributes& packetAttr) override
 	{
-		std::cout << "OnTransmit:";
-		std::cout << "TX ";
-
 		auto app = GetApplication(packetAttr.GetApplicationId());
-		auto appType = ApplicationTypeToString(app->GetApplicationType());
 		auto destination = app->GetDestination();
-
-		std::cout << appType << " ID " << packet.GetID()
-			<< " B " << packetAttr.GetBearerId()
-			<< " SIZE " << packetAttr.GetSize()
-			<< " SRC " << packetAttr.GetSourceId()
-			<< " DST " << packetAttr.GetDestinationId()
-			<< " T " << packetAttr.GetCreatedTime();
+		bool isIndoor = false;
 
 		if (destination->GetNodeType() == NetworkNode::TYPE_UE)
 		{
 			auto ue = dynamic_cast<UserEquipment*>(destination);
-			std::cout << " " << ue->IsIndoor() << std::endl;
+			isIndoor = ue->IsIndoor();
 		}
+
+		auto output = OutputFactory::CreateTXOutputModel(
+			packet.GetID(),
+			app->GetApplicationType(),
+			destination->GetNodeType(),
+			packetAttr.GetBearerId(),
+			packetAttr.GetSize(),
+			packetAttr.GetSourceId(),
+			packetAttr.GetDestinationId(),
+			packetAttr.GetCreatedTime(),
+			isIndoor
+		);
+
+		std::cout << output->ToString() << std::endl;
 	}
 
 	void OnReceive(Packet& packet, PacketAttributes& packetAttr) override
 	{
-		std::cout << "OnReceive: ";
-		std::cout << "RX ";
-
 		auto app = GetApplication(packetAttr.GetApplicationId());
-
-		auto appType = ApplicationTypeToString(app->GetApplicationType());
-		auto delay = CalculateDelay(packet);
 		auto ue = dynamic_cast<UserEquipment*>(app->GetDestination());
 
-		std::cout << appType << " ID " << packet.GetID()
-			<< " B " << app->GetApplicationID()
-			<< " SIZE " << packet.GetPacketTags()->GetApplicationSize()
-			<< " SRC " << packet.GetSourceID()
-			<< " DST " << packet.GetDestinationID()
-			<< " D " << delay
-			<< " " << ue->IsIndoor() << std::endl;
-	}
+		auto output = OutputFactory::CreateRXOutputModel(
+			packet.GetID(),
+			app->GetApplicationType(),
+			app->GetApplicationID(),
+			packet.GetPacketTags()->GetApplicationSize(),
+			packet.GetSourceID(),
+			packet.GetDestinationID(),
+			CalculateDelay(packet),
+			ue->IsIndoor()
+		);
 
-private:
-	static std::string ApplicationTypeToString(Application::ApplicationType applicationType)
-	{
-		switch (applicationType)
-		{
-		case Application::APPLICATION_TYPE_VOIP: return "VOIP";
-		case Application::APPLICATION_TYPE_TRACE_BASED: return "VIDEO";
-		case Application::APPLICATION_TYPE_CBR: return "CBR";
-		case Application::APPLICATION_TYPE_INFINITE_BUFFER: return "INF_BUF";
-		default: return "UNDEFINED";
-		}
-	}
-
-	double CalculateDelay(Packet& packet) const
-	{
-		double delay = (Now() * 10000 - packet.GetTimeStamp() * 10000) / 10000;
-		if (delay < 0.000001) delay = 0.000001;
-
-		return delay;
+		std::cout << output->ToString() << std::endl;
 	}
 };
 

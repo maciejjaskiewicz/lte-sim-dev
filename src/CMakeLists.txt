@@ -286,6 +286,11 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/utility/RandomVariable.h
     ${PROJECT_SOURCE_DIR}/utility/seed.h
     ${PROJECT_SOURCE_DIR}/utility/UsersDistribution.h
+    ${PROJECT_SOURCE_DIR}/utility/PacketHelper.h
+    ${PROJECT_SOURCE_DIR}/output/OutputModel.cpp
+    ${PROJECT_SOURCE_DIR}/output/OutputModel.h
+    ${PROJECT_SOURCE_DIR}/output/OutputFactory.cpp
+    ${PROJECT_SOURCE_DIR}/output/OutputFactory.h
 )
 source_group(TREE ${PROJECT_SOURCE_DIR} FILES ${LTE_SIM_SRC})
 

@@ -31,6 +31,7 @@ void Simulation::Stop()
 {
 	// TODO: Logging
 	m_Running = false;
+	OnStop();
 }
 
 void Simulation::ScheduleStop(double time)

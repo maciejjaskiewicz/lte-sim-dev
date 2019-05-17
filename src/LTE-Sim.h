@@ -29,6 +29,7 @@
 #include "flows/QoS/QoSForM_LWDF.h"
 
 #include "phy/lte-phy.h"
+#include "phy/wideband-cqi-eesm-error-model.h"
 
 #include "core/simulation/Simulation.h"
 #include "core/cartesianCoodrdinates/CartesianCoordinates.h"

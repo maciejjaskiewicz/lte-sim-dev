@@ -20,6 +20,7 @@ public:
 	void ScheduleStop(double time);
 	void virtual OnTransmit(Packet& packet, PacketAttributes& packetAttr) = 0;
 	void virtual OnReceive(Packet& packet, PacketAttributes& packetAttr) = 0;
+	void virtual OnStop() {};
 
 	double Now() const;
 	int GenerateNewUID();
