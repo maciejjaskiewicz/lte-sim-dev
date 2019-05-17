@@ -5,6 +5,8 @@
 #include "componentManagers/NetworkManager.h"
 
 #include "channel/LteChannel.h"
+#include "channel/propagation-model/macrocell-urban-area-channel-realization.h"
+#include "channel/propagation-model/propagation-loss-model.h"
 
 #include "networkTopology/Cell.h"
 
@@ -13,13 +15,20 @@
 #include "device/HeNodeB.h"
 #include "device/NetworkNode.h"
 #include "device/UserEquipment.h"
+#include "device/CqiManager/fullband-cqi-manager.h"
 
 #include "flows/ApplicationFactory.h"
 #include "flows/application/InfiniteBuffer.h"
+#include "flows/application/TraceBased.h"
 #include "flows/application/CBR.h"
 #include "flows/application/VoIP.h"
 #include "flows/application/WEB.h"
 #include "flows/QoS/QoSParameters.h"
+#include "flows/QoS/QoSForFLS.h"
+#include "flows/QoS/QoSForEXP.h"
+#include "flows/QoS/QoSForM_LWDF.h"
+
+#include "phy/lte-phy.h"
 
 #include "core/simulation/Simulation.h"
 #include "core/cartesianCoodrdinates/CartesianCoordinates.h"

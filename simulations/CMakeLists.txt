@@ -1,1 +1,3 @@
 add_subdirectory(Simple)
+add_subdirectory(MultiCell)
+add_subdirectory(MySchFair)

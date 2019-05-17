@@ -80,12 +80,6 @@ ApplicationSink::GetSourceApplication (void)
 void
 ApplicationSink::Receive (Packet* p)
 {
-  /*
-   * Trace format:
-   *
-   * TX   APPLICATION_TYPE   BEARER_ID  SIZE   SRC_ID   DST_ID   TIME
-   */
-
 	auto packetAttr = new PacketAttributes(
 		m_sourceApplication->GetApplicationID(),
 		m_sourceApplication->GetApplicationID(),
@@ -94,55 +88,8 @@ ApplicationSink::Receive (Packet* p)
 		p->GetDestinationID(),
 		Simulation::Get().Now()
 	);
-	  Simulation::Get().OnReceive(*p, *packetAttr);
 
-	//TODO: Remove
-	  if (!_APP_TRACING_) return;
+	Simulation::Get().OnReceive(*p, *packetAttr);
 
-	  std::cout << "RX";
-
-	  switch (m_sourceApplication->GetApplicationType ())
-		{
-		  case Application::APPLICATION_TYPE_VOIP:
-			{
-			  std::cout << " VOIP";
-			  break;
-			}
-		  case Application::APPLICATION_TYPE_TRACE_BASED:
-			{
-			  std::cout << " VIDEO";
-			  break;
-			}
-		  case Application::APPLICATION_TYPE_CBR:
-			{
-			  std::cout << " CBR";
-			  break;
-			}
-		  case Application::APPLICATION_TYPE_INFINITE_BUFFER:
-			{
-			  std::cout << " INF_BUF";
-			  break;
-			}
-		  default:
-			{
-			  std::cout << " UNDEFINED";
-			  break;
-			}
-		}
-
-	  double delay = ((Simulation::Get().Now() *10000) - (p->GetTimeStamp () *10000)) /10000;
-	  if (delay < 0.000001) delay = 0.000001;
-
-	  UserEquipment* ue = (UserEquipment*) GetSourceApplication ()->GetDestination ();
-
-	  std::cout << " ID " << p->GetID ()
-	                        << " B " << m_sourceApplication->GetApplicationID ()
-	                        << " SIZE " << p->GetPacketTags ()->GetApplicationSize ()
-	                        << " SRC " << p->GetSourceID ()
-	                        << " DST " << p->GetDestinationID ()
-	                        << " D " << delay
-	                        << " " << ue->IsIndoor () << std::endl;
-
-
-	  delete p;
+	delete p;
 }

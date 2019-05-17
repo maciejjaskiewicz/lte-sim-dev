@@ -189,54 +189,6 @@ RadioBearer::CreatePacket (int bytes)
 
   Simulation::Get().OnTransmit(*p, *packetAttr);
 
-  //TODO: Remove
-  if (_APP_TRACING_)
-    {
-	  /*
-	   * Trace format:
-	   *
-	   * TX   APPLICATION_TYPE   BEARER_ID  SIZE   SRC_ID   DST_ID   TIME
-	   */
-	  UserEquipment* ue = (UserEquipment*) GetApplication ()->GetDestination ();
-	   std::cout << "TX";
-	   switch (p->GetPacketTags ()->GetApplicationType ())
-	     {
-	       case Application::APPLICATION_TYPE_VOIP:
-	         {
-	     	  std::cout << " VOIP";
-	     	  break;
-	         }
-	       case Application::APPLICATION_TYPE_TRACE_BASED:
-	         {
-	           std::cout << " VIDEO";
-	     	  break;
-	         }
-	       case Application::APPLICATION_TYPE_CBR:
-	         {
-	     	  std::cout << " CBR";
-	     	  break;
-	         }
-	       case Application::APPLICATION_TYPE_INFINITE_BUFFER:
-	         {
-	     	  std::cout << " INF_BUF";
-	     	  break;
-	         }
-	       default:
-	         {
-	     	  std::cout << " UNDEFINED";
-	     	  break;
-	         }
-	     }
-
-       std::cout << " ID " << p->GetID ()
-	 		    << " B " << GetRlcEntity ()->GetRlcEntityIndex ()
-	 			<< " SIZE " << bytes
-	 			<< " SRC " << GetSource ()->GetIDNetworkNode ()
-	 			<< " DST " << GetDestination ()->GetIDNetworkNode ()
-	 			<< " T " << Simulation::Get().Now()
-	 			<< " " << ue->IsIndoor () << std::endl;
-    }
-
   return p;
 }
 

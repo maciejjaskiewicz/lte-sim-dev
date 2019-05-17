@@ -1,6 +1,5 @@
 #include <iostream>
 #include <LTE-Sim.h>
-#include "flows/ApplicationFactory.h"
 
 class Simple : public Simulation
 {
