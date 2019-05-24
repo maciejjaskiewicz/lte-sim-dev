@@ -31,6 +31,12 @@ class PacketBurst;
 class Packet;
 class RadioBearer;
 
+enum FlowPriority
+{
+	HIGH,
+	LOW
+};
+
 class LTE_SIM_API PacketScheduler {
 public:
 	PacketScheduler();
@@ -56,6 +62,8 @@ public:
 	    int m_allocatedBits;		//bits
 	    int m_transmittedData;	//bytes
 	    int m_dataToTransmit;		//bytes
+		int m_UserNetworkNodeId;
+		FlowPriority m_Priority{LOW};
 
 	    std::vector<double> m_spectralEfficiency;
 	    std::vector<int> m_listOfAllocatedRBs;
@@ -69,6 +77,10 @@ public:
 		int GetTransmittedData (void) const;
 		void SetDataToTransmit (int dataToTransmit);
 		int GetDataToTransmit (void) const;
+		void SetUserNetworkNodeId(int userNetworkNodeId);
+		int GetUserNetworkNodeId() const;
+		void SetPriority(FlowPriority priority);
+		FlowPriority GetPriority() const;
 
 		void SetSpectralEfficiency (std::vector<double> s);
 		std::vector<double> GetSpectralEfficiency (void);
@@ -86,12 +98,15 @@ public:
 	void DeleteFlowsToSchedule (void);
 	void ClearFlowsToSchedule ();
 
-	FlowsToSchedule* GetFlowsToSchedule (void) const;
+	FlowsToSchedule* GetFlowsToSchedule(void) const;
+	FlowsToSchedule* GetFlowsToSchedule (FlowPriority priority) const;
 
 	void InsertFlowToSchedule (RadioBearer* bearer,
 						       int dataToTransmit,
 						       std::vector<double> specEff,
-						       std::vector<int> cqiFeedbacks);
+						       std::vector<int> cqiFeedbacks,
+							   int userNetworkNodeId = -1,
+							   FlowPriority priority = LOW);
 
 	void UpdateAllocatedBits (FlowToSchedule* scheduledFlow,
 						      int allocatedBits,

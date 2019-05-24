@@ -116,6 +116,21 @@ PacketScheduler::GetFlowsToSchedule (void) const
   return m_flowsToSchedule;
 }
 
+PacketScheduler::FlowsToSchedule* PacketScheduler::GetFlowsToSchedule(FlowPriority priority) const
+{
+	auto flowsToScheduleWithPriority = new FlowsToSchedule();
+
+	for (auto& flow : *m_flowsToSchedule)
+	{
+		if(flow->GetPriority() == priority)
+		{
+			flowsToScheduleWithPriority->push_back(flow);
+		}
+	}
+
+	return flowsToScheduleWithPriority;
+}
+
 void
 PacketScheduler::ClearFlowsToSchedule ()
 {
@@ -188,6 +203,26 @@ PacketScheduler::FlowToSchedule::GetDataToTransmit (void) const
   return m_dataToTransmit;
 }
 
+void PacketScheduler::FlowToSchedule::SetUserNetworkNodeId(int userNetworkNodeId)
+{
+	m_UserNetworkNodeId = userNetworkNodeId;
+}
+
+int PacketScheduler::FlowToSchedule::GetUserNetworkNodeId() const
+{
+	return m_UserNetworkNodeId;
+}
+
+void PacketScheduler::FlowToSchedule::SetPriority(FlowPriority priority)
+{
+	m_Priority = priority;
+}
+
+FlowPriority PacketScheduler::FlowToSchedule::GetPriority() const
+{
+	return m_Priority;
+}
+
 std::vector<int>*
 PacketScheduler::FlowToSchedule::GetListOfAllocatedRBs ()
 {
@@ -213,7 +248,8 @@ PacketScheduler::FlowToSchedule::GetCqiFeedbacks (void)
 }
 
 void
-PacketScheduler::InsertFlowToSchedule (RadioBearer* bearer, int dataToTransmit, std::vector<double> specEff, std::vector<int> cqiFeedbacks)
+PacketScheduler::InsertFlowToSchedule (RadioBearer* bearer, int dataToTransmit, std::vector<double> specEff, 
+	std::vector<int> cqiFeedbacks, int userNetworkNodeId, FlowPriority priority)
 {
 #ifdef SCHEDULER_DEBUG
 	std::cout << "\t  --> selected flow: "
@@ -221,11 +257,13 @@ PacketScheduler::InsertFlowToSchedule (RadioBearer* bearer, int dataToTransmit, 
 			<< " " << dataToTransmit << std::endl;
 #endif
 
-  FlowToSchedule *flowToSchedule = new FlowToSchedule(bearer, dataToTransmit);
-  flowToSchedule->SetSpectralEfficiency (specEff);
-  flowToSchedule->SetCqiFeedbacks (cqiFeedbacks);
+	auto flowToSchedule = new FlowToSchedule(bearer, dataToTransmit);
+	flowToSchedule->SetSpectralEfficiency (specEff);
+	flowToSchedule->SetCqiFeedbacks (cqiFeedbacks);
+	flowToSchedule->SetUserNetworkNodeId(userNetworkNodeId);
+	flowToSchedule->SetPriority(priority);
 
-  GetFlowsToSchedule ()->push_back(flowToSchedule);
+	GetFlowsToSchedule ()->push_back(flowToSchedule);
 }
 
 void

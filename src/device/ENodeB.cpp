@@ -38,6 +38,7 @@
 #include "../core/spectrum/bandwidth-manager.h"
 #include "../protocolStack/packet/packet-burst.h"
 #include "mobility/ConstantPosition.h"
+#include "protocolStack/mac/packet-scheduler/my-sch-fair-packet-scheduler.h"
 
 ENodeB::ENodeB ()
 {}
@@ -339,6 +340,11 @@ ENodeB::SetDLScheduler (ENodeB::DLSchedulerType type)
       	scheduler = new  LogRuleDownlinkPacketScheduler ();
       	scheduler->SetMacEntity (mac);
       	mac->SetDownlinkPacketScheduler (scheduler);
+		  break;
+	  case ENodeB::DLScheduler_MY_SCH_FAIR:
+	    scheduler = new MY_SCH_FAIR_PacketScheduler();
+	    scheduler->SetMacEntity(mac);
+	    mac->SetDownlinkPacketScheduler(scheduler);
 		  break;
 
 	  default:

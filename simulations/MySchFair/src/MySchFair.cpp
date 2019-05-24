@@ -15,7 +15,7 @@ public:
 		//Config
 		int nbCells = 1;
 		double radius = 1;
-		int nbUE = 10;
+		int nbUE = 50;
 		int nbVoIP = 1;
 		int nbVideo = 1;
 		int nbBE = 1;
@@ -24,7 +24,7 @@ public:
 		double maxDelay = 0.1;
 		//End Config
 
-		double duration = 1;
+		double duration = 2;
 		double flow_duration = 10;
 
 		int cluster = 3;
@@ -36,7 +36,7 @@ public:
 		int commonSeed = GetCommonSeed(0);
 		srand(commonSeed);
 
-		auto downlink_scheduler_type = ENodeB::DLScheduler_TYPE_PROPORTIONAL_FAIR;
+		auto downlink_scheduler_type = ENodeB::DLScheduler_MY_SCH_FAIR;
 		auto frame_structure = FrameManager::FRAME_STRUCTURE_FDD;
 
 		frameManager->SetFrameStructure(frame_structure);

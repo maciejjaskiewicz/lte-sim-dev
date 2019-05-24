@@ -228,6 +228,8 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/mt-uplink-packet-scheduler.h
     ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/mw-rule-downlink-packet-scheduler.cpp
     ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/mw-rule-downlink-packet-scheduler.h
+    ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/my-sch-fair-packet-scheduler.cpp
+    ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/my-sch-fair-packet-scheduler.h
     ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/packet-scheduler.cpp
     ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/packet-scheduler.h
     ${PROJECT_SOURCE_DIR}/protocolStack/mac/packet-scheduler/roundrobin-uplink-packet-scheduler.cpp
