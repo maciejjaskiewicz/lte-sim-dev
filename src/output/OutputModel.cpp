@@ -60,32 +60,32 @@ bool OutputModel::IsIndoor() const
 	return m_IsIndoor;
 }
 
-std::string OutputModel::ToString() const
+std::string OutputModel::GetCSVHeader()
 {
 	stringstream ss;
 
-	ss << TransmissionTypeToString(m_TransmissionType) << " ";
-	ss << ApplicationTypeToString(m_ApplicationType);
-	ss << " ID " << m_Id;
-	ss << " SIZE " << m_Size;
-	ss << " SRC " << m_SourceId;
-	ss << " DST " << m_DestinationId;
-
-	if(m_TransmissionType == RX)
-	{
-		ss << " D " << m_Delay;
-		ss << m_IsIndoor;
-	} else
-	{
-		ss << " T " << m_CreatedTime;
-
-		if(m_NodeType == NetworkNode::TYPE_UE)
-		{
-			ss << m_IsIndoor;
-		}
-	}
+	ss << "TxType" << m_CsvSeparator;
+	ss << "AppType" << m_CsvSeparator;
+	ss << "Id" << m_CsvSeparator;
+	ss << "Size" << m_CsvSeparator;
+	ss << "SRC" << m_CsvSeparator;
+	ss << "DST" << m_CsvSeparator;
+	ss << "CreatedTime" << m_CsvSeparator;
+	ss << "Delay" << m_CsvSeparator;
+	ss << "IsIndoor";
 
 	return ss.str();
+}
+
+std::string OutputModel::ToString(OutputStrFormat format) const
+{
+	switch (format)
+	{
+	case STDOUT: return BuildStdOutString();
+	case CSV: return BuildCsvString();
+	}
+
+	return BuildStdOutString();
 }
 
 std::string OutputModel::ApplicationTypeToString(Application::ApplicationType applicationType)
@@ -108,4 +108,55 @@ std::string OutputModel::TransmissionTypeToString(TransmissionType transmissionT
 	case TX: return "TX";
 	default: return "UNDEFINED";
 	}
+}
+
+std::string OutputModel::BuildStdOutString() const
+{
+	stringstream ss;
+
+	ss << TransmissionTypeToString(m_TransmissionType) << " ";
+	ss << ApplicationTypeToString(m_ApplicationType);
+	ss << " ID " << m_Id;
+	ss << " SIZE " << m_Size;
+	ss << " SRC " << m_SourceId;
+	ss << " DST " << m_DestinationId;
+
+	if (m_TransmissionType == RX)
+	{
+		ss << " D " << m_Delay;
+		ss << m_IsIndoor;
+	}
+	else
+	{
+		ss << " T " << m_CreatedTime;
+
+		if (m_NodeType == NetworkNode::TYPE_UE)
+		{
+			ss << m_IsIndoor;
+		}
+	}
+
+	return ss.str();
+}
+
+std::string OutputModel::BuildCsvString() const
+{
+	stringstream ss;
+
+	ss << TransmissionTypeToString(m_TransmissionType) << m_CsvSeparator;
+	ss << ApplicationTypeToString(m_ApplicationType) << m_CsvSeparator;
+	ss << m_Id << m_CsvSeparator;
+	ss << m_Size << m_CsvSeparator;
+	ss << m_SourceId << m_CsvSeparator;
+	ss << m_DestinationId << m_CsvSeparator;
+
+	if(m_TransmissionType == TX) ss << m_CreatedTime << m_CsvSeparator;
+	else ss << m_CsvSeparator;
+
+	if (m_TransmissionType == RX) ss << m_Delay << m_CsvSeparator;
+	else ss << m_CsvSeparator;
+
+	ss << m_IsIndoor;
+
+	return ss.str();
 }

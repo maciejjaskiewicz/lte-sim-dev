@@ -40,6 +40,10 @@
 #include "core/spectrum/bandwidth-manager.h"
 #include "core/spectrum/transmitted-signal.h"
 
+#include "output/OutputModel.h"
+#include "output/OutputFactory.h"
+#include "output/CSV/CSVOutputBuilder.h"
+
 // Entry Point
 #include "core/main.h"
 

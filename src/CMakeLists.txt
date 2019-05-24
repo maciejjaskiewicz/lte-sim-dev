@@ -293,6 +293,8 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/output/OutputModel.h
     ${PROJECT_SOURCE_DIR}/output/OutputFactory.cpp
     ${PROJECT_SOURCE_DIR}/output/OutputFactory.h
+    ${PROJECT_SOURCE_DIR}/output/CSV/CSVOutputBuilder.cpp
+    ${PROJECT_SOURCE_DIR}/output/CSV/CSVOutputBuilder.h
 )
 source_group(TREE ${PROJECT_SOURCE_DIR} FILES ${LTE_SIM_SRC})
 

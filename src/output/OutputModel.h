@@ -10,6 +10,12 @@ enum TransmissionType
 	TX
 };
 
+enum OutputStrFormat
+{
+	STDOUT,
+	CSV
+};
+
 class LTE_SIM_API OutputModel
 {
 public:
@@ -27,7 +33,10 @@ public:
 	double GetDelay() const;
 	bool IsIndoor() const;
 
-	std::string ToString() const;
+	static const char m_CsvSeparator = ',';
+	static std::string GetCSVHeader();
+
+	std::string ToString(OutputStrFormat format = STDOUT) const;
 
 private:
 	int m_Id;
@@ -44,6 +53,9 @@ private:
 
 	static std::string ApplicationTypeToString(Application::ApplicationType applicationType);
 	static std::string TransmissionTypeToString(TransmissionType transmissionType);
+
+	std::string BuildStdOutString() const;
+	std::string BuildCsvString() const;
 
 	friend class OutputFactory;
 };

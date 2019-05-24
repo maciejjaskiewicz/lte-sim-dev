@@ -4,7 +4,6 @@
 #include "utility/CellPosition.h"
 #include "utility/frequency-reuse-helper.h"
 #include "utility/RandomVariable.h"
-#include "output/OutputFactory.h"
 #include "utility/PacketHelper.h"
 
 class MySchFair : public Simulation
@@ -321,6 +320,8 @@ public:
 		for (auto beApp : BEApplication) AddApplication(std::make_unique<InfiniteBuffer>(beApp));
 		for (auto cbrApp : CBRApplication) AddApplication(std::make_unique<CBR>(cbrApp));
 
+		m_CSVOutputBuilder = new CSVOutputBuilder("MY_SCH_FAIR.csv");
+
 		ScheduleStop(duration);
 		Run();
 	}
@@ -349,7 +350,7 @@ public:
 			isIndoor
 		);
 
-		std::cout << output->ToString() << std::endl;
+		m_CSVOutputBuilder->Add(std::move(output));
 	}
 
 	void OnReceive(Packet& packet, PacketAttributes& packetAttr) override
@@ -368,8 +369,16 @@ public:
 			ue->IsIndoor()
 		);
 
-		std::cout << output->ToString() << std::endl;
+		m_CSVOutputBuilder->Add(std::move(output));
 	}
+
+	void OnStop() override
+	{
+		m_CSVOutputBuilder->Close();
+	}
+
+private:
+	CSVOutputBuilder* m_CSVOutputBuilder;
 };
 
 Simulation* CreateSimulation()
