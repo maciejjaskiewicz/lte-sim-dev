@@ -1,7 +1,7 @@
 #ifndef OUTPUTFACTORY_H
 #define OUTPUTFACTORY_H
 
-#include "OutputModel.h"
+#include "Models/OutputModel.h"
 
 class LTE_SIM_API OutputFactory
 {

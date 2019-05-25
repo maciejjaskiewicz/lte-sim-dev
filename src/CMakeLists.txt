@@ -151,7 +151,6 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer-sink.h
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer.cpp
     ${PROJECT_SOURCE_DIR}/flows/radio-bearer.h
-    ${PROJECT_SOURCE_DIR}/flows/ApplicationFactory.cpp
     ${PROJECT_SOURCE_DIR}/flows/ApplicationFactory.h
     ${PROJECT_SOURCE_DIR}/load-parameters.h
     ${PROJECT_SOURCE_DIR}/mobility/ConstantPosition.cpp
@@ -289,10 +288,14 @@ SET(LTE_SIM_SRC
     ${PROJECT_SOURCE_DIR}/utility/seed.h
     ${PROJECT_SOURCE_DIR}/utility/UsersDistribution.h
     ${PROJECT_SOURCE_DIR}/utility/PacketHelper.h
-    ${PROJECT_SOURCE_DIR}/output/OutputModel.cpp
-    ${PROJECT_SOURCE_DIR}/output/OutputModel.h
+    ${PROJECT_SOURCE_DIR}/output/Models/OutputModel.cpp
+    ${PROJECT_SOURCE_DIR}/output/Models/OutputModel.h
+    ${PROJECT_SOURCE_DIR}/output/Models/SimulationMetricsModel.cpp
+    ${PROJECT_SOURCE_DIR}/output/Models/SimulationMetricsModel.h
     ${PROJECT_SOURCE_DIR}/output/OutputFactory.cpp
     ${PROJECT_SOURCE_DIR}/output/OutputFactory.h
+    ${PROJECT_SOURCE_DIR}/output/SimulationMetricsCalculator.cpp
+    ${PROJECT_SOURCE_DIR}/output/SimulationMetricsCalculator.h
     ${PROJECT_SOURCE_DIR}/output/CSV/CSVOutputBuilder.cpp
     ${PROJECT_SOURCE_DIR}/output/CSV/CSVOutputBuilder.h
 )

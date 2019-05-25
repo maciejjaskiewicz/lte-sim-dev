@@ -1,3 +1,5 @@
+#define LTE_SIM_CUSTOM_MAIN
+
 #include <iostream>
 #include <LTE-Sim.h>
 #include "utility/seed.h"
@@ -5,16 +7,17 @@
 #include "utility/frequency-reuse-helper.h"
 #include "utility/RandomVariable.h"
 #include "utility/PacketHelper.h"
+#include "output/SimulationMetricsCalculator.h"
+#include "output/Models/SimulationMetricsModel.h"
 
 class MySchFair : public Simulation
 {
 public:
-	MySchFair()
+	MySchFair(int nbUE = 10)
 	{
 		//Config
 		int nbCells = 1;
 		double radius = 1;
-		int nbUE = 50;
 		int nbVoIP = 1;
 		int nbVideo = 1;
 		int nbBE = 1;
@@ -101,12 +104,6 @@ public:
 			eNBs->push_back(enb);
 		}
 
-		//Define Application Container
-		std::vector<VoIP> VoIPApplication(nbVoIP*nbCells*nbUE);
-		std::vector<TraceBased> VideoApplication(nbVideo*nbCells*nbUE);
-		std::vector<InfiniteBuffer> BEApplication(nbBE*nbCells*nbUE);
-		std::vector<CBR> CBRApplication(nbCBR*nbCells*nbUE);
-
 		int voipApplication = 0;
 		int cbrApplication = 0;
 		int beApplication = 0;
@@ -170,12 +167,14 @@ public:
 			// *** voip application
 			for (int j = 0; j < nbVoIP; j++)
 			{
-				// create application
-				VoIPApplication[voipApplication].SetSource(gw);
-				VoIPApplication[voipApplication].SetDestination(ue);
-				VoIPApplication[voipApplication].SetApplicationID(applicationID);
-				VoIPApplication[voipApplication].SetStartTime(start_time);
-				VoIPApplication[voipApplication].SetStopTime(duration_time);
+				auto voIPApp = ApplicationFactory::CreateApplication<VoIP>(
+					applicationID,
+					gw, ue,
+					0, destinationPort,
+					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP,
+					start_time,
+					duration_time
+				);
 
 				// create qos parameters
 				if (downlink_scheduler_type == ENodeB::DLScheduler_TYPE_FLS)
@@ -208,27 +207,26 @@ public:
 						return;
 					}
 
-					VoIPApplication[voipApplication].SetQoSParameters(qos);
+					voIPApp->SetQoSParameters(qos);
 				}
 				else if (downlink_scheduler_type == ENodeB::DLScheduler_TYPE_EXP)
 				{
 					QoSForEXP *qos = new QoSForEXP();
 					qos->SetMaxDelay(maxDelay);
-					VoIPApplication[voipApplication].SetQoSParameters(qos);
+					voIPApp->SetQoSParameters(qos);
 				}
 				else if (downlink_scheduler_type == ENodeB::DLScheduler_TYPE_MLWDF)
 				{
 					QoSForM_LWDF *qos = new QoSForM_LWDF();
 					qos->SetMaxDelay(maxDelay);
-					VoIPApplication[voipApplication].SetQoSParameters(qos);
+					voIPApp->SetQoSParameters(qos);
 				}
 				else
 				{
 					QoSParameters *qos = new QoSParameters();
 					qos->SetMaxDelay(maxDelay);
-					VoIPApplication[voipApplication].SetQoSParameters(qos);
+					voIPApp->SetQoSParameters(qos);
 				}
-
 
 				//create classifier parameters
 				ClassifierParameters *cp = new ClassifierParameters(gw->GetIDNetworkNode(),
@@ -236,8 +234,9 @@ public:
 					0,
 					destinationPort,
 					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP);
-				VoIPApplication[voipApplication].SetClassifierParameters(cp);
+				voIPApp->SetClassifierParameters(cp);
 
+				AddApplication(std::move(voIPApp));
 				std::cout << "CREATED VOIP APPLICATION, ID " << applicationID << std::endl;
 
 				//update counter
@@ -249,27 +248,28 @@ public:
 			// *** be application
 			for (int j = 0; j < nbBE; j++)
 			{
-				// create application
-				BEApplication[beApplication].SetSource(gw);
-				BEApplication[beApplication].SetDestination(ue);
-				BEApplication[beApplication].SetApplicationID(applicationID);
-				BEApplication[beApplication].SetStartTime(start_time);
-				BEApplication[beApplication].SetStopTime(duration_time);
-
+				auto beApp = ApplicationFactory::CreateApplication<InfiniteBuffer>(
+					applicationID,
+					gw, ue,
+					0, destinationPort,
+					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP,
+					start_time,
+					duration_time
+				);
 
 				// create qos parameters
-				QoSParameters *qosParameters = new QoSParameters();
-				BEApplication[beApplication].SetQoSParameters(qosParameters);
-
+				auto*qosParameters = new QoSParameters();
+				beApp->SetQoSParameters(qosParameters);
 
 				//create classifier parameters
-				ClassifierParameters *cp = new ClassifierParameters(gw->GetIDNetworkNode(),
+				auto*cp = new ClassifierParameters(gw->GetIDNetworkNode(),
 					ue->GetIDNetworkNode(),
 					0,
 					destinationPort,
 					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP);
-				BEApplication[beApplication].SetClassifierParameters(cp);
+				beApp->SetClassifierParameters(cp);
 
+				AddApplication(std::move(beApp));
 				std::cout << "CREATED BE APPLICATION, ID " << applicationID << std::endl;
 
 				//update counter
@@ -281,20 +281,23 @@ public:
 			// *** cbr application
 			for (int j = 0; j < nbCBR; j++)
 			{
-				// create application
-				CBRApplication[cbrApplication].SetSource(gw);
-				CBRApplication[cbrApplication].SetDestination(ue);
-				CBRApplication[cbrApplication].SetApplicationID(applicationID);
-				CBRApplication[cbrApplication].SetStartTime(start_time);
-				CBRApplication[cbrApplication].SetStopTime(duration_time);
-				CBRApplication[cbrApplication].SetInterval(0.04);
-				CBRApplication[cbrApplication].SetSize(5);
+				auto cbrApp = ApplicationFactory::CreateApplication<CBR>(
+					applicationID,
+					gw, ue,
+					0, destinationPort,
+					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP,
+					start_time,
+					duration_time
+				);
+
+				cbrApp->SetInterval(0.04);
+				cbrApp->SetSize(5);
 
 				// create qos parameters
 				QoSParameters *qosParameters = new QoSParameters();
 				qosParameters->SetMaxDelay(maxDelay);
 
-				CBRApplication[cbrApplication].SetQoSParameters(qosParameters);
+				cbrApp->SetQoSParameters(qosParameters);
 
 
 				//create classifier parameters
@@ -303,8 +306,9 @@ public:
 					0,
 					destinationPort,
 					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP);
-				CBRApplication[cbrApplication].SetClassifierParameters(cp);
+				cbrApp->SetClassifierParameters(cp);
 
+				AddApplication(std::move(cbrApp));
 				std::cout << "CREATED CBR APPLICATION, ID " << applicationID << std::endl;
 
 				//update counter
@@ -316,11 +320,9 @@ public:
 			idUE++;
 		}
 
-		for (auto voIpApp : VoIPApplication) AddApplication(std::make_unique<VoIP>(voIpApp));
-		for (auto beApp : BEApplication) AddApplication(std::make_unique<InfiniteBuffer>(beApp));
-		for (auto cbrApp : CBRApplication) AddApplication(std::make_unique<CBR>(cbrApp));
-
 		m_CSVOutputBuilder = new CSVOutputBuilder("MY_SCH_FAIR.csv");
+		m_MetricsCalculator = new SimulationMetricsCalculator(nbUE, duration);
+		m_SimulationMetricsResult = new SimulationMetricsModel(nbUE, downlink_scheduler_type);
 
 		ScheduleStop(duration);
 		Run();
@@ -350,6 +352,7 @@ public:
 			isIndoor
 		);
 
+		m_MetricsCalculator->Add(*output);
 		m_CSVOutputBuilder->Add(std::move(output));
 	}
 
@@ -369,19 +372,49 @@ public:
 			ue->IsIndoor()
 		);
 
+		m_MetricsCalculator->Add(*output);
 		m_CSVOutputBuilder->Add(std::move(output));
 	}
 
 	void OnStop() override
 	{
 		m_CSVOutputBuilder->Close();
+
+		const auto delay = m_MetricsCalculator->CalculateDelay();
+		const auto throughput = m_MetricsCalculator->CalculateThroughput();
+		const auto fairness = m_MetricsCalculator->CalculateFairness();
+
+		m_SimulationMetricsResult->SetDelay(delay);
+		m_SimulationMetricsResult->SetThroughput(throughput);
+		m_SimulationMetricsResult->SetFairness(fairness);
+	}
+
+	const SimulationMetricsModel& GetSimulationResult() const
+	{
+		return *m_SimulationMetricsResult;
 	}
 
 private:
 	CSVOutputBuilder* m_CSVOutputBuilder;
+	SimulationMetricsCalculator* m_MetricsCalculator;
+	SimulationMetricsModel* m_SimulationMetricsResult;
 };
 
-Simulation* CreateSimulation()
+int main(int argc, char** argv)
 {
-	return new MySchFair();
+	for(int i = 10; i <= 100; i += 10)
+	{
+		auto simulation = new MySchFair(i);
+		auto result = simulation->GetSimulationResult();
+
+		std::cout << result.ToString(STDOUT) << std::endl;
+
+		delete simulation;
+
+		//TODO: Refactor
+		delete NetworkManager::Init();
+		delete FrameManager::Init();
+	}
+
+	return 0;
 }

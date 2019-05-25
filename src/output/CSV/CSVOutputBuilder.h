@@ -2,7 +2,7 @@
 #define CSVOUTPUTBUILDER_H
 
 #include "core/Core.h"
-#include "output/OutputModel.h"
+#include "output/Models/OutputModel.h"
 
 #include <fstream>
 #include <vector>

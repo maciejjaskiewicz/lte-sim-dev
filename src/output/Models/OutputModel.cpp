@@ -67,6 +67,7 @@ std::string OutputModel::GetCSVHeader()
 	ss << "TxType" << m_CsvSeparator;
 	ss << "AppType" << m_CsvSeparator;
 	ss << "Id" << m_CsvSeparator;
+	ss << "Bearer" << m_CsvSeparator;
 	ss << "Size" << m_CsvSeparator;
 	ss << "SRC" << m_CsvSeparator;
 	ss << "DST" << m_CsvSeparator;
@@ -117,6 +118,7 @@ std::string OutputModel::BuildStdOutString() const
 	ss << TransmissionTypeToString(m_TransmissionType) << " ";
 	ss << ApplicationTypeToString(m_ApplicationType);
 	ss << " ID " << m_Id;
+	ss << " B " << m_BearerId;
 	ss << " SIZE " << m_Size;
 	ss << " SRC " << m_SourceId;
 	ss << " DST " << m_DestinationId;
@@ -146,6 +148,7 @@ std::string OutputModel::BuildCsvString() const
 	ss << TransmissionTypeToString(m_TransmissionType) << m_CsvSeparator;
 	ss << ApplicationTypeToString(m_ApplicationType) << m_CsvSeparator;
 	ss << m_Id << m_CsvSeparator;
+	ss << m_BearerId << m_CsvSeparator;
 	ss << m_Size << m_CsvSeparator;
 	ss << m_SourceId << m_CsvSeparator;
 	ss << m_DestinationId << m_CsvSeparator;

@@ -8,17 +8,42 @@
 class LTE_SIM_API ApplicationFactory
 {
 public:
-	static std::unique_ptr<Application> CreateApplication(
-		Application::ApplicationType type,
+	template<class T>
+	static std::unique_ptr<T> CreateApplication(
 		int applicationId,
 		NetworkNode* src,
 		NetworkNode* dst,
 		int srcPort,
 		int destPort,
 		TransportProtocol::TransportProtocolType protocol,
-		QoSParameters* qos,
 		double startTime,
-		double duration);	
+		double duration)
+	{
+		auto app = std::make_unique<T>();
+
+		LTE_SIM_ASSERT(app);
+
+		app->SetApplicationID(applicationId);
+
+		app->SetSource(src);
+		app->SetDestination(dst);
+		app->SetSourcePort(srcPort);
+		app->SetDestinationPort(destPort);
+
+		const auto cp = new ClassifierParameters(
+			src->GetIDNetworkNode(),
+			dst->GetIDNetworkNode(),
+			srcPort,
+			destPort,
+			protocol);
+
+		app->SetClassifierParameters(cp);
+
+		app->SetStartTime(startTime);
+		app->SetStopTime(startTime + duration);
+
+		return app;
+	}
 	
 };
 

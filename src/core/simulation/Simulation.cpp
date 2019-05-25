@@ -10,7 +10,13 @@ Simulation::Simulation() : m_CurrentTimeStamp(0), m_LastUID(-1)
 	m_Calendar = std::make_unique<Calendar>();
 }
 
-Simulation::~Simulation() = default;
+Simulation::~Simulation()
+{
+	m_Calendar.reset();
+
+	m_Applications.clear();
+	s_Instance = nullptr;
+}
 
 void Simulation::Run()
 {

@@ -41,14 +41,14 @@ public:
 		double startTime = 0.1; //s
 		double stopTime = 0.12;  //s
 
-		auto application = ApplicationFactory::CreateApplication(
-			Application::APPLICATION_TYPE_INFINITE_BUFFER,
+		auto application = ApplicationFactory::CreateApplication<InfiniteBuffer>(
 			applicationID,
 			gw, ue,
 			srcPort, dstPort,
 			TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP,
-			qos,
 			startTime, stopTime);
+
+		application->SetQoSParameters(qos);
 
 		AddApplication(std::move(application));
 
