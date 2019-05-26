@@ -193,18 +193,18 @@ GetCartesianCoordinatesForCell (int idCell, double radius)
 static double
 GetTopology_Border (void)
 {
-  int nbCell = NetworkManager::Init()->GetNbCell();
+  int nbCell = NetworkManager::Get()->GetNbCell();
 
   switch (nbCell)
     {
       case 1:
-    	  return (NetworkManager::Init()->GetCellByID (0)->GetRadius () * 1000);
+    	  return (NetworkManager::Get()->GetCellByID (0)->GetRadius () * 1000);
     	  break;
       case 7:
-    	  return ((2.6 * NetworkManager::Init()->GetCellByID (0)->GetRadius ()) * 1000);
+    	  return ((2.6 * NetworkManager::Get()->GetCellByID (0)->GetRadius ()) * 1000);
     	  break;
       case 19:
-          return ((4. * NetworkManager::Init()->GetCellByID (0)->GetRadius ()) * 1000);
+          return ((4. * NetworkManager::Get()->GetCellByID (0)->GetRadius ()) * 1000);
           break;
       default:
     	  return 1000.0;

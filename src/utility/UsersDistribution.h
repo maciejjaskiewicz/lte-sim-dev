@@ -44,7 +44,7 @@ GetCartesianCoordinatesFromPolar (double r, double angle)
 static vector<CartesianCoordinates*>*
 GetUniformUsersDistribution (int idCell, int nbUE)
 {
-  NetworkManager * networkManager = NetworkManager::Init();
+  NetworkManager * networkManager = NetworkManager::Get();
   vector<CartesianCoordinates*> *vectorOfCoordinates = new vector<CartesianCoordinates*>;
 
   Cell *cell = networkManager->GetCellByID(idCell);
@@ -74,7 +74,7 @@ GetUniformUsersDistribution (int idCell, int nbUE)
 static vector<CartesianCoordinates*>*
 GetUniformUsersDistributionInFemtoCell (int idCell, int nbUE)
 {
-  NetworkManager * networkManager = NetworkManager::Init();
+  NetworkManager * networkManager = NetworkManager::Get();
   vector<CartesianCoordinates*> *vectorOfCoordinates = new vector<CartesianCoordinates*>;
 
   Femtocell *cell = networkManager->GetFemtoCellByID(idCell);

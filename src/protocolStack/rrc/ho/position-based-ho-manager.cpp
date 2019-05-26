@@ -55,7 +55,7 @@ PositionBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
     }
   */
 
-  std::vector<ENodeB*> *listOfNodes = NetworkManager::Init ()->GetENodeBContainer ();
+  std::vector<ENodeB*> *listOfNodes = NetworkManager::Get()->GetENodeBContainer ();
   std::vector<ENodeB*>::iterator it;
   for (it = listOfNodes->begin (); it != listOfNodes->end (); it++)
     {
@@ -70,7 +70,7 @@ PositionBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
 
 	      if (distance < targetDistance)
 	        {
-	    	  if (NetworkManager::Init()->CheckHandoverPermissions(probableNewTargetNode,ue))
+	    	  if (NetworkManager::Get()->CheckHandoverPermissions(probableNewTargetNode,ue))
 	    	  {
 			      targetDistance = distance;
 			      targetNode = probableNewTargetNode;
@@ -78,7 +78,7 @@ PositionBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
 	        }
 	    }
     }
-  std::vector<HeNodeB*> *listOfNodes2 = NetworkManager::Init ()->GetHomeENodeBContainer();
+  std::vector<HeNodeB*> *listOfNodes2 = NetworkManager::Get()->GetHomeENodeBContainer();
   std::vector<HeNodeB*>::iterator it2;
   for (it2 = listOfNodes2->begin (); it2 != listOfNodes2->end (); it2++)
     {
@@ -93,7 +93,7 @@ PositionBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
 
 	      if (distance < targetDistance)
 	        {
-	    	  if (NetworkManager::Init()->CheckHandoverPermissions(probableNewTargetNode,ue))
+	    	  if (NetworkManager::Get()->CheckHandoverPermissions(probableNewTargetNode,ue))
 	    	  {
 			      targetDistance = distance;
 			      targetNode = probableNewTargetNode;

@@ -28,8 +28,8 @@ public:
 		int cluster = 3;
 		double bandwidth = 10;
 
-		NetworkManager* networkManager = NetworkManager::Init();
-		FrameManager *frameManager = FrameManager::Init();
+		NetworkManager* networkManager = NetworkManager::Get();
+		FrameManager *frameManager = FrameManager::Get();
 
 		int commonSeed = GetCommonSeed(0);
 		srand(commonSeed);

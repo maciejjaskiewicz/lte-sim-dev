@@ -55,7 +55,7 @@ PowerBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
   double RXpower;
 
 
-  std::vector<ENodeB*> *listOfNodes = NetworkManager::Init ()->GetENodeBContainer ();
+  std::vector<ENodeB*> *listOfNodes = NetworkManager::Get()->GetENodeBContainer ();
   std::vector<ENodeB*>::iterator it;
   for (it = listOfNodes->begin (); it != listOfNodes->end (); it++)
     {
@@ -74,7 +74,7 @@ PowerBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
 
 	      if (RXpower > targetRXpower)
 	        {
-	    	  if (NetworkManager::Init()->CheckHandoverPermissions(probableNewTargetNode,ue))
+	    	  if (NetworkManager::Get()->CheckHandoverPermissions(probableNewTargetNode,ue))
 	    	  {
 		    	  targetRXpower = RXpower;
 			      targetNode = probableNewTargetNode;
@@ -83,7 +83,7 @@ PowerBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
 	    }
     }
 
-  std::vector<HeNodeB*> *listOfNodes2 = NetworkManager::Init ()->GetHomeENodeBContainer();
+  std::vector<HeNodeB*> *listOfNodes2 = NetworkManager::Get()->GetHomeENodeBContainer();
   std::vector<HeNodeB*>::iterator it2;
   for (it2 = listOfNodes2->begin (); it2 != listOfNodes2->end (); it2++)
     {
@@ -103,7 +103,7 @@ PowerBasedHoManager::CheckHandoverNeed (UserEquipment* ue)
 
 	      if (RXpower > targetRXpower)
 	        {
-	    	  if (NetworkManager::Init()->CheckHandoverPermissions(probableNewTargetNode,ue))
+	    	  if (NetworkManager::Get()->CheckHandoverPermissions(probableNewTargetNode,ue))
 	    	  {
 		    	  targetRXpower = RXpower;
 			      targetNode = probableNewTargetNode;

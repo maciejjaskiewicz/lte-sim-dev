@@ -26,7 +26,6 @@
 #include "core/Core.h"
 #include "../networkTopology/Cell.h"
 
-#include <stdint.h>
 #include <vector>
 
 class NetworkNode;
@@ -54,21 +53,15 @@ private:
 	std::vector<Building*> *m_buildingContainer;
 
 	NetworkManager();
-	static NetworkManager *ptr;
+	static NetworkManager* s_Instance;
 
 
 public:
 	virtual ~NetworkManager();
 
-	static NetworkManager*
-	Init (void)
-	  {
-		if (ptr==NULL)
-	      {
-		    ptr = new NetworkManager;
-	   	  }
-		return ptr;
-	  }
+	static void Init();
+	static NetworkManager* Get();
+	static void Destroy();
 
 	/*
 	 * Get a Network Element Container

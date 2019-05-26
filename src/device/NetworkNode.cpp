@@ -31,10 +31,11 @@
 
 NetworkNode::NetworkNode()
 {
-  m_cell = NULL;
-  m_protocolStack = NULL;
-  m_phy = NULL;
-  m_mobility = NULL;
+	m_classifier = nullptr;
+	m_cell = nullptr;
+	m_protocolStack = nullptr;
+	m_phy = nullptr;
+	m_mobility = nullptr;
 }
 
 NetworkNode::~NetworkNode()
@@ -45,10 +46,9 @@ NetworkNode::~NetworkNode()
 void
 NetworkNode::Destroy ()
 {
-  delete m_classifier;
-  delete m_phy;
-  delete m_protocolStack;
-  delete m_mobility;
+  m_classifier = NULL;
+  m_phy = NULL;
+  m_mobility = NULL;
 }
 
 void

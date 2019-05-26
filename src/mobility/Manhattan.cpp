@@ -67,7 +67,7 @@ Manhattan::UpdatePosition (double timestamp)
   double timeInterval = timestamp - GetPositionLastUpdate ();
   double speedDirection;
 
-  UserEquipment *thisNode = NetworkManager::Init ()->GetUserEquipmentByID (GetNodeID ());
+  UserEquipment *thisNode = NetworkManager::Get()->GetUserEquipmentByID (GetNodeID ());
   Cell *thisCell = thisNode->GetCell ();
 
 

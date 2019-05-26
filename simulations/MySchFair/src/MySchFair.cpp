@@ -32,8 +32,8 @@ public:
 		int cluster = 3;
 		double bandwidth = 10;
 
-		NetworkManager* networkManager = NetworkManager::Init();
-		FrameManager *frameManager = FrameManager::Init();
+		NetworkManager* networkManager = NetworkManager::Get();
+		FrameManager *frameManager = FrameManager::Get();
 
 		int commonSeed = GetCommonSeed(0);
 		srand(commonSeed);
@@ -394,6 +394,13 @@ public:
 		return *m_SimulationMetricsResult;
 	}
 
+	~MySchFair()
+	{
+		delete m_CSVOutputBuilder;
+		delete m_MetricsCalculator;
+		delete m_SimulationMetricsResult;
+	}
+
 private:
 	CSVOutputBuilder* m_CSVOutputBuilder;
 	SimulationMetricsCalculator* m_MetricsCalculator;
@@ -410,10 +417,8 @@ int main(int argc, char** argv)
 		std::cout << result.ToString(STDOUT) << std::endl;
 
 		delete simulation;
-
-		//TODO: Refactor
-		delete NetworkManager::Init();
-		delete FrameManager::Init();
+		NetworkManager::Destroy();
+		FrameManager::Destroy();
 	}
 
 	return 0;

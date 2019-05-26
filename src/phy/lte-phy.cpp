@@ -44,7 +44,7 @@ LtePhy::~LtePhy()
   m_dlChannel = NULL;
   m_ulChannel = NULL;
   m_bandwidthManager = NULL;
-  delete m_txSignal;
+  m_txSignal = NULL;
 }
 
 void

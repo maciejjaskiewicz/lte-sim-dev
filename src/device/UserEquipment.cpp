@@ -212,7 +212,7 @@ UserEquipment::UpdateUserPosition (double time)
 {
   GetMobilityModel ()->UpdatePosition (time);
 
-    SetIndoorFlag(NetworkManager::Init()->CheckIndoorUsers(this));
+    SetIndoorFlag(NetworkManager::Get()->CheckIndoorUsers(this));
 
     if (GetMobilityModel ()->GetHandover () == true)
       {
@@ -224,7 +224,7 @@ UserEquipment::UpdateUserPosition (double time)
            NetworkNode* newTagertNode = targetNode->GetProtocolStack ()
                            ->GetRrcEntity ()->GetHandoverEntity ()->GetHoManager ()->m_target;
 
-           NetworkManager::Init()->HandoverProcedure(time, this, targetNode, newTagertNode);
+           NetworkManager::Get()->HandoverProcedure(time, this, targetNode, newTagertNode);
           }
       }
 

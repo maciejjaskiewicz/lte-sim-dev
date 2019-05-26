@@ -45,7 +45,7 @@
 #include "../networkTopology/Street.h"
 #include "core/simulation/Simulation.h"
 
-NetworkManager* NetworkManager::ptr=NULL;
+NetworkManager* NetworkManager::s_Instance = nullptr;
 
 NetworkManager::NetworkManager()
 {
@@ -93,6 +93,26 @@ NetworkManager::~NetworkManager()
   delete m_userEquipmentContainer;
 }
 
+void NetworkManager::Init()
+{
+	s_Instance = new NetworkManager;
+}
+
+NetworkManager* NetworkManager::Get()
+{
+	if(s_Instance == nullptr)
+	{
+		Init();
+	}
+
+	return s_Instance;
+}
+
+void NetworkManager::Destroy()
+{
+	delete s_Instance;
+	s_Instance = nullptr;
+}
 
 Cell*
 NetworkManager::CreateCell (int idCell, double radius, double minDistance, double X, double Y)

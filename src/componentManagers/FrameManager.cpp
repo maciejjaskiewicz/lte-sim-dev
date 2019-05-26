@@ -27,7 +27,7 @@
 #include "componentManagers/TDDConfiguration.h"
 #include "core/simulation/Simulation.h"
 
-FrameManager* FrameManager::ptr=NULL;
+FrameManager* FrameManager::s_Instance=NULL;
 
 FrameManager::FrameManager() {
   m_nbFrames = 0;
@@ -38,8 +38,27 @@ FrameManager::FrameManager() {
   Simulation::Get().GetCalendar().Schedule(0.0, &FrameManager::Start, this);
 }
 
-FrameManager::~FrameManager()
-{}
+FrameManager::~FrameManager() = default;
+
+void FrameManager::Init()
+{
+	s_Instance = new FrameManager;
+}
+
+FrameManager* FrameManager::Get()
+{
+	if(s_Instance == nullptr)
+	{
+		Init();
+	}
+
+	return s_Instance;
+}
+
+void FrameManager::Destroy()
+{
+	s_Instance = nullptr;
+}
 
 void
 FrameManager::SetFrameStructure (FrameManager::FrameStructure frameStructure)
@@ -211,7 +230,7 @@ FrameManager::StopSubframe (void)
 NetworkManager*
 FrameManager::GetNetworkManager (void)
 {
-  return NetworkManager::Init();
+	return NetworkManager::Get();
 }
 
 void

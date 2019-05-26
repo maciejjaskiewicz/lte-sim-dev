@@ -6,8 +6,8 @@ class Simple : public Simulation
 public:
 	Simple()
 	{
-		NetworkManager* networkManager = NetworkManager::Init();
-		FrameManager *frameManager = FrameManager::Init();
+		NetworkManager* networkManager = NetworkManager::Get();
+		FrameManager *frameManager = FrameManager::Get();
 
 		LteChannel *dlCh = new LteChannel();
 		LteChannel *ulCh = new LteChannel();

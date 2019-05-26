@@ -32,7 +32,7 @@ Mobility::Mobility()
 
 Mobility::~Mobility()
 {
-  delete m_AbsolutePosition;
+  m_AbsolutePosition = NULL;
 }
 
 void
@@ -152,18 +152,18 @@ Mobility::GetLastHandoverTime (void) const
 double
 Mobility::GetTopologyBorder (void)
 {
-  int nbCell = NetworkManager::Init()->GetNbCell();
+  int nbCell = NetworkManager::Get()->GetNbCell();
 
   switch (nbCell)
     {
       case 1:
-    	  return (NetworkManager::Init()->GetCellByID (0)->GetRadius () * 1000);
+    	  return (NetworkManager::Get()->GetCellByID (0)->GetRadius () * 1000);
     	  break;
       case 7:
-    	  return ((2.6 * NetworkManager::Init()->GetCellByID (0)->GetRadius ()) * 1000);
+    	  return ((2.6 * NetworkManager::Get()->GetCellByID (0)->GetRadius ()) * 1000);
     	  break;
       case 19:
-          return ((4. * NetworkManager::Init()->GetCellByID (0)->GetRadius ()) * 1000);
+          return ((4. * NetworkManager::Get()->GetCellByID (0)->GetRadius ()) * 1000);
           break;
       default:
     	  return 1000.0;

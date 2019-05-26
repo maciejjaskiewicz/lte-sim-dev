@@ -35,7 +35,7 @@
 static vector<CartesianCoordinates*>*
 GetUniformBuildingDistribution (int idCell, int nbBuilding)
 {
-  NetworkManager * networkManager = NetworkManager::Init();
+  NetworkManager * networkManager = NetworkManager::Get();
   vector<CartesianCoordinates*> *vectorOfCoordinates = new vector<CartesianCoordinates*>;
 
   Cell *cell = networkManager->GetCellByID(idCell);
@@ -113,7 +113,7 @@ GetWalls(Femtocell* henb_cell, UserEquipment* ue)
 	nbWalls[0] = 0; //External Walls
 	nbWalls[1] = 0; //Internal Walls
 
-	Building* henb_building = NetworkManager::Init()->GetBuildingByFemtoCellID(henb_cell->GetIdCell());
+	Building* henb_building = NetworkManager::Get()->GetBuildingByFemtoCellID(henb_cell->GetIdCell());
 	int henb_cell_id = henb_building->GetFemtoIdInBuilding(henb_cell->GetIdCell());
 	int ue_cell_id;
 
@@ -127,7 +127,7 @@ GetWalls(Femtocell* henb_cell, UserEquipment* ue)
 		// there are no external walls in between
 		nbWalls[0] = 0;
 
-		ue_cell_id = henb_building->GetFemtoIdInBuilding(NetworkManager::Init()->GetBelongingCellFromPosition(ue)->GetIdCell());
+		ue_cell_id = henb_building->GetFemtoIdInBuilding(NetworkManager::Get()->GetBelongingCellFromPosition(ue)->GetIdCell());
 
 	}
 	else if(ue->IsIndoor())

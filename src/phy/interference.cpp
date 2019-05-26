@@ -42,7 +42,7 @@ Interference::ComputeInterference (UserEquipment *ue)
 
   double interference = 0;
 
-  std::vector<ENodeB*> *eNBs = NetworkManager::Init ()->GetENodeBContainer ();
+  std::vector<ENodeB*> *eNBs = NetworkManager::Get()->GetENodeBContainer ();
   std::vector<ENodeB*>::iterator it;
 
   //std::cout << "Compute interference for UE " << ue->GetIDNetworkNode () << " ,target node " << ue->GetTargetNode ()->GetIDNetworkNode ()<< std::endl;
@@ -75,7 +75,7 @@ Interference::ComputeInterference (UserEquipment *ue)
 	    }
     }
 
-  std::vector<HeNodeB*> *HeNBs = NetworkManager::Init ()->GetHomeENodeBContainer();
+  std::vector<HeNodeB*> *HeNBs = NetworkManager::Get()->GetHomeENodeBContainer();
   std::vector<HeNodeB*>::iterator it2;
   HeNodeB *henb;
 

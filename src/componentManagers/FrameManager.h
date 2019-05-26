@@ -56,21 +56,15 @@ private:
 	unsigned long m_TTICounter;
 
 	FrameManager();
-	static FrameManager *ptr;
+	static FrameManager *s_Instance;
 
 public:
 	//FrameManager();
 	virtual ~FrameManager();
 
-	static FrameManager*
-	Init (void)
-	  {
-		if (ptr==NULL)
-	      {
-		    ptr = new FrameManager;
-	   	  }
-		return ptr;
-	  }
+	static void Init();
+	static FrameManager* Get();
+	static void Destroy();
 
 	void
 	SetFrameStructure (FrameStructure frameStructure);

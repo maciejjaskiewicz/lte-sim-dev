@@ -61,7 +61,7 @@ RandomDirection::UpdatePosition (double time)
 
   double timeInterval = time - GetPositionLastUpdate ();
 
-  UserEquipment *thisNode = NetworkManager::Init ()->GetUserEquipmentByID (GetNodeID ());
+  UserEquipment *thisNode = NetworkManager::Get()->GetUserEquipmentByID (GetNodeID ());
   Cell *thisCell = thisNode->GetCell ();
 
 

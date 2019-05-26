@@ -49,7 +49,7 @@ RunFrequencyReuseTechniques(int nodes, int cluster, double bandwidth)
 {
   std::vector <BandwidthManager*> spectrum;
 
-  if (FrameManager::Init ()->GetFrameStructure () == FrameManager::FRAME_STRUCTURE_FDD)
+  if (FrameManager::Get ()->GetFrameStructure () == FrameManager::FRAME_STRUCTURE_FDD)
     {
 
       if (bandwidth == 5)
