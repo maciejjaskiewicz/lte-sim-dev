@@ -22,12 +22,12 @@ public:
 		int nbVideo = 1;
 		int nbBE = 1;
 		int nbCBR = 1;
-		int speed = 3;
+		int speed = 30;
 		double maxDelay = 0.1;
 		//End Config
 
-		double duration = 2;
-		double flow_duration = 10;
+		double duration = 3;
+		double flow_duration = 1;
 
 		int cluster = 3;
 		double bandwidth = 10;
@@ -105,6 +105,7 @@ public:
 		}
 
 		int voipApplication = 0;
+		int videoApplication = 0;
 		int cbrApplication = 0;
 		int beApplication = 0;
 		int destinationPort = 101;
@@ -243,6 +244,88 @@ public:
 				destinationPort++;
 				applicationID++;
 				voipApplication++;
+			}
+
+			for (int j = 0; j < nbVideo; j++)
+			{
+				auto videoApp = ApplicationFactory::CreateApplication<TraceBased>(
+					applicationID,
+					gw, ue,
+					0, destinationPort,
+					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP,
+					start_time,
+					duration_time
+				);
+
+				string video_trace("foreman_H264_");
+				string file("Trace/" + video_trace + "128k.dat");
+				videoApp->SetTraceFile(file);
+
+				if (downlink_scheduler_type == ENodeB::DLScheduler_TYPE_FLS)
+				{
+					QoSForFLS *qos = new QoSForFLS();
+					qos->SetMaxDelay(maxDelay);
+					if (maxDelay == 0.1)
+					{
+						std::cout << "Target Delay = 0.1 s, M = 9" << std::endl;
+						qos->SetNbOfCoefficients(9);
+					}
+					else if (maxDelay == 0.08)
+					{
+						std::cout << "Target Delay = 0.08 s, M = 7" << std::endl;
+						qos->SetNbOfCoefficients(7);
+					}
+					else if (maxDelay == 0.06)
+					{
+						std::cout << "Target Delay = 0.06 s, M = 5" << std::endl;
+						qos->SetNbOfCoefficients(5);
+					}
+					else if (maxDelay == 0.04)
+					{
+						std::cout << "Target Delay = 0.04 s, M = 3" << std::endl;
+						qos->SetNbOfCoefficients(3);
+					}
+					else
+					{
+						std::cout << "ERROR: target delay is not available" << std::endl;
+						return;
+					}
+					videoApp->SetQoSParameters(qos);
+				}
+				else if (downlink_scheduler_type == ENodeB::DLScheduler_TYPE_EXP)
+				{
+					QoSForEXP *qos = new QoSForEXP();
+					qos->SetMaxDelay(maxDelay);
+					videoApp->SetQoSParameters(qos);
+				}
+				else if (downlink_scheduler_type == ENodeB::DLScheduler_TYPE_MLWDF)
+				{
+					QoSForM_LWDF *qos = new QoSForM_LWDF();
+					qos->SetMaxDelay(maxDelay);
+					videoApp->SetQoSParameters(qos);
+				}
+				else
+				{
+					QoSParameters *qos = new QoSParameters();
+					qos->SetMaxDelay(maxDelay);
+					videoApp->SetQoSParameters(qos);
+				}
+
+				//create classifier parameters
+				ClassifierParameters *cp = new ClassifierParameters(gw->GetIDNetworkNode(),
+					ue->GetIDNetworkNode(),
+					0,
+					destinationPort,
+					TransportProtocol::TRANSPORT_PROTOCOL_TYPE_UDP);
+
+				videoApp->SetClassifierParameters(cp);
+
+				AddApplication(std::move(videoApp));
+				std::cout << "CREATED VIDEO APPLICATION, ID " << applicationID << std::endl;
+
+				destinationPort++;
+				applicationID++;
+				videoApplication++;
 			}
 
 			// *** be application
@@ -409,17 +492,24 @@ private:
 
 int main(int argc, char** argv)
 {
+	ofstream resultFile;
+	resultFile.open("MySchFairResult.csv", std::ofstream::out | std::ofstream::trunc);
+
+	resultFile << SimulationMetricsModel::GetCSVHeader() << std::endl;
+
 	for(int i = 10; i <= 100; i += 10)
 	{
 		auto simulation = new MySchFair(i);
 		auto result = simulation->GetSimulationResult();
 
-		std::cout << result.ToString(STDOUT) << std::endl;
+		resultFile << result.ToString(CSV) << std::endl;
 
 		delete simulation;
 		NetworkManager::Destroy();
 		FrameManager::Destroy();
 	}
+
+	resultFile.close();
 
 	return 0;
 }

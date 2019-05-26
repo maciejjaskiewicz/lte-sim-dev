@@ -82,7 +82,7 @@ std::string SimulationMetricsModel::ToString(OutputStrFormat format) const
 		ss << "Scheduler: " << GetSchedulerTypeStr() << ", ";
 		ss << "Users: " << m_UsersNumber << ", ";
 		ss << "Delay: " << m_Delay << ", ";
-		ss << "Throughput: " << m_Throughput << ", ";
+		ss << "Throughput: " << GetThroughputMbps() << ", ";
 		ss << "Fairness:" << m_Fairness;
 	}
 	else
@@ -90,9 +90,22 @@ std::string SimulationMetricsModel::ToString(OutputStrFormat format) const
 		ss << GetSchedulerTypeStr() << m_CsvSeparator;
 		ss << m_UsersNumber << m_CsvSeparator;
 		ss << m_Delay << m_CsvSeparator;
-		ss << m_Throughput << m_CsvSeparator;
+		ss << GetThroughputMbps() << m_CsvSeparator;
 		ss << m_Fairness;
 	}
+
+	return ss.str();
+}
+
+std::string SimulationMetricsModel::GetCSVHeader()
+{
+	stringstream ss;
+
+	ss << "Scheduler" << m_CsvSeparator;
+	ss << "Users" << m_CsvSeparator;
+	ss << "Delay" << m_CsvSeparator;
+	ss << "Throughput" << m_CsvSeparator;
+	ss << "Fairness";
 
 	return ss.str();
 }

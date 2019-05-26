@@ -24,6 +24,7 @@ public:
 	float GetFairness() const;
 
 	std::string ToString(OutputStrFormat format = STDOUT) const;
+	static std::string GetCSVHeader();
 
 private:
 	int m_UsersNumber;
