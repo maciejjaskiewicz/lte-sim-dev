@@ -11,12 +11,12 @@ if sys.argv[1]:
 print(fileName)
 
 dataset = pd.read_csv(fileName)
-X = dataset.iloc[:, 1].values
-Delay = dataset.iloc[:, 2].values
-Throughput = dataset.iloc[:, 3].values
-Fairness = dataset.iloc[:, 4].values
+dataset = dataset[dataset['ResultType'] == 'General']
 
-# Throughput[:] = [x / 1024 / 1024 for x in Throughput]
+X = dataset.iloc[:, 3].values
+Delay = dataset.iloc[:, 4].values
+Throughput = dataset.iloc[:, 5].values
+Fairness = dataset.iloc[:, 6].values
 
 plt.figure(1)
 plt.plot(X, Delay, color = 'red')
@@ -37,5 +37,6 @@ plt.plot(X, Fairness, color = 'red')
 plt.title('Number of users vs Fairness')
 plt.xlabel('Number of users')
 plt.ylabel('Fairness')
-plt.show()
 plt.savefig('Fairness.png')
+
+plt.show()

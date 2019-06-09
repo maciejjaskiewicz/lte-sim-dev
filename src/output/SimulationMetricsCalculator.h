@@ -5,6 +5,7 @@
 #include "Models/OutputModel.h"
 
 #include <map>
+#include <set>
 
 class LTE_SIM_API SimulationMetricsCalculator
 {
@@ -15,6 +16,9 @@ public:
 	float CalculateDelay() const;
 	float CalculateThroughput() const;
 	float CalculateFairness() const;
+
+	std::unique_ptr<std::map<int, float>> CalculateDelayPerUE();
+	std::unique_ptr<std::map<int, float>> CalculateThroughputPerUE();
 
 private:
 	int m_UsersNumber;
@@ -27,10 +31,12 @@ private:
 
 	struct MetricEntry
 	{
+		int UeTxId;
+		int UeRxId;
 		int TransmittedPackets;
 		int ReceivedPackets;
 		int ReceivedPacketsSize;
-		double m_DelaySum;
+		double DelaySum;
 	};
 
 	std::map<int, MetricEntry> m_BearerMetrics;

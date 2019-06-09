@@ -20,6 +20,7 @@ void SimulationMetricsCalculator::Add(const OutputModel& outputModel)
 	{
 		m_TransmittedPackets++;
 		bearerMetric.TransmittedPackets++;
+		bearerMetric.UeTxId = outputModel.GetSourceId();
 	}
 
 	if (outputModel.GetTransmissionType() == RX)
@@ -30,7 +31,8 @@ void SimulationMetricsCalculator::Add(const OutputModel& outputModel)
 
 		bearerMetric.ReceivedPackets++;
 		bearerMetric.ReceivedPacketsSize += outputModel.GetSize();
-		bearerMetric.m_DelaySum += outputModel.GetDelay();
+		bearerMetric.DelaySum += outputModel.GetDelay();
+		bearerMetric.UeRxId = outputModel.GetDestinationId();
 	}
 
 	if(newBearer)
@@ -69,6 +71,75 @@ float SimulationMetricsCalculator::CalculateFairness() const
 	const double throughputTotalSumQuad = pow(throughputSum, 2);
 
 	return throughputTotalSumQuad / (m_BearerMetrics.size() * throughputQuadSum);
+}
+
+std::unique_ptr<std::map<int, float>> SimulationMetricsCalculator::CalculateDelayPerUE()
+{
+	struct UeMetricEntry
+	{
+		int ReceivedPackets;
+		float DelaySum;
+	};
+
+	std::map<int, UeMetricEntry> ueMetrics;
+
+	for (const auto bearerMetric : m_BearerMetrics)
+	{
+		const auto ueId = bearerMetric.second.UeRxId;
+
+		if(ueMetrics.find(ueId) != ueMetrics.end())
+		{
+			ueMetrics[ueId].ReceivedPackets += bearerMetric.second.ReceivedPackets;
+			ueMetrics[ueId].DelaySum += bearerMetric.second.DelaySum;
+		}
+		else
+		{
+			UeMetricEntry metricEntry{};
+			metricEntry.ReceivedPackets += bearerMetric.second.ReceivedPackets;
+			metricEntry.DelaySum = bearerMetric.second.DelaySum;
+
+			ueMetrics.insert(std::make_pair(ueId, metricEntry));
+		}
+	}
+
+	auto result = std::make_unique<std::map<int, float>>();
+
+	for(const auto ueMetric : ueMetrics)
+	{
+		auto delay = ueMetric.second.DelaySum / ueMetric.second.ReceivedPackets;
+		result->insert(std::make_pair(ueMetric.first, delay));
+	}
+
+	return result;
+}
+
+std::unique_ptr<std::map<int, float>> SimulationMetricsCalculator::CalculateThroughputPerUE()
+{
+	std::map<int, int> ueReceivedPacketSizes;
+
+	for (const auto bearerMetric : m_BearerMetrics)
+	{
+		const auto ueId = bearerMetric.second.UeRxId;
+
+		if (ueReceivedPacketSizes.find(ueId) != ueReceivedPacketSizes.end())
+		{
+			ueReceivedPacketSizes[ueId] += bearerMetric.second.ReceivedPacketsSize;
+		}
+		else
+		{
+			ueReceivedPacketSizes.insert(std::make_pair(ueId, bearerMetric.second.ReceivedPacketsSize));
+		}
+	}
+
+	auto result = std::make_unique<std::map<int, float>>();
+
+	for (const auto ueMetric : ueReceivedPacketSizes)
+	{
+		auto throughput = (ueMetric.second * 8) / m_Time;
+		result->insert(std::make_pair(ueMetric.first, throughput));
+	}
+
+	return result;
 }
 
 float SimulationMetricsCalculator::CalculateThroughput(MetricEntry metricEntry) const

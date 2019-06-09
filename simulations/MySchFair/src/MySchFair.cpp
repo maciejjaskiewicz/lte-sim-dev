@@ -470,6 +470,12 @@ public:
 		m_SimulationMetricsResult->SetDelay(delay);
 		m_SimulationMetricsResult->SetThroughput(throughput);
 		m_SimulationMetricsResult->SetFairness(fairness);
+
+		auto delayPerUe = m_MetricsCalculator->CalculateDelayPerUE();
+		auto throughputPerUe = m_MetricsCalculator->CalculateThroughputPerUE();
+
+		m_SimulationMetricsResult->SetDelayPerUE(std::move(delayPerUe));
+		m_SimulationMetricsResult->SetThroughputPerUE(std::move(throughputPerUe));
 	}
 
 	const SimulationMetricsModel& GetSimulationResult() const
@@ -497,10 +503,13 @@ int main(int argc, char** argv)
 
 	resultFile << SimulationMetricsModel::GetCSVHeader() << std::endl;
 
-	for(int i = 10; i <= 100; i += 10)
+	for (int i = 10; i <= 100; i += 10)
 	{
 		auto simulation = new MySchFair(i);
 		auto result = simulation->GetSimulationResult();
+
+		std::cout << std::endl << "Simulation " << i / 10 << " results:" << std::endl;
+		std::cout << result.ToString() << std::endl;
 
 		resultFile << result.ToString(CSV) << std::endl;
 
